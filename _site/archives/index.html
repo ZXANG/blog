@@ -14,7 +14,7 @@
 
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -89,7 +89,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="NexT" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml" />
 
 
 
@@ -111,17 +111,14 @@
 
 
 
-<meta name="description" content="Elegant theme for Jekyll.">
 <meta name="keywords" content="Jekyll, NexT">
 <meta property="og:type" content="website">
-<meta property="og:title" content="NexT">
+<meta property="og:title" content="Blog">
 <meta property="og:url" content="http://localhost:4000/archives/">
-<meta property="og:site_name" content="NexT">
-<meta property="og:description" content="Elegant theme for Jekyll.">
-<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Blog">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NexT">
-<meta name="twitter:description" content="Elegant theme for Jekyll.">
+<meta name="twitter:title" content="Blog">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -134,7 +131,7 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -154,7 +151,7 @@
 
 
 
-  <title>Archives | NexT</title>
+  <title>归档 | Blog</title>
   
 
 
@@ -174,7 +171,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -190,7 +187,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">NexT</span>
+        <span class="site-title">Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -222,7 +219,19 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
           </a>
         </li>
       
@@ -234,7 +243,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -246,7 +255,43 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
-            Tags
+            标签
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-something">
+          <a href="/something/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            奇奇怪怪
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
           </a>
         </li>
       
@@ -274,15 +319,54 @@
   <span class="archive-page-counter">
     
     
-    Um..!
+    嗯..!
     
-      15 posts in total.
+      目前共计 16 篇日志。
     
-    Keep on posting.
+    继续努力。
   </span>
 
   
   
+
+  
+    
+
+    
+    
+    
+      
+      <div class="collection-title" route="/">
+        <h2 class="archive-year motion-element" id="archive-year-2020">2020</h2>
+      </div>
+    
+    
+
+    
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/something/2020/05/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" itemprop="url">
+              
+                <span itemprop="name">第一篇blog</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-05-11T00:00:00+08:00"
+              content="2020-05-11" >
+          05-11
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
   
     
@@ -616,10 +700,15 @@
     
     
     
+      
+      <div class="collection-title" route="/page2">
+        <h2 class="archive-year motion-element" id="archive-year-2013">2013</h2>
+      </div>
+    
     
 
     
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article" route="/page2">
     <header class="post-header">
 
       <h2 class="post-title">
@@ -649,11 +738,6 @@
 
     
     
-    
-      
-      <div class="collection-title" route="/page2">
-        <h2 class="archive-year motion-element" id="archive-year-2013">2013</h2>
-      </div>
     
     
 
@@ -854,10 +938,10 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.gif"
-               alt="John Doe" />
-          <p class="site-author-name" itemprop="name">John Doe</p>
+               alt="ZX" />
+          <p class="site-author-name" itemprop="name">ZX</p>
            
-              <p class="site-description motion-element" itemprop="description">Elegant theme for Jekyll.</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           
         </div>
         <nav class="site-state motion-element">
@@ -865,8 +949,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">15</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -876,8 +960,8 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
               </a>
             </div>
           
@@ -887,8 +971,8 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
               </a>
             </div>
           
@@ -942,16 +1026,16 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">ZX</span>
 </div>
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://jekyllrb.com">Jekyll</a>
+  由 <a class="theme-link" href="https://jekyllrb.com">Jekyll</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
     NexT.Muse
   </a>
@@ -1089,7 +1173,7 @@
       
 
       
-        var sizes = 15
+        var sizes = 16
         var base = "#";
       
 
