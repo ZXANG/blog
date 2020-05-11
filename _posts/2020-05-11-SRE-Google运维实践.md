@@ -1,5 +1,5 @@
 ---
-title: 《SRE Google运维实践》
+title: 《SRE Google运维实践》介绍
 description: 《SRE Google运维实践》 综述
 categories:
  - SRE
