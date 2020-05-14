@@ -3,7 +3,7 @@ title: 《SRE Google运维实践》介绍
 description: 《SRE Google运维实践》 综述
 categories:
  - SRE
-tags: 《SRE-Google运维实践》
+tags: 《SRE-Google运维实践》 
 ---
 
 > 《The Site Reliability Workbook — Practical Ways to Implement SRE》 中文版

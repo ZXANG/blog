@@ -1,9 +1,9 @@
 ---
-title: 《SRE Google运维实践》第一章
+title: 第一章 SRE与DevOps之间的联系
 description: SRE与DevOps之间的联系
 categories:
  - SRE
-tags: 《SRE-Google运维实践》
+tags: 《SRE-Google运维实践》 
 ---
 
 > 《The Site Reliability Workbook — Practical Ways to Implement SRE》 中文版
