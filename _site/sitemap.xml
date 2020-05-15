@@ -17,6 +17,10 @@
 <lastmod>2020-01-03T00:00:00+08:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/sre/2020/01/06/%E5%87%8F%E5%B0%91%E7%90%90%E4%BA%8B/</loc>
+<lastmod>2020-01-06T00:00:00+08:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/sre/2020/01/16/%E7%81%B0%E5%BA%A6%E9%83%A8%E7%BD%B2/</loc>
 <lastmod>2020-01-16T00:00:00+08:00</lastmod>
 </url>
@@ -62,7 +66,7 @@
 <loc>http://localhost:4000/assets/lib/jquery_lazyload/</loc>
 </url>
 <url>
-<loc>http://localhost:4000/something/the-site-reliability-workbook-next18.pdf</loc>
+<loc>http://localhost:4000/something/pdf/SRE/the-site-reliability-workbook-next18.pdf</loc>
 <lastmod>2020-05-15T14:40:01+08:00</lastmod>
 </url>
 </urlset>

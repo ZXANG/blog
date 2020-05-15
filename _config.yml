@@ -45,9 +45,9 @@ highlight:
 
 #### Markdown Processors
 ## 'redcarpet' is unsupported on GitHub Pages now.
-markdown: kramdown
-kramdown:
-    input: GFM
+#markdown: kramdown
+#kramdown:
+#    input: GFM
 
 # Default Attributes
 ## Docs: https://jekyllrb.com/docs/configuration/#front-matter-defaults
