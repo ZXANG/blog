@@ -26,3 +26,6 @@ worked for them and what didn’t.
 《The Site Reliability Workbook》操作手册 具体的用途来展示如何在工作中实践SRE。 本书包含了Google自身经历
 或是从Google's Cloud Platform的客户案例，Evernote、The Home Depot、The New York Times。
 
+* 相关资料
+英文原版：[the-site-reliability-workbook-next18.pdf](/something/the-site-reliability-workbook-next18.pdf)
+
