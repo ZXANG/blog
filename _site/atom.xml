@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T19:33:29+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T19:40:11+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
   &lt;p&gt;如何搭建该网站！.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -878,12 +878,11 @@ Traffic Admin服务器提供ReleaseSatelliteMachines RPC。此处理程序使用
     &lt;/tbody&gt;
   &lt;/table&gt;
 
-  &lt;p&gt;&lt;strong&gt;名词解释&lt;/strong&gt;&lt;/p&gt;
-
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;管理服务器&lt;/code&gt;
+  &lt;p&gt;&lt;strong&gt;名词解释&lt;/strong&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;管理服务器&lt;/code&gt;&lt;br /&gt;
 RPC服务器，支持自动化为前端服务基础结构执行特权操作。自动化服务器常参与PCR和集群启停操作。&lt;/p&gt;
 
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Autoreplacer&lt;/code&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Autoreplacer&lt;/code&gt;&lt;br /&gt;
 将非Borgified服务器从一台机器移动到另一台机器的系统。在机器故障时保持服务运行，并且支持colo重新配置。&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Borg&lt;/code&gt;
@@ -907,9 +906,8 @@ RPC服务器，支持自动化为前端服务基础结构执行特权操作。�
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;卫星&lt;/code&gt;&lt;br /&gt;
 小巧便宜的机器机架，仅提供提供来自Google网络边缘的非视频、前端流量。几乎没有传统的生产集群基础设施可用于卫星。卫星不同于CDN，它提供来自Google边缘网络的YouTube视频内容，以及来自互联网中更广泛的其他地方的视频内容。YouTube CDN未受此事件的影响。&lt;/p&gt;
 
-  &lt;p&gt;&lt;strong&gt;附录&lt;/strong&gt;&lt;/p&gt;
-
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;为什么释放卫星机器不是幂等的？&lt;/code&gt; &lt;br /&gt;
+  &lt;p&gt;&lt;strong&gt;附录&lt;/strong&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;为什么释放卫星机器不是幂等的？&lt;/code&gt; &lt;br /&gt;
 [该问题的回复已被删除]&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;管理服务器将所有卫星分配给diskerase团队后发生了什么？&lt;/code&gt; &lt;br /&gt;
@@ -934,12 +932,10 @@ RPC服务器，支持自动化为前端服务基础结构执行特权操作。�
  [图表省略]&lt;br /&gt;
  该图显示了由网络区域聚合的数据包丢失情况。在活动期间有一些短的尖峰，但大部分损失发生在卫星覆盖少的各个地区的高峰时刻。&lt;/p&gt;
 
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;人与机器，GFE&lt;/code&gt;&lt;/p&gt;
-  &lt;blockquote&gt;
-    &lt;p&gt;[省略了人机与自动机器设置速率的图表说明。]
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;人与机器，GFE&lt;/code&gt;&lt;br /&gt;
+ [省略了人机与自动机器设置速率的图表说明。]&lt;br /&gt;
 &lt;img src=&quot;/blog/something/images/SRE/10-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图10-1.故障期间核心与边缘QPS分布 &lt;/center&gt;&lt;/p&gt;
-  &lt;/blockquote&gt;
 
   &lt;p&gt;&lt;img src=&quot;/blog/something/images/SRE/10-2.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图10-2.故障期间核心与边缘QPS分布（替代表示） &lt;/center&gt;&lt;/p&gt;
