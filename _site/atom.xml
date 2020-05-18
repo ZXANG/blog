@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T18:54:29+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T19:33:29+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
   &lt;p&gt;如何搭建该网站！.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -502,43 +502,34 @@
 &lt;/blockquote&gt;
 
 &lt;h4 id=&quot;适得其反的指责&quot;&gt;适得其反的指责&lt;/h4&gt;
-
 &lt;p&gt;每一次事后总结都可能会陷入相互指责中。来看一些例子：&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;事情变得糟糕&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;事情变得糟糕&lt;/strong&gt;&lt;br /&gt;
+整个团队都被指责要对故障负责，尤其是这两名成员（maxone@和logantwo@）。&lt;/p&gt;
 
-&lt;p&gt;整个团队都被指责要对故障负责，尤其是这两名成员（maxone@和logantwo@）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;行动列表&lt;/strong&gt;&lt;br /&gt;
+列表的最后一项指向了sydneythree@，负责跨站点轮岗。&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;行动列表&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;列表的最后一项指向了sydneythree@，负责跨站点轮岗。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;根本原因和触发点&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;dylanfour@为本次故障全权负责。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;根本原因和触发点&lt;/strong&gt;&lt;br /&gt;
+dylanfour@为本次故障全权负责。&lt;/p&gt;
 
 &lt;p&gt;在事后总结中强调个体似乎是个好主意，但实际上，这种做法会导致团队成员不愿承担风险，因为害怕被当众羞辱。他们可能会掩盖那些防止再次发生故障的事实。&lt;/p&gt;
 
 &lt;h4 id=&quot;animated语言&quot;&gt;Animated语言&lt;/h4&gt;
-
 &lt;p&gt;事后总结基于事实，不应该受个人判断和主观语言的影响，应该考虑多种观点并尊重他人。示例中包含了多个反面例子：&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;根本原因和触发点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;根本原因和触发点&lt;/strong&gt;&lt;br /&gt;
+多余的语言（例如，“粗心无知”）&lt;/p&gt;
 
-&lt;p&gt;多余的语言（例如，“粗心无知”）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;事情变得糟糕&lt;/strong&gt;&lt;br /&gt;
+Animated文字（例如，“这太荒谬了”）&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;事情变得糟糕&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Animated文字（例如，“这太荒谬了”）&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;幸运的&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;一种夸张的感叹（例如，“无法相信我们能够幸免于难！”）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;幸运的&lt;/strong&gt;&lt;br /&gt;
+一种夸张的感叹（例如，“无法相信我们能够幸免于难！”）&lt;/p&gt;
 
 &lt;p&gt;动画语言和对事件的戏剧性描述稀释了关键信息，降低了警惕性。应该提供可验证的数据来证明事件的严重性。&lt;/p&gt;
 
 &lt;h4 id=&quot;缺少负责人&quot;&gt;缺少负责人&lt;/h4&gt;
-
 &lt;p&gt;宣布官方所有权会产生问责制，从而促进采取行动。示例中有几个缺少所有权的例子：&lt;/p&gt;
 
 &lt;ul&gt;
@@ -548,13 +539,11 @@
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;受众有限&quot;&gt;受众有限&lt;/h4&gt;
-
 &lt;p&gt;示例事后总结仅在团队成员之间共享。默认情况下，公司的每个人都应该可以访问该文档。建议尽可能广泛的分享你的事后总结，甚至和客户分享。总结的价值和所创造的经验成正比。能够从过去事件中吸取教训的人越多，重复发生的可能性就越低。周密和诚实的事后总结也是恢复信任的关键。&lt;/p&gt;
 
 &lt;p&gt;随着体验和舒适度的提高，可以将“受众”扩展到非人类。成熟的事后总结文化通常会添加机器可读标签（和其他元数据）以启用下游分析。&lt;/p&gt;
 
 &lt;h4 id=&quot;延迟发布&quot;&gt;延迟发布&lt;/h4&gt;
-
 &lt;p&gt;示例是在事件发生四个月后公布的。在此期间，如果事故再次发生（实际上确实发生过），团队成员可能会忘记总结中提到的关键细节。&lt;/p&gt;
 
 &lt;h2 id=&quot;优秀的事后总结示例&quot;&gt;优秀的事后总结示例&lt;/h2&gt;
@@ -891,13 +880,13 @@ Traffic Admin服务器提供ReleaseSatelliteMachines RPC。此处理程序使用
 
   &lt;p&gt;&lt;strong&gt;名词解释&lt;/strong&gt;&lt;/p&gt;
 
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;管理服务器 &lt;/code&gt;&lt;br /&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;管理服务器&lt;/code&gt;
 RPC服务器，支持自动化为前端服务基础结构执行特权操作。自动化服务器常参与PCR和集群启停操作。&lt;/p&gt;
 
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Autoreplacer&lt;/code&gt;&lt;br /&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Autoreplacer&lt;/code&gt;
 将非Borgified服务器从一台机器移动到另一台机器的系统。在机器故障时保持服务运行，并且支持colo重新配置。&lt;/p&gt;
 
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Borg&lt;/code&gt;&lt;br /&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Borg&lt;/code&gt;
 集群管理系统，旨在管理大规模任务和机器资源。Borg拥有Borg单元中所有机器，并将任务分配给具有可用资源的机器。&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Decom&lt;/code&gt;&lt;br /&gt;
