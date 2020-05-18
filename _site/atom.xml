@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T14:53:55+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T14:58:24+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
   &lt;p&gt;如何搭建该网站！.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -74,7 +74,7 @@
 &lt;/ul&gt;
 
 &lt;p&gt;CI/CD与发布自动化相结合可以持续改进开发周期，如图16-1所示。当发布自动化时，你可以更频繁地发布。对于变更率很高的软件来说，更频繁地发布意味着在任何给定的发布工件中捆绑更少的更改。而更小的、自包含的发布工件使得在出现bug时回滚任何给定的发布工件变得成本更低、更容易。更快的发布节奏意味着可以更快地修复bug。
-&lt;img src=&quot;/blog/something/images/SRE/16-1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/blog/blog/somthing/images/SRE/16-1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;平衡发布速度和可靠性&quot;&gt;平衡发布速度和可靠性&lt;/h2&gt;
 
@@ -84,7 +84,7 @@
 
 &lt;p&gt;尽管对软件进行变更存在固有的风险，但是这些变更(bug修复、安全补丁和新特性)对业务的成功是必需的。你可以使用SLOs和错误预算的概念来衡量发布新版本对可靠性的影响，而不是提倡反对变更。你的目标应该是在满足用户期望的可靠性目标的同时尽快发布软件。下一节将讨论如何使用canary流程来实现这些目标。&lt;/p&gt;
 
-&lt;p&gt;分离变更频率不同的组件&lt;/p&gt;
+&lt;h3 id=&quot;分离变更频率不同的组件&quot;&gt;分离变更频率不同的组件&lt;/h3&gt;
 
 &lt;p&gt;服务由具有不同变更频率的多个组件组成:二进制文件或代码、基础环境(如JVM、内核/OS)、库、服务配置或标志、特性/测试配置和用户配置。如果只有一种发布变更的方法，那么这些组件单独变更会比较困难。&lt;/p&gt;
 
@@ -130,7 +130,7 @@
 &lt;p&gt;我们将在发生中断时根据错误预算节省和一般影响，来对没有灰度发布的部署流程和灰度发布流程进行比较。我们的部署过程以开发环境为基础。一旦我们感觉代码在开发环境中正常工作，我们就将该版本部署到生产环境中。&lt;/p&gt;
 
 &lt;p&gt;在部署之后不久，监视开始报高错误率(参见图16-2，在图16-2中，为了模拟示例服务中的缺陷，对示例应用程序进行配置以使20％的请求失败)。对于示例，假设部署流程不支持回滚到以前已知的配置正常的版本时。修复这些错误的最佳选择就只有在生产版本中查找缺陷，对其进行补救，并在停机期间重新部署一个新版本。这种做法肯定会延长错误对用户的影响。
-&lt;img src=&quot;/something/images/SRE/16-2.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/blog/somthing/images/SRE/16-2.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                                            图 16-2 部署之后错误率增加
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -140,7 +140,7 @@
 &lt;p&gt;我们在示例应用程序中的进行简单灰度发布，在应用程序的特定版本之间分配流量。 您可以使用App Engine或其他任何方法来分割流量（例如负载均衡器上的后端权重，代理配置或循环DNS记录）。&lt;/p&gt;
 
 &lt;p&gt;图16-3显示了当我们使用灰度发布，变更的影响会大大降低;事实上，这些错误几乎不可见!这提出了一个有趣的问题:与总体流量趋势相比，灰度发布的流量趋势很难看到和跟踪。
-&lt;img src=&quot;/something/images/SRE/16-3.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/blog/somthing/images/SRE/16-3.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;图 16-3 部署之后错误率增canary部署错误率； 因为进行canary部署的只是系统的一小部分，因此总体错误率降低
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -148,7 +148,7 @@
 &lt;p&gt;为了更清楚地了解需要在合理范围内跟踪的错误，我们可以通过App Engine应用程序版本查看关键指标(HTTP响应代码)，如图16-4所示。当我们查看每个版本的分解趋势图时，我们可以清楚地看到新版本引入的错误。我们还可以从图16-4中观察到当前版本提供的错误非常少。&lt;/p&gt;
 
 &lt;p&gt;现在，我们可以根据应用程序版本的HTTP错误率对部署进行调优。如果灰度发布的错误率大于全部系统的错误率，这表明canary部署是&lt;code class=&quot;highlighter-rouge&quot;&gt;糟糕的&lt;/code&gt;。我们应该暂停并回滚部署，或者联系他人来帮助解决问题。如果错误率相似，我们可以正常地进行部署。在图16-4中，我们的canary部署显然很糟糕，我们应该回滚它。
-&lt;img src=&quot;/something/images/SRE/16-4.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/blog/somthing/images/SRE/16-4.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;图 16-4 应用程序HTTP响应码； 新版本产生多数错误、当前版本产生小数错误（图中显示10%的log）
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -1014,14 +1014,14 @@ table th:nth-of-type(3) { width: 67.5%; }
 
 &lt;p&gt;在此之前，需要为每个产品单独提供前端和拍卖功能。如图7-1所示，当广告请求可能到达两个系统时，需要重写请求以符合第二个系统的要求。过程中，增加了额外的代码和处理，还加大了非预期循环的可能。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/7-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/7-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图7-1：之前，广告请求可能会同时触及AdMob和AdSense系统 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;为了简化系统，我们为满足所有用例的常用程序增加了逻辑，并且添加了用于保护程序的标志。随着时间的推移，我们删除了标志，将功能整合到较少的的服务器后端中。&lt;/p&gt;
 
 &lt;p&gt;当服务器统一时，拍卖服务器可直接与两个目标服务器通信。如图7-2所示，当多个目标服务器需要查找数据时，查询只需统一在拍卖服务器中进行一次。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/7-2.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/7-2.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图7-2：统一后的拍卖服务器只需执行一次数据查询 &lt;/center&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;经验教训-2&quot;&gt;经验教训&lt;/h4&gt;
@@ -1145,7 +1145,7 @@ table th:nth-of-type(3) { width: 67.5%; }
   &lt;li&gt;减少人为错误导致的问题&lt;/li&gt;
   &lt;li&gt;提高安全性&lt;/li&gt;
   &lt;li&gt;缩短用户投诉的响应时间
-&lt;img src=&quot;/something/images/SRE/6-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;img src=&quot;/blog/somthing/images/SRE/6-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图 6-1 预测在减少琐事工作上花费的时间，并确保其收益大于投入 &lt;/center&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1286,7 +1286,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 
 &lt;p&gt;早期，谷歌在运行数据中心时，每个数据中心的网络拓扑都只有少量的网络设备，可以管理大量服务器的流量。单个网络设备故障可能会显著影响网络性能，但是一个小规模的工程师团队就可以处理设备的故障。早期，工程师调试故障设备并手动将流量切换到其他正常组件。而我们下一代的数据中心拥有更多的机器，并引入了折叠Clos拓扑结构的软件定义网络（SDN），交换机数量显著增加。图6-2展示的是一个小型数据中心Clos交换机网络的流量复杂情况。如果将这个比例放大，意味着设备数量更多，发生故障的组件也更多。虽然可以说，每个单独的故障对网络性能的影响比以前更小，但是大量的问题同时并发也会压倒工程师们。调试问题的过程同时也会引入大量新的问题，复杂的布局也让工程师感到困惑：需要检查哪些链接？需要更换哪个线卡？为什么是Stage 2开关，而不是Stage 1或Stage 3开关？关闭交换机会给用户带来哪些问题？&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/6-2.jpg&quot; alt=&quot;&quot; /&gt;&lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/6-2.jpg&quot; alt=&quot;&quot; /&gt;&lt;center&gt;
 图6-2. 一个小型Clos网络，Stage1 支持480台机器连接 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;修复故障的线卡是一个随着系统网络增长而任务量不断增长的琐事，因此我们将此作为“数据中心网络修复自动化”项目的第一阶段的目标。本案例阐述了我们如何在第一代线卡（名为Saturn）系统上开始自动化修复的过程，并以此为基础，我们讨论了如何对自动化工作进行改进以适应下一代线卡(Jupiter光纤网络)。&lt;/p&gt;
@@ -1302,7 +1302,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 
 &lt;p&gt;Drain，更换线卡，undrain的工作是不变和重复性质的，是“琐事”的典型范例。这些重复性的工作本身就会带来一些问题——例如，工程师在处理此类故障时会并行处理其他更有挑战性的工作，分心的工程师可能会意外地将未配置的交换机加入网络。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/6-3.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt; 
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/6-3.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt; 
 图6-3. 自动化之前的数据中心（Saturn）线卡修复工作流程：所有步骤都需要手动工作 &lt;/center&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;问题陈述&quot;&gt;问题陈述&lt;/h3&gt;
@@ -1346,7 +1346,7 @@ table th:nth-of-type(3) { width: 67.5%; }
   &lt;li&gt;自动修复系统再次启动线卡。完成修复后，启动交换机，待初始化后，流程管理器会触发恢复操作，切回交换机流量并结算故障工单。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/6-4.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/6-4.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图6-4.具有自动化功能的Saturn线卡维修工作流程：只需按下按钮即可完成更换线卡等全部手动工作 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;新的自动化系统将团队从大量的琐事中解放出来，使他们有更多时间在其他地方开展更高效的项目：使用下一代Clos拓扑结构Jupiter。&lt;/p&gt;
@@ -1359,7 +1359,7 @@ table th:nth-of-type(3) { width: 67.5%; }
   &lt;li&gt;我们添加了自动化，用于安装和推送组件更换后的配置。&lt;/li&gt;
   &lt;li&gt;我们启用自动化功能，以便在切回流量之前验证修复是否成功。&lt;/li&gt;
   &lt;li&gt;除非绝对必要，否则我们更关注的是如何恢复流量而不用人为介入。
-&lt;img src=&quot;/something/images/SRE/6-5.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;img src=&quot;/blog/somthing/images/SRE/6-5.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图6-5.左图为Saturn线卡宕机自动化流程，右图为Jupiter线卡宕机自动化流程&lt;/center&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1386,11 +1386,11 @@ table th:nth-of-type(3) { width: 67.5%; }
 
 &lt;p&gt;下一步要提升的是自动缓解并修复Jupiter交换机线卡的内存错误。如图6-6所示，在开始自动化修复之前，此工作流程在很大程度上取决于工程师来判定故障是硬件导致还是软件导致，然后再停止使用，重启交换机等工作，并适时地安排修复。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/6-6.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/6-6.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图6-6. 自动化之前的Jupiter内存错误修复工作流程 &lt;/center&gt;
 我们的自动化过程不再尝试对内存错误进行故障排除从而达到简化修复工作流程的目的（请参阅第119页的“有时不完美的自动化就足够了”，了解为什么这样做是有意义的）。相反，我们处理内存错误的方式与处理线卡故障的方式相同。为了将自动化覆盖到内存错误引起的故障，我们只需在配置文件中添加一个特征，使其对新的故障类型起作用。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/6-7.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/6-7.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图6-7描述了内存错误的自动化工作流程。&lt;/center&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;经验教训&quot;&gt;经验教训&lt;/h3&gt;
@@ -1532,7 +1532,7 @@ table th:nth-of-type(3) { width: 67.5%; }
   &lt;p&gt;下线home目录/共享基础架构和相关硬件&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/6-8.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/6-8.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图6-8。Moira项目的四个阶段 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;本案例研究重点关注第一个项目Moira。后续项目的开展是在Moira的学习和开展的基础上开始的。如图6-8所示，Moira由四个阶段组成。&lt;/p&gt;
@@ -1555,7 +1555,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 &lt;/ul&gt;
 
 &lt;p&gt;至此，我们的业务逻辑变得相当复杂——因为我们必须考虑许多用户场景。例如，用户可能会从Google离职，短暂离职，或者在诉讼状态（需要保留其拥有的数据）。图6-9提供了一个示例图，说明了其复杂性。
-&lt;img src=&quot;/something/images/SRE/6-9.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;img src=&quot;/blog/somthing/images/SRE/6-9.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图6-9。基于用户场景的业务逻辑 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;为主门户网站提供支持的技术相对简单。基于Flask框架下用Python语言编写，它读取并写入Bigtable，并使用大量后台作业和调度程序来管理其工作。&lt;/p&gt;
@@ -1594,7 +1594,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 &lt;blockquote&gt;
   &lt;p&gt;有趣的事实：在谷歌，通过改变现实去适应代码而不是通过修改代码去适应现实的方式被称为“购买侏儒”。这句话源自一个关于Froogle的故事，Froogle是一个很早就开展的购物搜索引擎服务。
 在Froogle的早期阶段，发生过精确匹配搜索“跑鞋”关键字导致返回了garden gnome(花园侏儒, 穿着跑鞋）的严重错误。在几次尝试修复错误失败之后，有人注意到gnome不是批量生产的商品，而是一个带有“一口价”选项的eBay商品。他们购买了这个“花园侏儒”商品后，解决了这个返回错误搜索结果的问题（译者注：相比起修改代码，以更低的成本解决了问题）。（图6-10）。
-&lt;img src=&quot;/something/images/SRE/6-10.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;img src=&quot;/blog/somthing/images/SRE/6-10.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图6-10. 不会消失的花园侏儒 &lt;/center&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1667,7 +1667,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;           告警窗口/SLO期限
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/5-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/5-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图5-1 设有10分钟报警窗口和99.9％SLO的示例服务的检测时间&lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;图5-1 显示了设有10分钟报警窗口和99.9％SLO示例服务的检测时间和错误率之间的关系。&lt;/p&gt;
@@ -1726,7 +1726,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 
 &lt;p&gt;图5-2显示，虽然在36小时内，错误率已降至可忽略不计的水平，但36小时的平均错误率仍高于阈值。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/5-2.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/5-2.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图5-2  36小时内的错误率 &lt;/center&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;3-增加报警持续时间&quot;&gt;3. 增加报警持续时间&lt;/h3&gt;
@@ -1758,7 +1758,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 
 &lt;p&gt;图5-3显示了在报警触发前持续10分钟的服务窗口内5分钟内的平均错误率。每隔10分钟出现的持续5分钟的错误高峰永远不会触发报警，但是总体上看出错率是35%。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/5-3.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/5-3.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图5-3 每隔10分钟出现100%的错误 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;每个峰值消耗了30天预算的近12％，但报警从未触发。&lt;/p&gt;
@@ -1771,7 +1771,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 
 &lt;p&gt;示例服务使用了100%消耗率，这意味着它正在消耗错误预算，其速率使您在SLO的时间窗口结束时只剩下0的错误预（请参阅第一本书中的第4章）。 在30天的时间窗口内SLO为99.9％，持续的0.1％错误率正好可以在一个月内消耗完所有错误预算：消耗率为100%。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/5-4.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/5-4.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图5-4 相对于消耗率的错误预算 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;表5-4显示了消耗速率，相应的错误率以及耗尽SLO预算所需的时间。&lt;/p&gt;
@@ -1900,7 +1900,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;图5-5显示了根据错误率的检测时间和报警类型。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/5-5.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/5-5.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图5-5 错误率检测时间和报警类型 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;多个消耗速率允许你根据响应速度调整报警以提供适当的优先级。如果问题在几小时或几天内耗尽错误预算，则发送有效通知是合适的。否则，在下一个工作日处理基于工单的报警通知则更合适。表5-7列出了使用多种消耗率的优缺点。&lt;/p&gt;
@@ -1928,7 +1928,7 @@ table th:nth-of-type(3) { width: 67.5%; }
 
 &lt;p&gt;一个好的方案是将短窗口设为长窗口持续时间的1/12，如图5-6所示。 该图显示了报警阈值。 在经历了10分钟的15％错误之后，短窗口平均值立即超过报警阈值，并且在5分钟后长窗口平均值超过阈值，此时报警开始触发。 错误停止后5分钟，短窗口平均值降至阈值以下，此时报警停止触发。 错误停止后60分钟，长窗口平均值降至阈值以下。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/5-6.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/5-6.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图 5-6. 报警用的长短窗口 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;例如，你可以在前一小时和前五分钟超过14.4倍消耗率时发送工单级报警。 只有在消耗了2％的预算后，此报警才会触发，但通过在五分钟后停止发送而不是一小时后显示更好的恢复时间：&lt;/p&gt;
@@ -2384,7 +2384,7 @@ THEN increment the error counter by 1
 
 &lt;p&gt;监控和报警通常是一个多阶段过程，因此需要多个单元测试集。 这个领域仍然有待发展，但如果你想在某个时候实施监控测试，我们建议采用三层方法，如图4-1所示。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/something/images/SRE/4-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/somthing/images/SRE/4-1.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
 图4-1：报警逻辑测试 &lt;/center&gt;&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;二元报告：检查输出的标准的值是否在预期的某些条件下发生变化。&lt;/li&gt;
