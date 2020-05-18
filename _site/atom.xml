@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T14:32:17+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T14:53:55+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
   &lt;p&gt;如何搭建该网站！.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -74,7 +74,7 @@
 &lt;/ul&gt;
 
 &lt;p&gt;CI/CD与发布自动化相结合可以持续改进开发周期，如图16-1所示。当发布自动化时，你可以更频繁地发布。对于变更率很高的软件来说，更频繁地发布意味着在任何给定的发布工件中捆绑更少的更改。而更小的、自包含的发布工件使得在出现bug时回滚任何给定的发布工件变得成本更低、更容易。更快的发布节奏意味着可以更快地修复bug。
-&lt;img src=&quot;/something/images/SRE/16-1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/blog/something/images/SRE/16-1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;平衡发布速度和可靠性&quot;&gt;平衡发布速度和可靠性&lt;/h2&gt;
 
