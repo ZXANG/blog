@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T15:02:08+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-18T15:07:45+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><author><name>ZX</name></author><entry><title type="html">第一篇blog</title><link href="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/" rel="alternate" type="text/html" title="第一篇blog" /><published>2020-03-11T00:00:00+08:00</published><updated>2020-03-11T00:00:00+08:00</updated><id>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87</id><content type="html" xml:base="http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/">&lt;blockquote&gt;
   &lt;p&gt;如何搭建该网站！.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -129,29 +129,26 @@
 
 &lt;p&gt;我们将在发生中断时根据错误预算节省和一般影响，来对没有灰度发布的部署流程和灰度发布流程进行比较。我们的部署过程以开发环境为基础。一旦我们感觉代码在开发环境中正常工作，我们就将该版本部署到生产环境中。&lt;/p&gt;
 
-&lt;p&gt;在部署之后不久，监视开始报高错误率(参见图16-2，在图16-2中，为了模拟示例服务中的缺陷，对示例应用程序进行配置以使20％的请求失败)。对于示例，假设部署流程不支持回滚到以前已知的配置正常的版本时。修复这些错误的最佳选择就只有在生产版本中查找缺陷，对其进行补救，并在停机期间重新部署一个新版本。这种做法肯定会延长错误对用户的影响。
-&lt;img src=&quot;/blog/something/images/SRE/16-2.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;在部署之后不久，监视开始报高错误率(参见图16-2，在图16-2中，为了模拟示例服务中的缺陷，对示例应用程序进行配置以使20％的请求失败)。对于示例，假设部署流程不支持回滚到以前已知的配置正常的版本时。修复这些错误的最佳选择就只有在生产版本中查找缺陷，对其进行补救，并在停机期间重新部署一个新版本。这种做法肯定会延长错误对用户的影响。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                                            图 16-2 部署之后错误率增加
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/something/images/SRE/16-2.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+图 16-2 部署之后错误率增加 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;为了改进这个初始部署过程，我们可以在使用灰度发布来减少推送错误代码所造成的影响。 我们需要一种方法来在小部分生产环境中运行候选版本，而不是一次性部署到生产环境。 然后将一小部分流量发送到该生产环境（the canary金丝雀）并将其与其他部分（the control 主控）进行比较。 使用此方法，我们可以在所有生产受到影响之前发现候选版本中的缺陷。&lt;/p&gt;
 
 &lt;p&gt;我们在示例应用程序中的进行简单灰度发布，在应用程序的特定版本之间分配流量。 您可以使用App Engine或其他任何方法来分割流量（例如负载均衡器上的后端权重，代理配置或循环DNS记录）。&lt;/p&gt;
 
-&lt;p&gt;图16-3显示了当我们使用灰度发布，变更的影响会大大降低;事实上，这些错误几乎不可见!这提出了一个有趣的问题:与总体流量趋势相比，灰度发布的流量趋势很难看到和跟踪。
-&lt;img src=&quot;/blog/something/images/SRE/16-3.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;图16-3显示了当我们使用灰度发布，变更的影响会大大降低;事实上，这些错误几乎不可见!这提出了一个有趣的问题:与总体流量趋势相比，灰度发布的流量趋势很难看到和跟踪。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;图 16-3 部署之后错误率增canary部署错误率； 因为进行canary部署的只是系统的一小部分，因此总体错误率降低
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/something/images/SRE/16-3.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+图 16-3 部署之后错误率增canary部署错误率； 因为进行canary部署的只是系统的一小部分，因此总体错误率降低 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;为了更清楚地了解需要在合理范围内跟踪的错误，我们可以通过App Engine应用程序版本查看关键指标(HTTP响应代码)，如图16-4所示。当我们查看每个版本的分解趋势图时，我们可以清楚地看到新版本引入的错误。我们还可以从图16-4中观察到当前版本提供的错误非常少。&lt;/p&gt;
 
-&lt;p&gt;现在，我们可以根据应用程序版本的HTTP错误率对部署进行调优。如果灰度发布的错误率大于全部系统的错误率，这表明canary部署是&lt;code class=&quot;highlighter-rouge&quot;&gt;糟糕的&lt;/code&gt;。我们应该暂停并回滚部署，或者联系他人来帮助解决问题。如果错误率相似，我们可以正常地进行部署。在图16-4中，我们的canary部署显然很糟糕，我们应该回滚它。
-&lt;img src=&quot;/blog/something/images/SRE/16-4.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;现在，我们可以根据应用程序版本的HTTP错误率对部署进行调优。如果灰度发布的错误率大于全部系统的错误率，这表明canary部署是&lt;code class=&quot;highlighter-rouge&quot;&gt;糟糕的&lt;/code&gt;。我们应该暂停并回滚部署，或者联系他人来帮助解决问题。如果错误率相似，我们可以正常地进行部署。在图16-4中，我们的canary部署显然很糟糕，我们应该回滚它。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;图 16-4 应用程序HTTP响应码； 新版本产生多数错误、当前版本产生小数错误（图中显示10%的log）
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/something/images/SRE/16-4.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+图 16-4 应用程序HTTP响应码； 新版本产生多数错误、当前版本产生小数错误（图中显示10%的log） &lt;/center&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;canary实施&quot;&gt;Canary实施&lt;/h2&gt;
 
@@ -2970,9 +2967,8 @@ table th:nth-of-type(3) { width: 75%;   }
 
 &lt;p&gt;我们的案例是为一个需要人工管理的数据库建立指标为准确率的SLI。所有的数据的输入都是合法的，通过管道系统输出结果， 计算输出的准确率。为了使指标能够很好的反应用户体验，我们需要确保人工输入的数据和用户真实数据是一致的。（运小白说：这段看似简单，却是经验的分享。举一个具体的例子来让大家更深刻的理解，以计算服务为例，将已知的数据作为输入写入系统，你可以每分钟输入一个不变的数，然后让系统去计算一定时间的和值，从而度量计算服务的SLI。进阶的话，就是每分钟输入的是变化的数，从而计算和值，均值，最大值，最小值，那变化的数用什么呢，一般就是当前的分钟数）&lt;/p&gt;
 &lt;h3 id=&quot;sli的计算&quot;&gt;SLI的计算&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                    图2-2展示的是用白盒监控系从示例程序的各个组件中收集指标的过程。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/something/images/SRE/2-2.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
+图2-2展示的是用白盒监控系从示例程序的各个组件中收集指标的过程。 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;给出一个示例来说明我们是如何使用监控系统中的指标来计算启动器的SLO指标的，以便读者可以更好的理解。虽然我们在案例中只使用了可用性和慢查询延迟指标，但是同样的思路也适用于其他潜在的SLO指标的计算。系统使用度量标准的完整列表，请参阅附录a。我们的案例都使用普罗米修斯监控系统进行数据采集（Prometheus notation）。
 ####负载均衡指标&lt;/p&gt;
