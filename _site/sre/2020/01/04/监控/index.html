@@ -1,0 +1,1492 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="《SRE-Google运维实践》," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="监控">
+<meta name="keywords" content="《SRE-Google运维实践》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第四章 监控">
+<meta property="og:url" content="http://localhost:4000/sre/2020/01/04/%E7%9B%91%E6%8E%A7/">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="监控">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/blog/something/images/SRE/4-1.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第四章 监控">
+<meta name="twitter:description" content="监控">
+<meta name="twitter:image" content="/blog/something/images/SRE/4-1.jpg">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>第四章 监控 | Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6d1adeb8cec8ffce64c7106d77e66ce";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-something">
+          <a href="/something/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            奇奇怪怪
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/sre/2020/01/04/%E7%9B%91%E6%8E%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            第四章 监控
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-04T00:00:00+08:00">
+                2020-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/SRE" itemprop="url" rel="index">
+                    <span itemprop="name">SRE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- more -->
+
+<p>监控涉及到多种类型的数据，包括监控指标，纯文本日志，结构化日志，分布式跟踪日志， event introspection。 以上各种数据都有它们各自的用处，但是本章主要讨论监控指标和结构化日志。根据我们的经验，这两种数据最适合SRE的基础监控需求。</p>
+
+<p>从根本上讲，监控系统应当能够透视系统的内部，当需要判断服务的健康状态和诊断服务问题时，这是最关键的需求。在第一版SRE的第6章中给出了一些基本的监控方法，并且提到SRE监控他们系统的主要目的有：</p>
+
+<ul>
+  <li>当达到阈值时触发报警</li>
+  <li>诊断和分析服务问题</li>
+  <li>展示系统的可视化信息</li>
+  <li>获取系统资源使用情况或服务健康状况的变化趋势，以便做长期计划</li>
+  <li>比较变更前后的系统变化或一个实验的两组样本的不同</li>
+</ul>
+
+<p>这些用例的不同重要程度能指导你在选择或构建一个监控系统时做出权衡。</p>
+
+<p>本章讨论Google如何管理监控系统，并提供一些如何选择和运行监控系统的指导意见</p>
+
+<h2 id="监控策略的特征">监控策略的特征</h2>
+
+<p>在选择监控系统时，理解那些你关心的功能并对它们进行一个优先级的排序很重要。如果你正在评估一个监控系统，本节提到的这些特性可以帮助你思考哪种方案最适合你。如果你已经有一个在运行的监控系统了，你可以考虑使用现有解决方案的一些别的特性。根据你的需求，一个监控系统可能就能解决你所有的问题，也可能你需要组合好几个监控系统。</p>
+
+<h3 id="速度">速度</h3>
+
+<p>不同的组织对于数据的时效性和获取数据的速度有不同的要求。</p>
+
+<p>你需要用到数据的时候，数据就应该立马可用。数据的时效性影响的是当系统出错后多长时间监控系统才会通知你。另外，不及时的数据可能会导致因为错误的数据而采取不合适的行动。举个例子，关于事故响应，事故的发生时间和监控系统能够反映出结果的时间间隔如果太长，你可能会认为某一个改动没有产生什么不好的影响，或者你认为这个修改和某一个结果之间没有联系。超过4到5分钟才能获取的数据将会显著地影响你快速响应。</p>
+
+<p>如果你是基于速度在选择监控系统，那你需要首先确定对速度的需求。当你查询大量数据时，数据的获取速度通常都是个问题。如果需要汇总多个监控系统的数据，图形的加载需要费一些时间。监控系统如果从输入数据生成新的时间序列，则可以对一些通用查询进行预先计算，从而加速图形的加载。</p>
+
+<h3 id="计算">计算</h3>
+
+<p>很多应用场景都要求支持各种复杂计算。至少，你会希望能从监控系统获取几个月时间跨度的数据。没有长期数据的视图，你很难判断像系统增长性这样的长期趋势。关于粒度，汇总数据对于制作增长计划很有效。详细地存储每一个指标会有助于回答这样的问题：这样的异常行为以前发生过吗？但是，数据可能会耗费昂贵的存储空间，或者难以检索。</p>
+
+<p>理想的事件或资源消耗的指标是递增的计数器。利用计数器，监控系统可以基于时间做计算——比如，报告每秒的访问量。如果在更长的时间范围做计算，你就可以实现implement the building blocks for SLO burn-based alerting (see Chapter 5).</p>
+
+<p>最后，支持种类更齐全的统计函数很有用，因为细微的操作可能会掩盖不好的行为。当记录访问延迟时，算数平均数只能告诉你访问比较慢，而支持百分比计算的监控系统能让你一眼就看出是50%,5%还是1%的访问太慢。如果你目前的监控系统不支持直接的百分比计算，你可以采取下面的替代方案：</p>
+
+<p>通过把每一个访问的时间相加然后除以访问数量，从而计算出平均访问时间
+每一个请求写入日志，然后对日志记录进行扫描或取样，从而计算出百分比
+你也可以把原始的监控指标写到另一个离线分析系统中，用于生成周报或月报，或者执行一些难以在监控系统中直接进行的复杂的计算。</p>
+
+<h3 id="交互界面">交互界面</h3>
+
+<p>一个健壮的监控系统应该允许你简洁地在图形（graph）中显示时间序列数据，同时也能将数据结构化到表或各种类型的图表（chart）中。Dashborad是显示监控信息的主要的界面，所以选择显示格式很重要，要能最清晰地显示你所关心的数据。可以选择热力图、直方图和对数刻度图。</p>
+
+<p>你可能需要为同一数据提供不同的视图给不同的用户。高级管理人员希望看到的信息跟SRE的大不相同。针对使用者专门创建对他们来说有意义的dashborad。每一组dashborad，对同一类型的数据显示要保持一致，这样方便沟通。</p>
+
+<p>你可能需要实时图形化显示某一指标的不同聚合结果，比如分别根据机器类型、服务器版本或请求类型进行聚合。It’s a good idea for your team to be comfortable with performing ad hoc drill-downs on your data。根据不同的指标对你的数据进行切片，在需要的时候你可以查找数据之间的联系和模式。</p>
+
+<h3 id="报警">报警</h3>
+
+<p>报警分级很有必要，不同的级别采取不同的响应机制。 给报警设置不同的级别很有用，你可能会开一个工单用于跟踪一个低级别故障，调查可能会持续了一个多小时；100%的错误则属于紧急情况，需要立即响应。</p>
+
+<p>报警屏蔽功能能避免不必要的分散值班工程师精力的干扰。比如：</p>
+
+<ul>
+  <li>当所有的服务器都出现同样的高故障率时，可以只针对全局的高故障率报警一次，不需要为每个服务器单独发送报警。</li>
+  <li>当你的服务所依赖的服务报警时，不需要为你的服务发出故障报警。不要忘记，一旦故障事件处理完了，记得恢复被屏蔽的故障报警。
+你还需要确保在事件结束后不再屏蔽警报。</li>
+</ul>
+
+<p>监控系统的可控控制程度决定了你应该使用第三方的监控服务，还是部署和运行自己的监控系统。Google内部开发了自己的监控系统，但是外面有很多开源或商业的监控系统可供选择。</p>
+
+<h2 id="监控数据的来源">监控数据的来源</h2>
+
+<p>选择何种监控系统也受将要使用的监控数据源的影响。这节讨论两种常用的数据源：日志和指标。还有些其它的有用的监控数据源这里没有讨论的，比如分布式跟踪和运行时introspection.</p>
+
+<p>指标是属性和事件的数字度量，通常间隔一段固定的时间产生多个数据点。日志是只能追加的事件记录。本章的讨论主要集中在结构化日志，相比纯文本日志结构化日志更易于复杂查询和聚合工具。</p>
+
+<p>Google基于日志的监控系统处理大量细粒度（highly granular）数据。事件发生到log可见之间不可避免的有些延迟。日志分析并不要求即时性，可以先经过一个批处理系统的处理，然后运行一些特定的查询，并在控制面板展示。比如，可以先使用Cloud Dataflow处理日志，BigQuery做查询，Data Studio做控制面板。</p>
+
+<p>而我们的基于指标的监控系统，从Google的各种服务处收集了大量的指标，能几乎实时地提供粗粒度的信息。基本上其它基于日志或指标的监控系统有着和Google的系统类似的特性，当然也有例外，比如也有实时日志处理系统，或者细粒度的指标等。</p>
+
+<p>我们的报警和控制面板通常使用指标数据。指标监控系统的实时性能让工程师快速地发现问题。我们倾向于使用日志监控系统查找问题发生的根本原因，指标常常无法提供这方面的信息。</p>
+
+<p>报表不要求实时性，我们经常用日志处理系统来生成详细的报表，因为日志几乎总是比指标产生更准确的数据。</p>
+
+<p>如果你的报警是基于指标的，可能会临时增加一些基于日志的报警，比如你需要在某个异常事件发生时收到报警。就算你有这样的需求我们仍然推荐基于指标的报警系统，其实你可以在某个特殊事件发生时将计数器指标加一，然后创建一个基于这个指标的报警。这样做的好处是把所有报警配置都放在一个地方，便于管理（详见“管理你的监控系统”）。</p>
+
+<h3 id="案例">案例</h3>
+
+<p>接下来这些真实的例子解释了如何选择不同的监控系统。</p>
+
+<h4 id="将信息从日志移到指标">将信息从日志移到指标</h4>
+
+<p><strong>问题</strong>。对于App Engine的用户来说，HTTP状态码对于错误诊断来说非常重要，它存在于日志而不是指标中。指标控制面板只能显示一个总的错误率，无法包含错误相关的其它信息，如错误码或者错误发生的原因。因此，诊断一个问题需要这样做：</p>
+
+<ol>
+  <li>检查总体错误率的图表，找到错误发生的时间</li>
+  <li>读取日志文件，查找包含错误信息的日志记录</li>
+  <li>尝试在错误日志和错误图表之间建立联系</li>
+</ol>
+
+<p>日志记录无法体现出“数量”，因此很难从日志判断某一个错误是否频繁发生。日志还包含很多其它不相关的信息，让查找错误的根源变得很难。</p>
+
+<p><strong>建议的解决方案</strong>。 App Engine开发组决定将HTTP状态码输出成一个指标（比如，requests_total{status=404} 或者 requests_total{status=500})。由于不同HTTP状态码的数量是有限的，这样做不会导致指标数据的数据量大小增长到一个不可接受的水平，但是这些数据可以用于图表和报警。</p>
+
+<p><strong>结果</strong>。新的指标允许App Engine的开发组升级监控图表，分别显示不同的错误类型。用户则可以基于错误码快速判断可能发生的问题。同时，我们还能为客户端和服务端错误分别设置不同的报警阈值，让报警更加准确。</p>
+
+<h3 id="优化日志和指标">优化日志和指标</h3>
+
+<p>问题。Ads SRE组维护这近50个服务，由不同的语言和框架开发。SRE组将日志作为检验SLO（SLO compiance）的权威数据源。为了统计错误情况，为每个服务编写了专门的日志处理脚本。这里有一个日志处理脚本的例子：</p>
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11</pre></td><td class="code"><pre class="highlight"><code>If the HTTP status code was in the range (500, 599)
+
+AND the 'SERVER ERROR' field of the log is populated
+
+AND DEBUG cookie was not set as part of the request
+
+AND the url did not contain '/reports'
+
+AND the 'exception' field did not contain 'com.google.ads.PasswordException'
+
+THEN increment the error counter by 1
+</code></pre></td></tr></tbody></table></div></div>
+
+<p><strong>问题</strong>。脚本很难维护，并且用了一些指标监控系统没有的数据。因为报警由指标驱动，有时候报警可能跟用户无关的错误引发的。每一个报警都需要一个显式分类的步骤来判断它是否跟用户相关，这拖慢了响应速度。</p>
+
+<p><strong>建议的解决方案</strong>。 SRE组开发了一个库，植入到业务处理系统中，如果判断出某一个错误会影响用户的请求，将判断的结果写入日志并且导出一个指标数据，提高日志和指标的一致性。如果指标显示某个服务返回了错误，日志包含那个错误以及一些请求相关的数据，帮助重现和诊断错误。日志中任何SLO相关的错误同时也会改变SLI指标，SRE组可以据此创建报警。</p>
+
+<p><strong>结果</strong>。通过创建一个跨服务的统一控制接口，运维组重用了工具和报警逻辑，避免为不同的服务重复开发运维系统。去除了复杂的、服务特定的日志处理逻辑，所有的服务都从中受益，获得了扩展性的提升。一旦报警跟SLO直接绑定就变得清晰可执行了，因此错误报警显著减少</p>
+
+<h3 id="为数据源保留日志">为数据源保留日志</h3>
+
+<p><strong>问题</strong>。 在诊断生产环境中的问题时，运维组经常会查看受影响的实体ID，判断对用户的影响和问题的根源。在App Engine早期的时候，这样的调查工作需要用到只有日志中才有的数据。处理每个事故，运维组不得不执行一些一次性的查询，这就增加了事故恢复的时间——需要几分钟来编写正确的查询，然后花些时间查询日志。</p>
+
+<p><em>建议的解决方案</em>。 起初，运维组讨论了是否应该用指标来代替日志。然而，实体ID可能有几百万种不同的值，要把它们做成指标不太可行。最终，运维组决定编写一个脚本来执行那些一次性的查询，并在报警邮件中说明需要运行哪个脚本。在需要的时候，运维人员可以直接把脚本拷贝到命令行执行。</p>
+
+<p><em>结果</em>。运维组不再需要花太多精力管理一次性查询，获取结果的速度也更快了（尽管还没到指标查询那么快）。他们还有一个备用方案：报警发生时自动运行脚本，用一个小服务器定时查询日志，能获得半实时(semi-fresh)的数据。</p>
+
+<h2 id="管理你的监控系统">管理你的监控系统</h2>
+
+<p>你的监控系统与你运行的任何其他服务一样重要。 因此，应该给予适当的关注。</p>
+
+<h3 id="将配置视为代码">将配置视为代码</h3>
+
+<p>将系统配置作为代码处理并存储在版本控制系统中是常见的做法，好处也很明显：更改历史记录，从特定更改到任务跟踪系统的链接，更简单的回滚和格式检查，以及强制执行的代码审查过程。</p>
+
+<p>我们强烈建议你将监控配置视为代码（有关配置的更多信息，请参阅第14章）。 支持文本缩进配置的监控系统比仅提供Web UI或CRUD样式API的系统更好。对于很多开源程序，这是标准的配置方法，它们只从配置文件读取信息。 一些第三方配置解决方案（如grafanalib）为传统UI配置增加了文本配置的方式。</p>
+
+<h3 id="鼓励一致性">鼓励一致性</h3>
+
+<p>大型公司会有多个工程团队使用监控系统，他们需要寻求一种良好的平衡：集中式的监控系统保证了一致性，但另一方面，各个团队可能希望自己能完全决定配置的设计。</p>
+
+<p>正确的解决方案取决于你的组织。 谷歌的方法随着时间的推移逐渐发展为基于单一框架的集中式监控服务。 说这套解决方案适用于我们有几个原因。 单一的框架使工程师在换团队时能够更容易上手，并使调试过程中的协作变得更加容易。 我们还提供集中式仪表盘服务，每个团队的仪表盘对于其它团队都是可发现和可访问的。 如果你很容易了解其他团队的仪表盘，则可以更快地调试你们的问题。</p>
+
+<p>如果可能，尽量让基本监控覆盖很容易做。 如果你的所有服务都导出一组一致的基本指标，则可以在整个组织中自动收集这些指标，并提供一组一致的仪表盘。 这也意味着任何新组件都自动具有基本监视功能。公司的许多团队 - 甚至是非工程团队 - 都可以使用这些监控数据。</p>
+
+<h3 id="倾向于松耦合">倾向于松耦合</h3>
+
+<p>随着业务需求的变化，一年后您的生产系统看起来会有所不同。 同样，你的监控系统需要随着时间的推移而发展，因为它监控的服务会出现不同的故障模式。</p>
+
+<p>我们建议保持监控系统的组件松耦合。 你应该有稳定的接口来配置每个组件和传递监控数据。 但负责收集、存储、警告和可视化的组件应该相互独立。 稳定的接口使得更换任何给定组件更容易，如果你有更好的替代组件的话。</p>
+
+<p>将功能拆分为单个组件在开源世界中变得越来越流行。 十年前，像Zabbix这样的监控系统将所有功能集中到一个组件中。现在的设计通常将收集和规则评估（使用Prometheus服务器之类的解决方案）、长期时间序列存储（InfluxDB）、警报聚合（Alertmanager）和仪表盘（Grafana）等拆分开来。</p>
+
+<p>在本书撰写时，至少有两种流行用于检测软件和输出指标的开放标准：</p>
+
+<p><strong>statsd</strong></p>
+
+<p>度量聚合守护进程最初由Etsy编写，现在移植到大多数编程语言中。</p>
+
+<p><strong>Prometheus</strong></p>
+
+<p>一种开源监控解决方案，具有灵活的数据模型，支持指标标签和强大的直方图功能。 Prometheus正在被标准化为OpenMetrics，其他系统现在也采用Prometheus格式。</p>
+
+<p>独立的仪表盘系统可以使用多个数据源的数据，对服务状态进行集中的统一的展示。 谷歌最近在实践中看到了这一好处：我们的旧监控系统（Borgmon3）将仪表盘与报警规则放在同一配置中。在迁移到新系统（Monarch）时，我们决定将仪表盘移动到单独的服务（Viceroy）中。 由于Viceroy不是Borgmon或Monarch的组成部分，因此Monarch的功能要求较少。 由于用户可以使用Viceroy显示来自两个监控系统的数据，因此他们可以逐渐从Borgmon迁移到Monarch。</p>
+
+<h2 id="有目的的指标">有目的的指标</h2>
+
+<p>第5章介绍了在系统的错误数阈值快接近时如何使用SLI指标进行监控和报警。 SLI指标是您在基于SLO的警报触发时要检查的第一个指标。 SLI指标应显示在服务仪表盘的显眼位置，最好位于其首页上。</p>
+
+<p>在调查SLO报警触发的原因时，你很可能无法从SLO仪表盘获得足够的信息。 这些仪表盘告诉你SLO被触发了，但不会告诉你为什么。 监控仪表盘还应显示其它哪些数据？</p>
+
+<p>我们发现了一些指定指标的指导意见。 指标应提供合理的监控，便于调查生产环境的问题，同时提供有服务相关的很多信息。</p>
+
+<h3 id="预期的变化">预期的变化</h3>
+
+<p>在诊断SLO报警时，你需要能够从告知你有影响用户的问题发生的报警指标切换到能让你知道问题根源的指标。 最近对服务进行的预期更改可能是错误的。添加一些能监视生产环境中的任何改动的指标。对于监控触发条件，我们有如下的建议：</p>
+
+<ul>
+  <li>监控二进制文件的版本。</li>
+  <li>监控命令行参数，尤其是在使用这些参数开启和禁用某些服务功能时。</li>
+  <li>如果配置数据动态推送到你的服务，请监视此动态配置的版本。
+如果系统中的任何部分未进行版本控制，你可以监控上次编译或打包的时间戳。</li>
+</ul>
+
+<p>当你尝试将服务中断与上线关联起来时，查看与报警链接的图表/仪表盘要比查看CI / CD（持续集成/持续交付）系统日志更容易。</p>
+
+<h3 id="服务依赖">服务依赖</h3>
+
+<p>即使你的服务没有更改，其任何依赖项都可能会更改或出现问题，因此你还应该监视来自直接依赖项的响应。</p>
+
+<p>将每一个服务依赖项返回的字节数、延迟和响应代码都输出。 在选择图标展示指标时，请牢记四个黄金信号。你可以给指标额外定义标签，通过响应代码，RPC（远程过程调用）方法名称和服务依赖项的名称对指标进行进一步细分。</p>
+
+<p>理想情况下，你可以检测较低级别的RPC客户端库以导出这些度量标准，而不是要求每个RPC客户端库导出它们.检测客户端库提供更高的一致性，并允许你免费监控新的依赖关系。</p>
+
+<p>你有时会遇到提供非常狭窄的API的依赖项，其中所有功能都可通过名为Get，Query或同样无用的单个RPC获得，并且实际命令被指定为此RPC的参数。 客户端库中的单个检测点与此类依赖关系不符：你将观察到延迟的高度变化和一些百分比的错误，这些错误可能会或可能不会表明此不透明API的某些部分完全失败。 如果这种依赖关系很重要，那么你有几个选项可以很好地监控它：</p>
+
+<ul>
+  <li>导出单独的度量标准以定制依赖关系，以便度量标准可以解压缩它们收到的请求以获取实际信号。</li>
+  <li>要求依赖项所有者执行重写以导出更广泛的API，该API支持跨单独的RPC服务和方法拆分的单独功能。</li>
+</ul>
+
+<h3 id="资源容量">资源容量</h3>
+
+<p>目的是监视和跟踪服务所依赖的每种资源的使用情况。 某些资源具有你不能超过的硬限制，例如分配给你的应用程序的RAM，磁盘或CPU配额。 其他资源（如打开文件描述符，任何线程池中的活动线程，队列中的等待时间或写入的日志量）可能没有明确的硬限制，但仍需要管理。</p>
+
+<p>根据使用的编程语言不同，你还应该监视些其他资源：</p>
+
+<ul>
+  <li>对于Java：堆和元空间大小，以及根据垃圾收集类型不同而使用一些特殊指标</li>
+  <li>对于Go：协程的数量
+语言本身为跟踪这些资源提供了不同的支持。 除了如第5章所述警告重大事件之外，你可能还需要设置当某些特定资源接近耗尽时触发的报警，例如：</li>
+</ul>
+
+<p>当资源有硬性的上限时</p>
+<ul>
+  <li>当资源使用超过阈值会导致性能下降时</li>
+  <li>你应该对所有的资源都设置监控 - 即使是服务本身能很好地管理的资源。 这些指标对于容量和资源规划至关重要。</li>
+</ul>
+
+<h3 id="服务流量状况">服务流量状况</h3>
+
+<p>最好能增加跟流量相关的指标或指标标签，以便仪表盘按状态代码显示详细的流量情况（除非你的服务用于SLI目的的指标已包含此信息）。以下是一些建议：</p>
+
+<ul>
+  <li>对于HTTP流量，监视所有响应代码，即使它们没有达到报警的级别，因为某些响应代码可能由不正确的客户端行为触发。</li>
+  <li>如果你对用户设定了频率速率限制或流量限制，监控系统应当统计有多少用户的请求因为流量限制被拒绝了。
+流量监控图表可以帮助你确定一个线上的改动在何时导致了显著的错误数量的变化。</li>
+</ul>
+
+<h3 id="指定有目的指标">指定有目的指标</h3>
+
+<p>每个输出的指标都应该有用它的目的性。 不要仅仅因为某些指标很容易产生就轻易地将它们输出。 相反，应该想想输出的这些指标会被如何使用。Metric design, or lack thereof, has implications。</p>
+
+<p>理想情况下，用于报警的指标只在系统出问题时发生显著的变化，而在系统正常运行时不会变化。 但是，调试用的指标没有这些要求 - 它们旨在告诉我们当报警触发时系统内部发生了什么。 好的调试指标能指示系统中可能导致问题的地方。 编写事后调查时，想一下还有其它哪些指标能帮助你更快地诊断问题。</p>
+
+<h3 id="测试报警逻辑">测试报警逻辑</h3>
+
+<p>在理想情况下，监控和报警的代码应遵循与系统开发代码相同的测试标准。虽然Prometheus的开发人员正在讨论开发用于监控的单元测试，但目前广泛采用的监控系统还没有单元测试的支持。</p>
+
+<p>在Google，我们使用领域特定的语言测试我们的监控和警报，该语言允许我们创建合成时间序列（synthetic time series）。 然后，我们根据派生时间序列中的值，或特定报警的触发状态以及标签是否存在来编写测试断言。</p>
+
+<p>监控和报警通常是一个多阶段过程，因此需要多个单元测试集。 这个领域仍然有待发展，但如果你想在某个时候实施监控测试，我们建议采用三层方法，如图4-1所示。</p>
+
+<p><img src="/blog/something/images/SRE/4-1.jpg" alt="" /> <center>
+图4-1：报警逻辑测试 </center></p>
+<ol>
+  <li>二元报告：检查输出的标准的值是否在预期的某些条件下发生变化。</li>
+  <li>监控配置： 确保规则评估产生了预期的结果，并且特定条件会产生预期报警。</li>
+  <li>警报配置： 测试生成的报警是否按照报警的标签值路由到了预定目的地。</li>
+</ol>
+
+<p>如果你无法综合测试监控系统，或者你的监控的某一个阶段无法进行测试，可以考虑创建一个运行系统来输出一些公认的指标，例如请求数和错误数。 你可以据此来验证时间序列和报警。 你的报警规则很可能在设置之后的几个月或几年内都不会触发，你需要确信当指标超过某个阈值时，有意义的报警通知会发给正确的工程师。</p>
+
+<h2 id="结论">结论</h2>
+
+<p>由于SRE角色负责生产系统的可靠性，SRE通常需要非常熟悉服务的监控系统及其功能。如果没有这方面的知识，SRE可能不知道在哪里查看监控，如何识别异常行为，或者如何在紧急情况下找到所需的信息。</p>
+
+<p>我们希望通过指出我们认为有用的监控系统功能及其为什么我们认为它们有用，可以帮助你评估监控策略和需求有多匹配，探索你可能能够利用的一些其他功能，并考虑你可能想要做出的改变。也许你会发现将一些指标和日志监控结合起来的策略很有用;具体如何结合取决于应用场景。注意收集的指标要有其目的性，可能是为了更好地进行容量规划，辅助调试或直接通知你发生了什么问题。</p>
+
+<p>一旦你有了监控系统，需要确保它可见且可用。 为此，我们还建议你测试你的监控设置。良好的监控系统能带来好的回报。好好想想什么样的监控系统最适合你的需求，不断地摸索直到找到最好的那个，这是一笔很值得的投资。</p>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" rel="tag"># 《SRE-Google运维实践》</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sre/2020/01/05/SLO%E6%8A%A5%E8%AD%A6/" rel="next" title="第五章 SLO报警">
+                <i class="fa fa-chevron-left"></i> 第五章 SLO报警
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sre/2020/01/03/SLO%E6%A1%88%E4%BE%8B%E5%AD%A6%E4%B9%A0/" rel="prev" title="第三章 SLO工程案例学习">
+                第三章 SLO工程案例学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="ZX" />
+          <p class="site-author-name" itemprop="name">ZX</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#监控策略的特征"> <span class="nav-number">1</span> <span class="nav-text">监控策略的特征</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#速度"> <span class="nav-number">1.1</span> <span class="nav-text">速度</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#计算"> <span class="nav-number">1.2</span> <span class="nav-text">计算</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#交互界面"> <span class="nav-number">1.3</span> <span class="nav-text">交互界面</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#报警"> <span class="nav-number">1.4</span> <span class="nav-text">报警</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#监控数据的来源"> <span class="nav-number">2</span> <span class="nav-text">监控数据的来源</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#案例"> <span class="nav-number">2.1</span> <span class="nav-text">案例</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#将信息从日志移到指标"> <span class="nav-number">2.1.1</span> <span class="nav-text">将信息从日志移到指标</span> </a> </li> </ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#优化日志和指标"> <span class="nav-number">2.2</span> <span class="nav-text">优化日志和指标</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#为数据源保留日志"> <span class="nav-number">2.3</span> <span class="nav-text">为数据源保留日志</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#管理你的监控系统"> <span class="nav-number">3</span> <span class="nav-text">管理你的监控系统</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#将配置视为代码"> <span class="nav-number">3.1</span> <span class="nav-text">将配置视为代码</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#鼓励一致性"> <span class="nav-number">3.2</span> <span class="nav-text">鼓励一致性</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#倾向于松耦合"> <span class="nav-number">3.3</span> <span class="nav-text">倾向于松耦合</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#有目的的指标"> <span class="nav-number">4</span> <span class="nav-text">有目的的指标</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#预期的变化"> <span class="nav-number">4.1</span> <span class="nav-text">预期的变化</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#服务依赖"> <span class="nav-number">4.2</span> <span class="nav-text">服务依赖</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#资源容量"> <span class="nav-number">4.3</span> <span class="nav-text">资源容量</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#服务流量状况"> <span class="nav-number">4.4</span> <span class="nav-text">服务流量状况</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#指定有目的指标"> <span class="nav-number">4.5</span> <span class="nav-text">指定有目的指标</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#测试报警逻辑"> <span class="nav-number">4.6</span> <span class="nav-text">测试报警逻辑</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#结论"> <span class="nav-number">5</span> <span class="nav-text">结论</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZX</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://jekyllrb.com">Jekyll</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+

@@ -1,0 +1,1382 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="《SRE-Google运维实践》," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SRE与DevOps之间的联系">
+<meta name="keywords" content="《SRE-Google运维实践》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一章 SRE与DevOps之间的联系">
+<meta property="og:url" content="http://localhost:4000/sre/2020/01/01/SRE%E4%B8%8EDevops%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB/">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="SRE与DevOps之间的联系">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第一章 SRE与DevOps之间的联系">
+<meta name="twitter:description" content="SRE与DevOps之间的联系">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>第一章 SRE与DevOps之间的联系 | Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6d1adeb8cec8ffce64c7106d77e66ce";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-something">
+          <a href="/something/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            奇奇怪怪
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/sre/2020/01/01/SRE%E4%B8%8EDevops%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            第一章 SRE与DevOps之间的联系
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">
+                2020-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/SRE" itemprop="url" rel="index">
+                    <span itemprop="name">SRE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <blockquote>
+  <p>《The Site Reliability Workbook — Practical Ways to Implement SRE》 中文版</p>
+</blockquote>
+
+<!-- more -->
+
+<p>运维是一门很难的学科。 不但没有解决如何很好地运行系统，即便那些已经在使用的最佳实践也是高度依赖环境且未被广泛采纳的。 并且最重要的，没有解决如何良好地管理运维团队这一问题。人们普遍认为，对这些问题的详细分析源于二战期间致力于改善盟军军事进程和产出的作战研究，但事实上，长期以来我们一直都在思考如何更好地实践。</p>
+
+<p>尽管有这么多的努力和想法，可靠的生产运维仍然是难以保障的,特别是在信息技术和软件可操作性领域， 例如: 企业通常将运维视为成本中心， 这使得对结果进行有意义的改进变得困难甚至不可能。 这种短视的方法还没有被广泛理解， 但对它的不满却已经引发了IT领域对如何组织工作方面的一场革命。</p>
+
+<p>这场革命源于试图解决一系列普遍问题， 并诞生了两个不同的解决方案: DevOps 和 SRE(Site Reli‐ability Engineering)。 尽管单从描述上看，他们是企业完全不同的两个方面，需要单独讨论，但事实上，它们的相似之处，要远比我们想象的多。</p>
+
+<p>但首先，我们需要来了解一下每种原则的背景。</p>
+
+<h2 id="devops产生的背景">DevOps产生的背景</h2>
+<p>DevOps是一套松散的实践，指南和文化，旨在打破IT开发，运维，网络和安全方面的孤立。 是由John Willis，Damon Edwards和Jez Humble提出，使用CA(L)MS表示：文化（Culture），自动化（Automation），精益（Lean， 如精益管理;也包含持续交付），测量（Measurement,）和分享（Sharing） – 这是一个记住DevOps哲学要点很有用的缩写。 而分享和合作是这一运动的重中之重。 在DevOps方法中，您可以改进某些内容（通常通过自动化实现）、测量结果，并与同事分享这些结果，以便整个组织得到改进。 所有CALMS原则都是由支持文化促进的。</p>
+
+<p>DevOps，Agile以及各种其他业务和软件工程技术，都是关于如何在现代世界中进行最佳实践的示例。DevOps哲学中的任何元素彼此都不能轻易分离，这是由基本设计来决定的。 但是，有一些关键的想法可以相对分开地讨论。</p>
+
+<h3 id="不再孤岛">不再孤岛</h3>
+<p>关键一：不再孤岛 。有以下两种观点：</p>
+<ul>
+  <li>曾经流行将运维和开发团队独立分开，但现在却越来越过时。</li>
+  <li>在许多情况下，极端的知识孤岛化、纯粹的对内部优化的激励以及缺乏协作对商业是十分不利的。</li>
+</ul>
+
+<h3 id="事故是正常的">事故是正常的</h3>
+<p>关键二：事故不仅仅是由个人的孤立行动造成的，更是当问题不可避免地发生时，缺乏防范措施的结果。例如，一个糟糕的接口在不经意间助长了压力下的错误行为；如果出现（未知的）错误，系统缺陷将不可避免地导致失败；监控失效使得人们不可能知道是否出了问题，更不用说出了什么问题。一些传统观念更强的企业，拥有开除犯错者并惩罚他们的文化。但这样做有其自身的恶果： 他会诱使人们混淆问题、掩盖真相和指责他人， 而所有这些最终没有任何价值，专注于恢复服务比阻止事故发生要更有价值。</p>
+
+<h3 id="变更应该是循序渐进的">变更应该是循序渐进的</h3>
+<p>第三个关键点是， 小而频繁的变更是最佳的。 一个比较激进的示例，是变更委员会每月开会讨论彻底修改大型机配置的计划，然而这种做法并不鲜见，所有变更必须由经验丰富的人员进行有效的规划，结果或多或少与最佳实践相悖。变更是有风险的，没错，但是正确的做法是将变更尽可能拆分成更小的组件或单元。然后，根据产品、设计和基础架构的变更，构建稳定的低风险变更管道。（Then you build a steady pipeline of low-risk change out of regular output from product, design, and infrastructure changes）这种策略，增加对小变更的自动化测试和异常变更的可靠回滚，就形成了管理变更的方法：持续集成(CI)和持续交付或部署(CD)。</p>
+
+<h3 id="工具和文化是相互关联的">工具和文化是相互关联的</h3>
+<p>工具是DevOps的一个重要组成部分，特别是强调正确管理变更的今天，变更管理依赖于高度定制化的工具。 但总的来说，DevOps的支持者十分强调组织文化 - 而不是工具 - 这是成功采用新工作方式的关键。 一个好的文化可以解决破碎的工具，但相反的情况很少适用。 俗话说， 文化能把战略当早餐吃(意味着文化的影响力远胜过策略)。 与运维一样，变更本身也很难。</p>
+
+<h3 id="度量是至关重要的">度量是至关重要的</h3>
+<p>最后，度量在整个业务环境中尤为重要，例如，打破孤立和故障处理。 在上述的每种场景中，你可以通过客观的度量来确定正在发生事情的真实性，验证改变是否符合预期，并为不同职能部门达成一致的对话创建客观基础。 （这适用于商业和其他环境，例如On-call。）</p>
+
+<p>##SRE产生的背景
+SRE是由Google的工程副总裁Ben Treynor Sloss提出的术语（和相关的工作角色）。正如我们在上一节中所看到的，DevOps是运维和产品开发之间在整个生命周期互相协作的一系列广泛原则。SRE是一个工作角色，也是我们发现的一组实践（稍后介绍），以及一些激励这些实践的信念。如果您将DevOps看作一种哲学和工作方法，则可以认为SRE实现了DevOps描述的一些哲学，并且比“DevOps工程师”更接近于这个工作或角色的具体定义。因此，在某种程度上，SRE类实现了DevOps接口。</p>
+
+<p>与DevOps运动不同，DevOps运动起源于多家公司的领导者和从业者之间的合作，而SRE在整个行业广泛普及之前，则是由Google的SRE继承周围公司的大部分文化。 考虑到这一轨迹，整个SRE学科目前并没有像DevOps那样在文化上突然增长。 （当然，这并不能说明文化变革对在任意组织中进行SRE是否是必要的）</p>
+
+<p>SRE由以下具体原则定义。</p>
+
+<h3 id="运维是一个软件问题">运维是一个软件问题</h3>
+<p>SRE的基本原则是：做好运维是一个软件问题。 因此，SRE应使用软件工程来解决这一问题。 这涉及广泛的领域，涵盖了从流程和业务变更到同样复杂但更传统的软件问题的所有内容，例如重写堆栈以消除业务逻辑中的单点故障。</p>
+
+<h3 id="通过slos进行管理">通过SLOs进行管理</h3>
+<p>SRE不会尝试提供100％的可用性。 正如我们的第一本书 《Site Reliability Engineering》中所讨论的，这是错误的目标， 原因有很多。 相反，产品团队和SRE团队为服务及其用户群选择适当的可用性目标，并管理服务达到该目标，选定这样的目标需要业务部门的强大协作。 SLOs也具有文化内涵：作为利益相关者之间的协作决策，SLO违规行为将团队无可厚非地带回到原点。</p>
+
+<p>###减少琐事
+对于SRE来说，任何手动的， 重复性的的运维任务都是令人憎恶的。 （这并不意味着我们没有任何此类任务：我们有很多这样的操作。我们只是不喜欢它们。）我们相信，如果机器可以执行所需的操作，那么通常应该让机器来执行。 这是一种区别(也是一种价值)，在其他组织中并不常见。在那里，琐事就是工作，而这就是你付钱让一个人去做的事情。而对于在谷歌环境下的SRE来说，琐事不是工作——它不可能是。任何在操作任务上花费的时间都意味着无法再投入到项目工作上——项目工作才能使我们的服务可靠和可扩展。</p>
+
+<p>然而，通过“the wisdom of production”，执行运维任务确实为决策提供了重要的参考。这项工作通过提供来自给定系统的实时反馈信息来保持稳定。（This work keeps us grounded by providing real-time feedback from a given system.）琐事的来源需要明确，这样可以最小化或消除它们。然而，如果你发现自己处于操作不足的状态，那么你可能需要更频繁地推动新特性和更改，以便工程师依旧熟悉你所支持的服务的工作方式。
+                                         The Wisdom of Production 
+A note on “the wisdom of production”: by this phrase, we mean the wisdom you get from something running in production—the messy details of how it actually behaves, and how software should actually be designed, rather than a whiteboarded view of a service isolated from the facts on the ground. All of the pages you get, the tickets the team gets, and so on, are a direct connection with reality that should inform better system design and behavior.</p>
+
+<h3 id="把今年的工作自动化">把今年的工作自动化</h3>
+<p>在这个领域真正要做是，确定哪些工作基于什么样的条件，以什么样的方式要完成自动化。（The real work in this area is determining what to automate, under what conditions, and how to automate it.）</p>
+
+<p>在Google，经验丰富的SRE严格限制团队成员花费在琐事上的时间，与之相反的是他们会在产生持续价值的工程类工作中花费50%的时间。许多人认为这个限制是一个上限。 事实上，将它视为一种保证更为有用，一种明确的声明和启用机制，采用基于工程的方法来解决问题，而不是一遍又一遍地辛劳的解决问题。</p>
+
+<p>当我们考虑自动化和琐事时，基线和其如何发挥作用并不直观。（There is an unintuitive and interesting interaction between this benchmark and how it plays out when we think about automation and toil.） 随着时间的推移，一个SRE团队最终会将服务的大部分操作自动化，只留下无法自动化的（Murphy-Beyer效应）。 在其他条件相同的情况下，除非采取其他行动，否则SRE团队所做的事情就会受到影响。 在google你更倾向于通过不断新增服务来达到填满50%的工程设计时间的限制，或者你在自动化方向做的非常成功，以至于你可以去做一些完全不同的事情。</p>
+
+<h3 id="通过降低故障成本来快速行动">通过降低故障成本来快速行动</h3>
+<p>日益提高的可靠性只是SRE带来的众多收益中的一种，事实的确如此，它实际上提高了开发的产出。为什么呢？对于常见故障，减少故障平均修复时间（ Mean Time To Repair）会提高产品开发人员的速度，因为工程师不必在这些故障问题之后耗费时间和精力进行处理。这源于一个众所周知的事实，在一个产品的生命周期里，问题发现的越晚，修复它所付出的代价越高。SREs专门负责改善异常问题的过晚发现，为公司整体带来收益。</p>
+
+<h3 id="与开发分享权限">与开发分享权限</h3>
+<p>“应用程序开发”和“生产”（有时被称为Dev和Ops）之间的严格界限会适得其反。 如果项目事务处的职责划分和作为成本中心的分类，导致权力不平衡、尊重或薪酬方面的差异，则尤其如此。</p>
+
+<p>SREs往往倾向于关注生产而不是业务逻辑问题，但随着问题被他们用软件工程工具所解决，他们与产品开发团队分享技术栈。 通常，SREs在他们正在关注的服务的可用性，延迟，性能，效率，变更管理，监控，应急响应和容量规划方面具有特殊的专业知识。 那些特定的（通常定义明确的）能力是SRE对产品和产品的开发团队所做的贡献。理想情况下，产品开发和SRE团队应该对技术栈有一个整体的看法 - 前端，后端，库，存储，内核和物理机器 - 没有团队应该令人嫉妒的拥有着单个组件。事实证明，如果你“模糊线条”并使用SREs共苦JavaScript，或者产品开发人员对内核进行限定，你可以做得更多：知识如何进行更改，权限更加广泛，而激励小心翼翼地保护任何特定的功能这一想法都应摒弃。</p>
+
+<p>在《Site Reliability Engineering》这本书里,，我们没有明确表明Google中的产品开发团队默认拥有自己的服务。 SRE既不可用也不保证大部分服务，尽管如此，SRE原则仍然可以告知整个Google如何管理服务。 SRE团队与产品开发团队合作时的所有权模式最终也是一个共享模型。</p>
+
+<h3 id="使用相同的工具无论功能或职位">使用相同的工具，无论功能或职位</h3>
+<p>工具是一个非常重要的行为决定因素，  在Google的环境中，SRE如果没有统一的代码库、软件和系统的各种工具、高度优化和专有的生产堆栈等是非常天真的。我们与DevOps分享这个绝对的假设：团队服务应该使用相同的工具，无论他们在组织中的角色如何。 没有好的方法来管理一个服务，当该服务具有一个用于SRE的工具，一个用于产品开发人员的工具，在不同情况下表现不同（并且可能具有灾难性）。 当拥有的分歧越多，公司从改进每个工具努力中的获益就越少。</p>
+
+<h2 id="比较和对比">比较和对比</h2>
+<p>从上面聊到的原则中，我们可以立即看到他们之间有很多共性：</p>
+
+<ul>
+  <li>DevOps和SRE都接受一种理念，即为了改进，变更是必要的（都接受对于提高而言，变更是必要的）。否则，就没有多少可操作的空间。</li>
+  <li>协作是DevOps工作的前沿和中心。 有效的分享所有权模式和合作伙伴关系是SRE发挥作用所必需的。 与DevOps一样， SRE也具有跨组织分享的强大价值，这样更容易打破团队之间的孤立。</li>
+  <li>变更的最佳实践是: 持续小而频繁的变更，大多数操作理想情况下应该是：自动化测试和部署。变更和可靠性之间的关键交互使得这对于SRE尤为重要。</li>
+  <li>正确的工具至关重要，工具在一定程度上决定了你的行为范围。然而，我们决不能过于关注是否使用某些特定工具实现某种操作；归根结底，面向系统管理的API是更为重要的哲学，它将比任何特定的实现都持久。</li>
+  <li>度量绝对是DevOps和SRE如何工作的关键。对于SRE, SLOs (服务质量目标) 决定着是否改善和优化服务。当然，如果没有度量( 以及在产品、基础设施/SRE和业务之间的跨团队合作)，就不可能有SLOs。对于DevOps，度量行为通常用于理解流程的输出是什么，反馈周期的持续时间是什么，等等。DevOps和SRE都是面向数据的东西， 无论是从专业角度还是从哲学角度。</li>
+  <li>管理生产服务的残酷现实意味着故障时有发生，您必须说明原因。SRE和DevOps都进行了无可厚非的故障复盘，以抵消争议。</li>
+  <li>最终，实施DevOps或SRE是一种整体行为; 两者都希望通过高度特定的方式共同合作，使整个团队（或单位或组织）更好。 对于DevOps和SRE，更好的速度就是产出。</li>
+</ul>
+
+<p>如你所见，DevOps和SRE之间有许多的共同点。</p>
+
+<p>然而，也存在着显著的差异。DevOps在某种意义上是一个更广泛的哲学和文化。因为它影响的变化范围比SRE更广，所以DevOps对上下文更敏感。 DevOps对于如何在一个具体层面上执行操作没有更详细的说明。例如，它不是关于服务的精确管理的规定。相反，它选择专注于在更广泛的组织中打破壁垒。这就很有价值。</p>
+
+<p>另一方面，SRE的职责定义相对狭窄，其职权范围通常是面向服务（面向最终用户）而非整体业务。 因此，它为如何有效运行系统的问题带来了自以为是的知识框架（包括错误预算等概念）。 虽然作为一个职业，SRE非常清楚激励措施及其影响，但它反过来却对孤立化和信息壁垒等主题保持沉默。 它将支持CI和CD，不一定是因为业务需要，而是因为所涉及的操作实践得到了改进。 或者，换句话说，SRE相信和DevOps一样的东西，但原因略有不同。</p>
+<h3 id="组织环境与成功采纳的培养">组织环境与成功采纳的培养</h3>
+
+<p>DevOps和SRE在其运行方式上存在非常大的概念重叠。 正如您所料，他们也有一组类似的条件必须在组织内成立，以便他们  a)首先可以实现，并且  b)从该实现中获得最大的好处。 正如托尔斯泰几乎从未说过的：有效的操作方法都是相似的，而失败的方法都有各自的失败之处。 激励机制可以部分解释这一点。</p>
+
+<p>如果组织的文化重视DevOps方法的好处并且愿意承担这些成本 - 通常表现为招聘困难，维持团队和责任，流动性所需的能量，以及用于补偿必要技能所增加的财务资源，这更为罕见 。然后该组织还必须确保激励措施是正确的，以实现这种方法的全部好处。</p>
+
+<p>具体而言，以下内容应在DevOps和SRE的环境中都应成立。</p>
+
+<h3 id="教条刚性的激励措施限制了你的成功">教条，刚性的激励措施限制了你的成功</h3>
+
+<p>许多公司无意中定义了破坏集体绩效的激励措施。为了避免这种错误，不要将激励机制局限于与发布相关或可靠性相关的结果。正如任何一位经济学家都能告诉你的那样，如果有一个数字衡量标准，人们总会找到一种方法，让它产生不好的效果，有时甚至是以一种完全出于善意的方式。相反，你应该允许其他人自由地找到正确的选择。正如前面所讨论的，DevOps或SRE通常可以作为产品团队的催化剂，允许其他软件组织以连续可靠的方式向客户提供功能。这种动态机制还解决了传统和分散的系统/软件组方法的一个持久性问题：设计和生产之间缺乏循环反馈。具有早期SRE参与的系统（理想情况下，在设计时）通常在部署后的生产中工作得更好，而不用管是谁负责管理服务。 （没有什么比丢失用户数据更能阻碍功能开发的进展。）</p>
+
+<h3 id="最好自己解决这个问题-不要责怪别人">最好自己解决这个问题; 不要责怪别人</h3>
+
+<p>此外，要避免把生产事故或系统故障的责任推给其他组。在许多方面，推卸责任的动力是传统工程操作模型的核心问题，因为运维和软件团队允许出现单独的激励机制。不管怎样，考虑采用以下做法来反驳组织层面的指责:</p>
+
+<p>不仅仅只是允许，而是积极鼓励工程师在产品需要时改变代码和配置。还应允许这些团队在其任务范围内采取激进行动，从而消除采取缓慢行动的想法。</p>
+
+<p>支持事后总结。这样做排除了淡化或掩盖问题的动机。这一步骤对于充分理解产品并实际优化其性能和功能至关重要，并且依赖于前面提到的生产经验。</p>
+
+<p>允许对“运行困难并且不可挽救的”产品不进行支持。 支持暂停这种产品，直到产品开发在支持准备阶段和产品本身得到支持之后再修复该问题，从而节省每个人的时间。 根据您的背景，“运行困难并且不可挽救的”的含义可能会有所不同 - 这里的动态应该是相互理解的责任之一。 对其他组织的推迟可能会更为温和，“我们认为使用这种技能的人有更多的时间”，或者限制在“这些人员将会因为过多的操作工作而没有机会使用他们的工程技能。“在Google，直接撤销此类产品支持的做法已成为一种制度。</p>
+
+<h3 id="将可靠性工作视为一个专门的角色">将可靠性工作视为一个专门的角色</h3>
+
+<p>在谷歌，SRE和产品开发是独立的组织。每个小组都有自己的重点、优先级和管理，而不需要对另一个小组发号施令。然而，当产品成功时，产品开发团队将有效地资助新员工SRE的提升。这样，产品开发与SRE团队的成功息息相关，就像SREs与产品开发团队的成功息息相关一样。SRE也很幸运地得到了管理层的大力支持，这使得工程师团队认可了“SRE”这一角色。尽管如此，你不需要有一个组织结构图来做不同的事情，但是你需要一个不同的实践社区。</p>
+
+<p>不管你是使用组织结构图还是使用非正式的机制，重要的是要认识到专业化会带来挑战。DevOps和SRE的实践者可以从一个同伴社区中获得支持和职业发展，以及一个用来奖励他们独特的技能和观点的职业阶梯。</p>
+
+<p>值得注意的是，Google采用的组织结构以及上述一些激励措施在某种程度上依赖于规模庞大的组织。 例如，如果您的20人创业公司只有一个（相对较小的）产品，那么允许运维退出支持没有多大意义。 仍然可以采用DevOps风格的方法，但是，如果您能做的仅仅只是帮助它成长，那么改善操作性差的产品的能力就会受到损害。不过，对于如何满足这些增长需求，与技术债务累积的速度相比，人们通常有比想象中更多的选择。</p>
+
+<h3 id="何时可以替代">何时可以替代</h3>
+
+<p>但是，当您的组织或产品增长超过一定规模时，您可以在支持哪些产品或如何确定支持优先级方面行使更大的自由度。 如果很明显，对系统X的支持将比支持系统Y更快地发生，那么隐式条件可以发挥同样的作用,选择不支持服务的行为。</p>
+
+<p>在谷歌，SRE与产品开发的强大合作关系已被证明至关重要：如果您的组织存在这种关系，那么撤回（或提供）支持的决定可以基于有关的客观数据来比较运营特征，从而避免非生产性的交涉。</p>
+
+<p>SRE与产品开发之间的富有成效的关系也有助于避免产品开发团队在产品或功能准备就绪之前必须交付的组织反模式。相反，SRE可以与开发团队合作，在维护负担转移到具有最多专业知识的人员之前改进产品。</p>
+
+<h3 id="争取平等的尊重职业与薪酬">争取平等的尊重：职业与薪酬</h3>
+
+<p>最后，确保正确的职业激励措施到位：我们希望我们的DevOps/SRE组织能够像他们的产品开发伙伴一样受到尊重。因此，每个团队的成员应按大致相同的方法进行评级，并具有相同的薪酬激励。</p>
+
+<h2 id="结论">结论</h2>
+
+<p>在IT运维整体领域的许多方面，DevOps和SRE在实践和理念上都非常接近。</p>
+
+<p>DevOps和SRE都需要讨论、管理支持、并从实际工作人员那里来获得重大进展。 实施其中任何一个都是一段旅程，而不是一个快速解决方案：rename-and-shame（重命名和羞耻的）做法是空洞的，不太可能带来收益。 鉴于它是对如何执行操作的更具见解性的实现，SRE对于如何在此过程中更早地更改您的工作实践有更具体的建议，尽管需要进行特定的调整。DevOps关注的范围更广了，因此很难对其进行推理并将其转化为具体的步骤，但恰恰是因为更广泛的关注，可能会遇到较弱的初始阻力。</p>
+
+<p>但是，每种方法的实践者都使用许多相同的工具、相同的方法来改变管理，以及相同的基于数据的决策思维方式。最终，我们都面临着同样的问题:生产，让它变得更好——不管我们被称为什么。</p>
+
+<p>对于那些有兴趣进一步阅读的人，以下建议可以帮助您更广泛地了解目前正在进行的运维革命的文化，业务和技术基础：</p>
+
+<ul>
+  <li>Site Reliability Engineering</li>
+  <li>Effective DevOps</li>
+  <li>The Phoenix Project</li>
+  <li>The Practice of Cloud System Administration: DevOps and SRE Practices for Web Services, Volume 2</li>
+  <li>Accelerate: The Science of Lean Software and DevOps</li>
+</ul>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" rel="tag"># 《SRE-Google运维实践》</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sre/2020/01/02/%E5%AE%9E%E6%96%BDSLO/" rel="next" title="第二章 实施SLO">
+                <i class="fa fa-chevron-left"></i> 第二章 实施SLO
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sre/2020/01/01/SRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5/" rel="prev" title="《SRE Google运维实践》介绍">
+                《SRE Google运维实践》介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="ZX" />
+          <p class="site-author-name" itemprop="name">ZX</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#devops产生的背景"> <span class="nav-number">1</span> <span class="nav-text">DevOps产生的背景</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#不再孤岛"> <span class="nav-number">1.1</span> <span class="nav-text">不再孤岛</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#事故是正常的"> <span class="nav-number">1.2</span> <span class="nav-text">事故是正常的</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#变更应该是循序渐进的"> <span class="nav-number">1.3</span> <span class="nav-text">变更应该是循序渐进的</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#工具和文化是相互关联的"> <span class="nav-number">1.4</span> <span class="nav-text">工具和文化是相互关联的</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#度量是至关重要的"> <span class="nav-number">1.5</span> <span class="nav-text">度量是至关重要的</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#运维是一个软件问题"> <span class="nav-number">1.6</span> <span class="nav-text">运维是一个软件问题</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#通过slos进行管理"> <span class="nav-number">1.7</span> <span class="nav-text">通过SLOs进行管理</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#把今年的工作自动化"> <span class="nav-number">1.8</span> <span class="nav-text">把今年的工作自动化</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#通过降低故障成本来快速行动"> <span class="nav-number">1.9</span> <span class="nav-text">通过降低故障成本来快速行动</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#与开发分享权限"> <span class="nav-number">1.10</span> <span class="nav-text">与开发分享权限</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#使用相同的工具无论功能或职位"> <span class="nav-number">1.11</span> <span class="nav-text">使用相同的工具，无论功能或职位</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#比较和对比"> <span class="nav-number">2</span> <span class="nav-text">比较和对比</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#组织环境与成功采纳的培养"> <span class="nav-number">2.1</span> <span class="nav-text">组织环境与成功采纳的培养</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#教条刚性的激励措施限制了你的成功"> <span class="nav-number">2.2</span> <span class="nav-text">教条，刚性的激励措施限制了你的成功</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#最好自己解决这个问题-不要责怪别人"> <span class="nav-number">2.3</span> <span class="nav-text">最好自己解决这个问题; 不要责怪别人</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#将可靠性工作视为一个专门的角色"> <span class="nav-number">2.4</span> <span class="nav-text">将可靠性工作视为一个专门的角色</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#何时可以替代"> <span class="nav-number">2.5</span> <span class="nav-text">何时可以替代</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#争取平等的尊重职业与薪酬"> <span class="nav-number">2.6</span> <span class="nav-text">争取平等的尊重：职业与薪酬</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#结论"> <span class="nav-number">3</span> <span class="nav-text">结论</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZX</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://jekyllrb.com">Jekyll</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+

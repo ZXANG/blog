@@ -1,0 +1,1806 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="《SRE-Google运维实践》," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="On-Call">
+<meta name="keywords" content="《SRE-Google运维实践》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第八章 On-Call">
+<meta property="og:url" content="http://localhost:4000/sre/2020/01/08/On-Call/">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="On-Call">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第八章 On-Call">
+<meta name="twitter:description" content="On-Call">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>第八章 On-Call | Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6d1adeb8cec8ffce64c7106d77e66ce";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-something">
+          <a href="/something/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            奇奇怪怪
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/sre/2020/01/08/On-Call/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            第八章 On-Call
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-08T00:00:00+08:00">
+                2020-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/SRE" itemprop="url" rel="index">
+                    <span itemprop="name">SRE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- more -->
+<p>On-call轮值意味着在某段时间内随叫随到，随时响应紧急问题。站点可靠性工程师（SRE）通常需要参与on-call轮值工作。在on-call轮值期间，SRE需根据需要判断、缓解、修复或升级事件。此外，SRE还需定期响应非紧急生产事件。</p>
+
+<p>在Google，on-call轮值是SRE的职责之一。SRE团队可以缓解故障，修复生产环境问题且自动执行运维任务。由于大多数SRE团队的运维任务还未完全实现自动化，升级需要人为联系on-call工程师。SRE团队的on-call工作是根据所支持系统的重要程度或系统所处的开发状态而定的。根据我们的经验，大多数SRE团队都需要参与on-call轮值工作。</p>
+
+<p>On-call是一个庞大而复杂的话题，限制因素很多，但是试错率却很少。我们的第一本书《Site Reliability Engineering》第11章“on-call轮值”已经探讨过这一主题。本章介绍一些我们收到的有关该章的反馈和问题。其中包括：</p>
+
+<ul>
+  <li>“我们不是Google，我们的规模要小得多。我们没有那么多人参与轮值，并且没有位于不同时区的站点。你在第一本书中描述的内容与我无关。”</li>
+  <li>“我们的开发人员和DevOps是混合在一起参与on-call轮值的。如何组织是最佳方案？如何分担责任？”</li>
+  <li>“我们的on-call工程师在24小时轮值中约要处理100个问题。很多问题都被忽略了，而真正重要的问题也淹没其中。我们应该从哪开始处理？”</li>
+  <li>“我们的on-call轮值周转率很高，如何解决团队内部的认知差距？”</li>
+  <li>“我们打算将我们的DevOps团队重组为SRE(注1)。”</li>
+  <li>SRE on-call、DevOps on-call和开发人员on-call的区别是什么？因为DevOps团队非常关注这点，所以请具体说明。</li>
+</ul>
+
+<p>我们将为这些问题提供实用的建议。Google是一家拥有成熟SRE组织的大型公司，多年来我们学到的很多东西都可以应用于任何规模和成熟度的公司或者组织中。Google在各种规模的服务上都有数百个on-call轮值人员，从简单到复杂的服务对应着不同的on-call设定。on-call并不专属于SRE：许多开发团队对于他们所负责的服务也需要on-call。每个on-call设定都应满足对应服务的需要。</p>
+
+<p>本章介绍Google内部以及其他公司的on-call设定。你的设定和情况可能与我们展示的具体示例不同，但我们所涵盖的基本概念是普遍适用的。</p>
+
+<p>在深入研究和分析手机报警负载的原因后，我们提出优化报警信息设置的策略并最大限度的减少负载。</p>
+
+<p>最后，我们分享了Google内部实践的两个例子：on-call的灵活性和on-call团队的动态变化。这些实践证明无论on-call设定的数学方法是什么，都不能完全依赖on-call人员的后续处理。需要适当考虑对on-call人员进行激励和人文关怀。</p>
+
+<h2 id="回顾第一本sre书中on-call轮值">回顾第一本SRE书中“On-Call轮值”</h2>
+
+<p>《站点可靠性工程师》在“On-Call轮值”一章中阐述了Google on-call轮值的基本原则。本节将讨论该章节的重点内容。</p>
+
+<p>在Google，on-call的目标是确保不牺牲on-call工程师的健康为前提下覆盖到重点服务，保障服务的可靠性。因此，SRE团队的工作应该是个健康的平衡的职责搭配：on-call和日常项目工作。我们要求SRE团队至少花50%的时间进行工程项目开发，以便战略性的解决生产环境中发现的各种问题。团队人员必须确保有时间参与项目开发工作。</p>
+
+<p>为确保有足够时间跟进，每个on-call轮值班次内最多跟进两个故障（注2）。如果报警信息负载过多，需要采取纠正措施。（我们将在本章后面探讨报警信息负载。）注2：不管同一个“问题”发出了多少报警，都被定义为一个“故障”。一个轮值班次是12个小时。</p>
+
+<p>安全感（注3）对于on-call的有效轮转至关重要。on-call期间的压力很大，为了减轻on-call人员的压力，调节他们的生活，应该提供一系列清晰的程序和问题升级路线的支持。注3：David Blank-Edelman（O’Reilly）在Seeking SRE一书中有更多关于此主题的内容。</p>
+
+<p>针对工作时间之外的on-call工作应给予合理的补贴。不同的公司可能有不同的方式进行补贴。Google提供年假或者现金补贴，同时按一定程度的工资比例作为上限。补贴措施激励SRE按需参与on-call工作，且避免因经济原因而过多的参与on-call工作。</p>
+
+<h2 id="google内部和其他公司的on-call设定示例">Google内部和其他公司的On-Call设定示例</h2>
+
+<p>本节介绍了Google和Evernote的on-call设置，这是一家致力于帮助个人和团队创建、汇总和共享信息的跨平台应用程序的加利福尼亚公司。我们探讨了每家公司on-call设定、理念以及实践背后的原因。</p>
+
+<h3 id="google组建新团队">Google：组建新团队</h3>
+
+<h4 id="初始场景">初始场景</h4>
+
+<p>几年前，Google Mountain View（地名：山景城）的SER Sara组建了一个新的SRE团队，该团队需要在三个月内胜任on-call工作。Google的大多数SRE团队默认新员工需要三到九个月时间来准备承担on-call工作。新组建的Mountain View SRE团队将支持三个Google Apps服务，这些服务之前是由位于华盛顿州Kirkland（地名：柯克兰）的SRE团队提供支持的（从Mountain View起飞需要两小时才能到达）。Kirkland团队在伦敦有一个姊妹团队，该团队会继续支持这些服务，以及新组建的Mountain View SRE团队和部分产品开发团队（注4）注4：Google的SRE团队通过跨时区协同工作来确保服务的连续性。</p>
+
+<p>新成立的MountainView SRE团队很快聚集了七个人：</p>
+
+<ul>
+  <li>Sara，SRE技术主管</li>
+  <li>Mike，来自另一个SRE团队的具有丰富经验的SRE</li>
+  <li>从新产品开发团队转岗过来的SRE</li>
+  <li>四名Nooglers（Nooglers：新员工，特指近期才为Google工作的人）</li>
+</ul>
+
+<p>面对新服务的on-call工作，即使是个成熟的团队，也是充满挑战的，而新的Mountain View SRE团队是一个相对初级的团队。尽管如此，新团队做到了在不牺牲服务质量或项目速度的前提下提供服务。他们很快着手改进服务，包括将机器成本降低40%，通过灰度发布和其它安全检查完成自动化发布。新团队持续提供可靠性服务，目标为99.98%的可用性，或每季度约26分钟的停机时间。</p>
+
+<p>新的SRE团队是如何通过自我完善来实现该目标的？答案是通过入门项目，指导和培训。</p>
+
+<h4 id="培训方案">培训方案</h4>
+
+<p>虽然新的SRE团队对他们的服务对象知之甚少，但Sara和Mike对Google的生产环境和SRE工作非常熟悉，且四位Nooglers也通过了公司的招聘，Sara和Mike整理了一份包含二十多个重点领域的清单供组员在on-call之前进行练习，例如：</p>
+
+<ul>
+  <li>管理生产作业</li>
+  <li>了解调试信息</li>
+  <li>集群流量切换</li>
+  <li>回滚有问题的版本</li>
+  <li>阻止或限制恶意请求</li>
+  <li>提供额外的服务能力</li>
+  <li>使用监控系统（报警和仪表盘）</li>
+  <li>了解服务的架构，各种组件以及依赖关系</li>
+</ul>
+
+<p>Nooglers(新人)通过研究现有文档和代码（指导，实践编码教程）找到这类信息，并通过研究入门项目来理解相关主题。当团队成员学习到与Nooglers的初学者项目相关的主题时，该成员会召开简短的临时会议，将所学知识分享给其他成员。Sara和Mike会介绍剩余的主题。该团队还进行实践练习，通过执行常见的调试和降损操作帮助成员形成肌肉记忆，增加对自己能力的信心。</p>
+
+<p>除了练习清单外，这个新团队还进行了一系列“深度潜水”来深入了解他们的服务。团队浏览了监控控制台，确定正在运行的作业，并尝试修复最近的报警。Sara和Mike解释道，要想做到对每项服务都十分熟悉，工程师并非需要多年的专业知识。他们指导团队也是从这一原则出发，鼓励Nooglers熟悉这些服务。他们每个人理解的知识都是有限的，这会教导成员在何时向别人寻求帮助。</p>
+
+<p>在整个成长过程，新团队并不孤单。Sara和Mike前往其它SRE团队和产品开发团队，向他们取经。新团队通过视频会议、邮件和IRC与Kirkland和伦敦团队进行沟通。此外，该团队还参加每周的生产会议，查看on-call轮值表和事后报告，并浏览现有的服务文档。Kirkland团队派来一名SRE与新团队交流解答问题，伦敦的SRE整理了一套完整的灾难情景，并在Google灾难恢复培训期间进行了运行展示（请参阅“站点可靠性工程”第33章“灾难预案与演习”部分）。</p>
+
+<p>该小组还通过“幸运之轮”训练演习（见第28章“故障处理分角色演习”一节）如何on-call，扮演各类角色，练习解决生产问题。演习期间，鼓励所有SRE提供解决模拟生产环境故障的建议。在每个人的能力都得到增强之后，团队仍举办这类演习，每个成员轮流担任演习负责人，并且将演习过程记录下来以供未来参考。</p>
+
+<p>在进行on-call工作之前，团队查看了有关on-call工程师职责的指导原则。例如：</p>
+
+<ul>
+  <li>在每次轮岗开始时，要从上一个on-call工程师那获得轮岗转换邮件。</li>
+  <li>on-call工程师需要先止损，然后确保完全解决问题。</li>
+  <li>在轮岗结束时，on-call工程师向待命的on-call发送轮岗转换邮件通知。</li>
+</ul>
+
+<p>操作指南规定了问题何时升级到其他人以及如何为大型事件编写事后总结报告。</p>
+
+<p>最后，该团队阅读并更新了on-call的操作指南。操作指南中有针对报警的详细说明，解释了报警的严重级别和影响，还有针对完全解除报警的操作意见和需要采取的措施。对于SRE，每当产生报警时，都会创建对应的操作指南记录。这些记录可以减小on-call压力，平均恢复时间（MTTR）以及人为犯错误的风险。</p>
+
+<blockquote>
+  <h4 id="-维护操作指南-"><center> 维护操作指南 </center></h4>
+  <p>操作指南中涉及的细节变化与生产环境的变化保持同步。针对日常发布，指南可能需要随着发布时间进行更新。就像任何一种方式的沟通一样，编写一份好的文档是很难的。因此，如何维护好你的操作指南呢？</p>
+
+  <p>Google的一些SRE主张操作指南条目要保持通用性，这样迭代的速度就会缓慢些。例如，所有的“RPC Errors High”报警放在一个条目下，经验丰富的on-call工程师可以结合当前报警服务的架构图进行阅读。为了减少人员变更因素影响以及降低MTTR，另有部分SRE主张逐步开放分享操作指南。如果你的团队对指南中的做法另有异议，那么操作指南可能会衍生出多个分支。</p>
+
+  <p>这个话题颇具争议。不管你想做成什么样的，但至少你和你的团队要明确操作指南的最小粒度和结构化的细节，并时刻关注操作指南的内容是否累计到超出了最初的设定。在这过程中，要学会将实践获取的知识自动化部署到到监控平台。如果你的操作指南是个明确的由命令组成的列表，当对应的报警触发时，on-call工程师会按照列表执行命令的话，我们建议将其转化为自动化执行。</p>
+
+</blockquote>
+
+<p>两个月后，Sara，Mike和他们的SRE承担了即将卸任的Kirkland SRE团队的on-call备岗工作。在第三个月，他们成了on-call主岗，Kirkland SRE作为备岗。通过这样的方式，Sara和他的SRE团队随时可以替代Kirkland SRE团队。接下来，Nooglers作为更有经验的SRE成员的备岗加入了轮值工作。</p>
+
+<p>丰富的文档和前文所述的各种策略方法都有助于团队形成坚实的基础并迅速获得提升。虽然on-call意味着压力，但团队已经具备足够的信心让他们在采取行动之前不会怀疑自己。即使他们升级事件，他们的反应也是基于团队的集体知识以及自身心理素质，仍然是个称职的on-call工程师。</p>
+
+<h4 id="后续">后续</h4>
+
+<p>虽然MountainView SRE仍在成长，但他们了解到他们在伦敦的姊妹团队将转而负责新的项目，并且在苏黎世成立了一个新团队来负责伦敦团队之前的工作。对于第二次工作交接，Mountain View SRE使用了相同的方法，事实证明也是成功的。MountainView SRE之前准备的入职和培训资料帮助新成立的苏黎世SRE团队获得成功。</p>
+
+<p>当一群SRE组成一个新团队时，Mountain View SRE的方法是有效的，但当团队新加入一个成员时，只需要用更轻量级的方法即可。考虑到将来的轮转，SRE绘制了服务架构图，并将基础培训列表正式化为一系列的练习，这些练习无需导师全程参与，可由成员半自主完成。例如描述存储层，执行扩容以及了解HTTP请求过程。</p>
+
+<h3 id="evernote在云中寻找我们的根">Evernote：在云中寻找我们的根</h3>
+
+<h4 id="将我们的本地基础架构迁移到云">将我们的本地基础架构迁移到云</h4>
+
+<p>如生活中的大多数事情一样，需求是发明之母，因此我们并没有着手重新设计我们的on-call流程。在2016年12月之前，Evernote仅运行在本地数据中心，支持我们的单体式应用程序。我们的网络和服务器在设计时考虑了特定的架构和数据流，结合其他一些约束，意味着我们缺乏支持水平架构所需的灵活性。Google Cloud Platform（GCP）为我们提供了具体的解决方案。但是，仍有一个障碍需要克服：将我们的所有产品和基础设施迁移到GCP。历时70天，通过艰苦卓绝的努力和无数壮举（例如，移动数千台服务器和3.5PB的数据），我们住进了新家。至此，我们的工作仍未完成：我们如何监控，报警，最重要的——如何在新环境应对问题？</p>
+
+<h4 id="调整on-call策略和流程">调整on-call策略和流程</h4>
+
+<p>应用迁移到云环境激发了我们基础设施快速增长的潜力，减小了我们的基础设施快速增长的阻力，但我们的on-call策略和流程尚未随着这种增长而调整。迁移完成后，我们着手解决问题。在之前的物理数据中心中，我们几乎在每个组件中都创建了冗余。对我们而言，组件故障很常见，但基本上很少有单个组件对用户体验产生负面影响。要知道任何小的抖动都是源于系统的某处故障，而因为我们可以控制它，所以我们的基础设施非常稳定。我们的报警策略是基于以下思路构建的：一些丢弃的数据包，导致JDBC（Java数据库连接）连接异常，意味着VM（虚拟机）主机即将发生故障，或控制面板某一开关一直处于失常。甚至在我们第一天步入云端之前，我们就意识到这种类型的报警/响应系统在未来是不可行的。在实时迁移和网络延迟的世界中，我们需要采用更全面的监控方法。</p>
+
+<p>根据第一原则重新构建报警事件，并将这些原则写下来作为明确的SLO（服务级别目标），这有助于团队明确重要信息，从监控基础架构中减少冗余。我们专注更高级别的指标，例如API响应而非类似MySQL中的InnDB行锁等低级别的基础结构，这意味着将更多时间集中在用户在服务中断时遇到的痛点上。对团队而言，也意味着可以减少追踪瞬态问题的时间。相对应的，有了更多的睡眠时间，更高效，工作满意度也更高。</p>
+
+<h4 id="重构监控和指标">重构监控和指标</h4>
+
+<p>我们的on-call轮值人员是由一个小而充满斗志的工程师团队组成，他们负责生产基础设施和一些业务系统（例如，升级和构建管道基础设施）。每周进行一次轮岗，且在每日的晨会上对之前一天的事故进行复盘。我们的团队规模小，但责任范围大，因此需要努力减轻流程负担，专注于尽快响应报警/报警分类/处理报警/事后分析复盘。我们实现这一目标的方法之一是通过维护简单但有效的报警SLA（服务级别协议）来保持低信噪比。我们将指标或监控基础架构产生的所有故障分成三类：</p>
+
+<p><strong>P1：立即处理</strong></p>
+<ul>
+  <li>需要立即采取行动</li>
+  <li>呼叫on-call</li>
+  <li>导致事件分类</li>
+  <li>是否影响SLO</li>
+</ul>
+
+<p><strong>P2：下个工作日处理</strong></p>
+<ul>
+  <li>通常不面向客户，或范围有限</li>
+  <li>向团队发送电子邮件并通知事件流向</li>
+</ul>
+
+<p><strong>P3：故障仅需知晓</strong></p>
+<ul>
+  <li>信息收集在仪表盘，自动发送的邮件中等</li>
+  <li>与容量规划相关的信息</li>
+</ul>
+
+<p>所有P1和P2故障都附有故障单，用于描述事件分类，跟踪处理措施，SLO影响，发生的次数和事后报告链接。</p>
+
+<p>当出现P1级别的事件时，on-call人员需要评估该事件对用户的影响。从1到3对事件的严重性做分级。对于严重性等级为1（Sev 1）的事件，我们有一套标准流程以便响应人员尽可能快速的做出升级决策。故障升级后，我们会组建一个故障团队开始故障处理流程。由记录员和通讯负责人负责故障通报，沟通渠道是完全开放的。故障解决后，我们会主动进行复盘并在公司内部分享结果。对于级别为Sev 2或Sev 3的故障，on-call人员负责处理故障以及故障的事后报告。</p>
+
+<p>保持流程的轻量化有助于参与项目工作的同事胜任on-call工作，鼓励on-call在遇到故障时立即采取修复行动，并在完成故障复盘后发现工具或流程中的不足之处。通过这种方式，在每次on-call轮岗期间都有持续的改进和灵活的循环方式，能和环境的变化速度保持一致。我们的目标是每个on-call轮次都比上一次更好。</p>
+
+<h4 id="追踪观察我们的表现">追踪观察我们的表现</h4>
+
+<p>随着SLO的引入，我们希望按照时间维度跟踪性能，并将这些信息分享给公司内部的利益相关者。我们举办了月度级别的服务回顾会议，任何有兴趣的人都可以参加，会议主要回顾和讨论上个月份的服务情况。同时通过该会议判断on-call人员的负担，on-call的负担情况是团队健康的晴雨表，在压力过大时我们需要讨论缓解措施。会议的另一目的是在公司内部宣传SLO的重要性，督促技术团队对我们的服务健康和我们的健康负责。</p>
+
+<h4 id="与cre合作">与CRE合作</h4>
+
+<p>合理表达我们在SLO方面的目标是与Google客户可靠性工程（CRE）团队合作的奠定了基础。在与CRE讨论我们的SLO以明确它们是否真实可衡量后，两个团队决定针对会影响SLO的故障，都参与报警接收。隐藏在云抽象层背后的故障根本原因是很难被找到的，Google员工的参与在黑盒事件分类方面给予了帮助。更重要的是，这项举措进一步减小了用户最关心的MTTR。</p>
+
+<h4 id="保持自我延续的循环">保持自我延续的循环</h4>
+
+<p>我们现在有更多时间从团队角度思考如何推进业务发展，而不是将所有时间投入到分类/根因分析/事后分析的事情上。例如，改进我们的微服务平台，为我们的产品开发团队建立生产环境标准等项目。后者包括了我们重组on-call时遵循的很多原则，对于团队第一次上战场“接收报警”十分有帮助。因此，我们也延长改善了on-call的循环时间。</p>
+
+<h2 id="实际实施细节">实际实施细节</h2>
+
+<p>至此，我们已经讨论了Google和Google以外的on-call设定的细节。但是对于即将参与on-call有哪些具体考虑因素呢？以下部分更深入的讨论了这些实现细节：</p>
+
+<ul>
+  <li>报警负载——它是什么，如何工作，如何管理它</li>
+  <li>如何让on-call时间表更具灵活性，为SRE创造更健康的工作/生活平衡环境</li>
+  <li>对于特定的SRE团队和合作团队要有动态的团队策略</li>
+</ul>
+
+<h3 id="手机报警负载剖析">手机报警负载剖析</h3>
+
+<p>你的手机一直有报警提醒，多到团队都受到了影响。假定你已经阅读了《》Site Reliability Engineering》的第31章，并和你的团队以及所支持的开发团队定期召开生产会议。现在大家都知道你的on-call工程师因为报警负载而不开心。然后呢？</p>
+
+<p>手机报警负载的定义是on-call工程师在轮值期间（每天或每周）收到的报警数量。一个故障可能导致多个报警产生。我们将介绍各种影响手机报警负载的因素并提出最小化报警负载的技术。</p>
+
+<blockquote>
+  <h3 id="-合适的响应时间-"><center> 合适的响应时间 </center></h3>
+
+  <p>除非有充足的理由，否则工程师无需在收到报警的几分钟内上机器处理问题。虽然面向客户的创收服务故障需要立即响应，但一些不太严重的问题（例如，备份失败），你完全可以在几小时内处理。</p>
+
+  <p>我们建议你检查当前的报警设置，判断是否应该为当前触发报警的所有事件提供报警服务。你可能试图采用自动修复来解决问题（相对于人为修复，计算机能更好的解决问题）或者采用工单（如果它不是高优先级）。表8-1显示了一些案例和相对的响应。</p>
+
+</blockquote>
+
+<center>  表8-1. 实际响应时间案例 </center>
+
+<style>
+table th:nth-of-type(1) { width: 20%; }
+table th:nth-of-type(2) { width: 12.5%; }
+table th:nth-of-type(3) { width: 67.5%; }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>故障描述</th>
+      <th>响应时间</th>
+      <th>对SRE的影响</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>影响盈利的网络中断</td>
+      <td>5分钟</td>
+      <td>SRE需要保证手头的电脑有足够的电量且能联网；不能外出；必须始终与备岗协调保持联系。</td>
+    </tr>
+    <tr>
+      <td>客户订单处理系统挂了</td>
+      <td>30分钟</td>
+      <td>SRE可以出门，短期在外；在此期间，备岗无需保持在线。</td>
+    </tr>
+    <tr>
+      <td>用于预发的数据库备份失败</td>
+      <td>提工单（工作时间处理）</td>
+      <td>无。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="场景超负荷的团队">场景：超负荷的团队</h4>
+<p>（假设）负责前端负载均衡和终端用户连接的Connection SRE团队发现自身的报警负载超负荷了。他们已经建立了每次轮值报警事件小于2次的目标，但在过去一年中，他们每次轮值平均接收5次报警事件。分析表明，有三分之一的轮值班次内报警数量超出预设值。团队成员已经及时的响应了报警，但仍然无法解决根因；没有足够的时间找到报警根因并妥善处理解决后续问题。一些工程师离开了团队，加入了运维负担较小的团队。由于on-call工程师的时间只够用来缓解眼前的故障，没法跟踪报警的根本原因。</p>
+
+<p>团队的视野是开阔的：拥有遵循SRE最佳实践的成熟的监控系统，遵循SRE最佳时间。报警阈值设置和SLO保持一致，且报警本质上是基于业务表现特征的，意味着仅在客户受到影响时才会触发。高层管理人员在获知这些信息后，认为该团队已经处于超负荷状态，为了让团队恢复健康状态，他们开始审查项目计划。</p>
+
+<p>不幸的是，随着时间的推移，Connection团队已经从10多个开发团队中获得了软件组件的所有权，并且对Google面向客户的边缘和骨干网络有着强依赖。群际关系很复杂，也慢慢变得难以管理。</p>
+
+<p>尽管团队遵循构建监控的最佳实践方法，但所面临的很多报警都超出了他们的直接控制范围。例如，黑盒探测可能会因网络拥塞而失败，导致数据丢包。团队可以采取的唯一措施就是将事件升级到直接负责该网络的团队。</p>
+
+<p>除了运维负担外，团队还需要为前端系统提供新功能，供所有Google服务使用。更糟糕的是，他们的基础架构正在从一个已有10年历史的遗留框架和集群管理系统中迁移到更高的支持替代品中。该团队的服务受到全所未有的变化速度的影响，这些变化本身也引起了大部分的on-call负担。</p>
+
+<p>该团队需要各种技术来平衡减少过多的报警负载，团队的技术项目经理和人事经理向高级管理层提交了一份项目建议书，高级管理层审核并通过该建议书。团队全力投入减小报警负载中，在此过程中也获得了宝贵的经验教训。</p>
+
+<h4 id="报警负载来源">报警负载来源</h4>
+
+<p>解决报警负载的第一步是明确负载出现的原因。报警负载受到三个主要因素的影响：生产环境中的bug （注5）、报警和人为因素。这些因素都有对应的来源，本节将详细讨论其中一部分来源。</p>
+
+<p>注5：文中的“bug”是由软件或配置错误导致的非预期的系统行为。代码中的逻辑错误，二进制文件的错误配置，错误的容量规划，错误配置的负载平衡或新发现的漏洞都是导致报警负载的“生产 bug”的原因。</p>
+
+<p><strong>对于生产环境：</strong></p>
+<ul>
+  <li>生产环境中存在的bug数量</li>
+  <li>将新bug引入生产环境</li>
+  <li>识别到新引入的bug的速度</li>
+  <li>缓解bug并从生产环境中删除之的速度</li>
+</ul>
+
+<p><strong>对于报警：</strong></p>
+<ul>
+  <li>触发报警的阈值</li>
+  <li>引入新的报警规则</li>
+  <li>将服务的SLO与其所依赖的服务的SLO关联对齐</li>
+</ul>
+
+<p><strong>对于人为因素：</strong></p>
+<ul>
+  <li>严格的修复和追踪bug</li>
+  <li>收集报警的数据质量</li>
+  <li>注意报警负载变化</li>
+  <li>人为驱动的生产环境变化</li>
+</ul>
+
+<p><strong>已经存在的bug</strong>。不存在完美的系统。无论是在你的代码里，还是在你依赖的软件和库中，或者是接口之间，产品总会存在bug。虽然这些bug可能并不会立即触发报警，但它们却是客观存在的。你可以利用一些技术来识别或防止尚未导致报警的bug：</p>
+<ul>
+  <li>确保系统的复杂度和实际相符，并不是越复杂越好。（见第7章）。</li>
+  <li>利用修复bug的机会，定期更新系统所依赖的软件或库（请参阅下一节有关新bug的部分）。</li>
+  <li>定期执行破坏性测试或模糊测试（例如，使用Netflix的Chaos Monkey）。</li>
+  <li>除集成和单元测试外，还执行常规负载测试。</li>
+</ul>
+
+<p><strong>新bug</strong>。理想情况下，SRE团队及其合作的开发团队应该在新bug进入生产环境之前检测到。事实上自动化测试漏测了很多bug，这些bug最终进入了生产环境。</p>
+
+<p>软件测试是个覆盖面很广的主题（例如，Martin Fowler on Testing）。这项技术在减少进入生产环境的bug数量以及减少bug在生产环境停留的时间方面很有帮助：</p>
+
+<ul>
+  <li>随着时间推移不断改进测试（方法、技术）。尤其是你在生产环境中每发现一个bug，都要自问“如何才能在预发环境检测到这个bug？”确保有必要的工程技术跟进解决此问题。（请参阅“严谨跟踪”，第164页）。</li>
+  <li>不要忽略负载测试，虽然负载测试的优先级常被视为低于功能测试的。但许多bug仅在特定的负载条件下或特定的请求组合中才会显露出来。</li>
+  <li>在生产环境中集成（使用类似生产环境但是是合成的流量进行测试）。我们将在本书的第5章简要讨论生成合成流量。</li>
+  <li>在生产环境执行canarying（第16章）。</li>
+  <li>对新bug保持较低的容忍度。遵循“检测，回滚，修复和发布”策略，而不是“检测，虽然找到bug，但继续发布，修复并再次发布”策略。（相关详细信息，请参阅第162页的“减少延迟”。）</li>
+</ul>
+
+<p>这种回滚策略需要可预测且频繁发布，因此回滚任何版本的成本都很小。我们在《Site Reliability Engineering》一书“发布工程”章节中讨论了相关主题。</p>
+
+<p>一些bug可能仅仅是由于改变客户端行为导致的。例如：</p>
+
+<ul>
+  <li>仅在特定负载水平下出现的bug——例如，9月返校流量，黑色星期五，网络星期一，或一年中夏令时即欧洲和北美时差一小时的那一周，意味着更多用户同时保持清醒和在线状态。</li>
+  <li>只有特定混合请求才显示的bug——例如，用于亚洲字符集的语言编码，更接近亚洲的服务器的流量消耗更大。</li>
+  <li>仅在用户以意想不到的方式运行系统时才会显示的bug——例如，（在）航空公司订票系统使用的日期（下运行系统）！因此，为了测试能够覆盖到不常发生的行为（导致的bug），扩展您的测试方案是十分必要的。</li>
+</ul>
+
+<p>当生产系统受到多个并发错误的影响时，判断报警是由于现有bug还是新bug引起的是很困难的。最大限度的减少生产环境中的bug不仅可以减少报警负载，还对新bug的识别和分类很有帮助。因此。尽快从系统中删除生产环境的bug至关重要，修复现有bug的优先级应该在开发新功能之上；如果过程中需要跨团队合作，请参阅第18章。</p>
+
+<p>架构或程序问题，例如自动健康检查，自我修复和减小负载，可能需要大量的工程工作来解决。为简单起见，我们将这些问题视为“bug”，即使它们的规模、复杂度或解决它们需要的工作量很大。</p>
+
+<p>《SiteReliability Engineering》中第3章描述了错误预算如何控制新bug发布到生产环境的方法。例如，当服务的SLO超过其总季度错误预算的某一部分时——事先在开发人员和SRE团队间达成一致意见——可以暂停新功能开发以及和功能相关的部署，以专注于系统稳定，减少报警的频率。</p>
+
+<p>示例中的Connection团队采用严格的策略，要求每次故障都需要追踪bug。该举措能让团队的技术项目经理知道产生新bug的根本原因在哪。数据显示，人为错误是生产环境中新bug产生的第二大常见原因。</p>
+
+<p>由于人类容易出错，如果对生产系统所做的所有变更都是通过（人为开发的）配置自动生成的，那么效果会更好。在对生产环境进行变更之前，自动化手段可以执行人类无法进行的测试。Connection团队是半手工的对生产环境进行复杂的变更的。毫无疑问，团队的手动变更有时会出错；该团队引入了触发报警的新bug。在新bug进入生产系统并触发报警前，将要做出类似变更的自动化系统就会判断出这种变更是不安全。技术项目经理将这些数据提供给团队，说服他们优先考虑进行自动化项目。</p>
+
+<p><strong>识别延迟</strong>。及时识别报警的原因十分重要，这个识别的时间越长，意味着报警再次产生的几率越大。例如，有一个仅在高负载情况下才会产生的报警，如果在下一个峰值之前未识别有问题的代码或配置，那么问题可能会再次发生。你可以用这些技术来减少报警识别时间：</p>
+
+<p><em>使用合理有效的报警和控制台</em></p>
+
+<p>确保报警页面链接到相关的监控控制台，且该控制台突出显示系统运行超出规范的位置。在控制台中，将黑盒和白盒监控报警相关联，并对关联的图表执行相同的操作。确保操作指南是最新的，提供相应每种报警类型的行动建议。on-call工程师应在相应的报警触发时用最新信息更新操作指南。</p>
+
+<p><em>实践应急响应</em></p>
+
+<p>进行“幸运之轮”练习（在《Site Reliability Engineering》中有描述），和同事共享常用的和针对特定服务的调试技术。</p>
+
+<p><em>执行小变更</em></p>
+
+<p>如果您频繁执行局部（部分功能、部分模块）的变更而不是偶尔的整体（所有功能、所有模块）变更，那么能很容易的将bug与引入它们对应的变更相关联。第16章中描述的Canarying版本给出了一个判断，表明新bug是否是由于新版本引起的。</p>
+
+<p><em>日志变更</em></p>
+
+<p>将变更信息聚合到可搜索的时间线中可以更简单（且更快）的将新bug与引入它们的变更相关联。Jenkins的Slack插件可能会有所帮助。</p>
+
+<p><em>寻求帮助</em></p>
+
+<p>在《SiteReliability Engineering》“故障管理”中，我们讨论了共同管理大型故障的问题。on-call工程师从来不会只是一个人；要让你的团队在寻求帮助时有安全感。</p>
+
+<p><strong>减少延误</strong>。一旦找到bug，修复bug所需的时间越长，就越可能再次发生问题并产生报警。可以考虑这些减少延误的技术：</p>
+
+<p><em>回滚变更</em></p>
+
+<ul>
+  <li>如果bug是在一次最近的代码、配置变更中引入的，在安全和恰当的情况下（单独回滚代码、配置可能是必要的，但如果bug是因为数据损坏导致的，那只回滚代码、配置就不能解决问题了）我们可以通过立即回滚生产环境的变更消除bug。谨记，即使是“快速修复”也需要时间进行验证，构建和发布。验证是至关重要的，要确保“快速修复”确实可以修复bug，并且不会引入额外的bug或其他非预期的影响。通常，采取“回滚，修复和发布”要优于“发布，修复和再发布”操作。</li>
+  <li>如果你的目标是99.99%的可用性，那么每季度约有15分钟的错误预算时间。上线发布的构建步骤可能需要15分钟以上，因此回滚对用户的影响更小。（99.999%的可用性对应每季度80秒的错误预算，这样的系统可能需要自我修复的属性，超出了本章的讨论范围。）</li>
+  <li>如果可能，避免接入无法回滚的变更，例如API不兼容的变更和锁步版本。</li>
+</ul>
+
+<p><em>使用功能隔离</em></p>
+
+<ul>
+  <li>设计你的系统，以便在功能X出错时，可以通过一个功能标志禁用它，而不影响功能Y。该策略还能提高发布速率让禁用X功能变得简单——且不需知道产品经理是否习惯于禁用功能。</li>
+</ul>
+
+<p><em>切走请求流量</em></p>
+
+<ul>
+  <li>把请求流量从出现bug的系统组件中切走（即重定向客户请求）。例如，如果bug是代码或配置上线导致的，并且是逐步发布到生产环境中的，那么你还有机会通过把流量从已发生变更的基础架构的元素切走（达到快速止损的目的）。这样你可以在几秒钟内降低对客户的影响，但回滚可能需要几分钟或更长时间。</li>
+</ul>
+
+<p><strong>报警</strong>。Google SRE每次轮值时间即12小时最多发生两次不同的报警事件，因此我们对如何配置报警以及如何引入新的报警是经过深思熟虑的。网站可靠性工程“监控分布式系统”描述了Google定义报警阈值的方法。严格遵守这些准则有助于健康的on-call轮转。</p>
+
+<p>需要强调一下，这章讨论了一些关键元素：</p>
+
+<ul>
+  <li>收到的所有报警都应该立即去操作。我们希望团队在收到系统无法自愈的报警后立刻采取行动。信噪比要高，确保较低的误报率；低信噪比会增加on-call工程师产生“狼来了”的感觉的几率。</li>
+  <li>如果团队的报警规则是基于SLO，或错误上限（请参阅站点可靠性工程中的“黑盒监控与白盒监控”部分），那么所有参与开发和维护站点可靠性的团队都需要认同SLO的重要性并明确他们的工作优先级。</li>
+  <li>如果团队完全基于SLO和现象制订报警策略，那么放宽报警阈值是对报警的合理调整。</li>
+  <li>就像新的代码，新的报警策略也应该经过彻底和周密的审查，每条报警都应该有对应的操作指南条目。</li>
+</ul>
+
+<p>接收报警会对人产生负面的心理影响。为了最大限度的减少这类影响，最好只有在真正需要时才引入新的报警规则。团队中任何人都可以编写新的报警策略，但新的策略需要经过整个团队的审核建议以及提出替代方案。在将新策略发布到线上之前，要彻底测试生产中的新策略来审查是否有误报。例如，可以在报警触发时给作者发送电子邮件，而不是直接呼叫on-call工程师。</p>
+
+<p>新的报警信息会帮你发现之前并不知道的生产环境问题。在解决了这些bug之后，报警将仅被新bug触发，也起到了回归测试的作用。</p>
+
+<p>确保新报警在测试环境下运行的时间足够长，能适应典型的生产环境，例如常规软件部署，云提供商的维护需求，每周负载峰值等。通常一周的测试时间是足够的，但具体时间窗口仍取决于报警和系统。</p>
+
+<p>最后，利用测试期间报警的触发率预测新报警可能会产生的报警负担。对新报警配置的批准或禁止要以团队为单位。如果引入新报警会导致你的服务超出报警阈值，那么需要额外注意系统的稳定性。</p>
+
+<p><strong>事后密切跟进</strong>。目的是确定每个报警的根本原因。查找“根因”的范围要从机器层面延伸到团队流程层面。服务中断是由一个本可以通过单元测试发现的bug导致的吗？根因可能不是代码中的bug，而是代码审查中团队流程的bug。</p>
+
+<p>如果你知道根因，你就可以修复它防止再次困扰你或你的同事。如果你的团队无法确定根本原因，可以添加监控或日志记录，帮助在下次发生这种情况时找到报警的根本原因。如果没有足够的信息来识别bug，你可以做一些事情来帮助进一步调试bug。或者至少可以得出结论，即报警是由“未知原因”触发的。请牢记，身为on-call工程师，你永远不是孤军奋战，所以可以请同事帮忙检查你的发现，看看是否有遗漏的地方。通常，报警触发后有新的证据可用时，很快能找到报警的根本原因。</p>
+
+<p>将一个报警解释为“瞬态的”或由于系统“自行修复”或莫名其妙“消失”而不采取任何行动时，这个报警很可能会再次发生并导致另一个报警，会给下一下on-call工程师带来麻烦。</p>
+
+<p>简单修复眼前的bug（或进行一个“点”修复）错过了一个避免将来出现类似报警的黄金机会。把报警信息看作一个带来工程工作的机会，这种工程工作可以改进系统并且消除可能出现的一类bug。可以在你的团队的生产组件中归档项目bug来做到这一点，我们提倡通过收集这个项目会消除的bug以及报警数量，按轻重缓急进行bug修复。如果你的提案需要3个工作周或120个工作时来实施，并且报警平均需要4个工作时才能正确处理，那么30个报警产生后会有一个明确的盈亏平衡点。</p>
+
+<p>举个例子，假设有这样一种情况，在同一故障域上存在很多服务器，例如这些机器在数据中心中的同一个交换机下，会导致定期同时发生多个机器的故障。</p>
+
+<p><em>点修复</em></p>
+
+<p>在众多故障域中重新平衡当前的覆盖区。</p>
+
+<p><em>系统修复</em></p>
+
+<p>使用自动化手段确保此类服务器和所有其他类似服务器始终分布在足够的故障域中，并在必要时自动重新平衡。</p>
+
+<p><em>监控（或预防）修复</em></p>
+
+<p>当故障域多样性低于预期水平但尚未影响服务时，预先发出警告。理想情况下，警报将是故障工单警报，而不是呼叫报警，因为不需要立即响应。尽管处于较低的冗余水平，该系统仍可以进行服务。</p>
+
+<p>为确保您对寻呼警报的后续工作有所了解，请考虑以下问题：</p>
+
+<ul>
+  <li>如何防止此特定bug再次发生？</li>
+  <li>对于此系统和我负责的其他系统，如何防止此类bug再次发生？</li>
+  <li>哪些测试可以防止此bug被发布到生产环境中？</li>
+  <li>哪些故障工单警报会触发操作以防止bug在被报警前变的严重？</li>
+  <li>在变得严重之前，哪些报警信息会出现在控制台上？</li>
+  <li>我是否最大化了修复bug带来的收益？</li>
+</ul>
+
+<p>当然，对于on-call工程师，仅仅提交值班期间发生的呼叫报警相关的bug是不够的。重要的是，SRE团队会迅速处理他们确定的bug以减少它们再次发生的可能性。要确保SRE和开发人员团队的资源规划考虑了响应bug所需的工作量。</p>
+
+<p>我们建议保留一小部分SRE和开发人员团队的时间来响应出现的生产bug。例如，Google on-call工程师通常不会在轮值期间处理项目工作。相反，他们处理可以改善系统健康状况的bug。确保你的团队常规下处理生产环境bug的优先级高于其他项目工作。SRE经理和技术主管应确保及时处理生产环境bug，必要时要升级到开发人员团队决策者。</p>
+
+<p>当电话报警严重到需要事后调查时，遵循此方法来安排和跟踪后续行动更为重要。（有关详细信息，请参阅第10章。）</p>
+
+<p><strong>数据质量</strong>。一旦识别出系统中导致报警的bug，就会出现一些问题：</p>
+
+<ul>
+  <li>如何明确先修复那个bug？</li>
+  <li>如何得知系统中哪个组件导致大多数报警？</li>
+  <li>如何确定on-call工程师为解决这些报警而采取的重复性手动操作？</li>
+  <li>如何判断有多少报警仍有未识别的根本原因？</li>
+  <li>如何得知哪些bug是真实存在的、最严重的，而不是未确定的？</li>
+</ul>
+
+<p>答案很简单：收集数据！</p>
+
+<p>你可能会通过跟踪和收集on-call负载的方式来收集数据，但这种方法是有局限性的。更加可持续的做法是，为你的bug跟踪系统（例如，Jira，Issue-Tracker）中的每个电话报警提交一个bug，当on-call工程师意识到每个报警都是已存在的bug的表征时，需要在监控系统的相关报警和相关bug间建立链接。你将在一列中找到尚未解决的bug列表，以及每个相关联bug的页面列表。</p>
+
+<p>当你拥有有关报警原因的结构化数据，就可以着手分析数据生成报告，这些报告能够回答以下问题：</p>
+
+<ul>
+  <li>哪些bug导致大多数的报警？理想情况下，我们会立即回滚并修复bug，但有时候，查找根本原因并部署修复程序需要很长时间，有时忽略关键报警并不是一个合理的选择。例如，上述Connection SRE团队可能会遇到持续的网络拥塞，这种拥塞无法立即解决，但仍需要跟踪问题。为团队收集导致了最多的报警和压力的生产环境问题的数据，支持进行数据驱动的有系统的、有优先级的对话。</li>
+  <li>系统的哪个组成部分是大多数报警的原因（支付网关，身份验证微服务等）？</li>
+  <li>与其他监控数据相关联时，特定报警是否与其他信号相对应（请求量高峰，并发客户会话数，注册次数，提款次数等）？</li>
+</ul>
+
+<p>将bug数据和报警根本原因数据结构化还有其他好处：</p>
+
+<ul>
+  <li>你可以自动填充现有bug列表（即已知bug），这对你所支持的团队可能有益处。</li>
+  <li>你可以根据每个bug导致的报警数确定bug的优先级。</li>
+</ul>
+
+<p>你所收集的数据质量将决定人工或机器可以做出的决策质量。为了确保高质量的数据，请考虑以下技术：</p>
+
+<ul>
+  <li>定义并记录你的团队对报警数据收集的策略和预期。</li>
+  <li>设置来自监控系统的非呼叫报警，突出显示未处理报警的位置。经理和技术主管应确保达到预期。</li>
+  <li>当轮岗交接不符合预期时，队友应该相互帮助跟进。积极的评论有“也许跟bug123有关”，“我已经根据你的调查结果提交了bug报告，所以我们可以进一步跟进了”，或“这看起来像我上周三轮岗发生的事情：&lt;报警，bug的链接&gt;”强化预期行为，确保最大化的改进。没人愿意为上一轮岗就已发生的报警再接收一次报警。</li>
+</ul>
+
+<p><strong>警觉</strong>。很多时候，团队会因为多次减员而陷入运维过载中。为了避免温水煮青蛙，要注意on-call工程师的健康状况，确保SRE和开发团队始终优先考虑生产环境健康状况。</p>
+
+<p>以下技术可以帮助团队密切关注报警呼叫负载：</p>
+
+<ul>
+  <li>在生产会议上（参见“站点可靠性工程”中的“沟通：生产会议”一节，第31章），定期根据收集的结构化数据分析报警呼叫负载的趋势。追踪21天的平均值非常有用。</li>
+  <li>当呼叫报警负载超过你的团队事先明确的“告警”阈值时，设置针对技术主管或经理的故障单报警。</li>
+  <li>在SRE团队和开发团队之间定期召开会议，讨论当前的生产状况以及当前SRE为解决的生产环境bug。</li>
+</ul>
+
+<h3 id="on-call灵活性">on-call灵活性</h3>
+
+<blockquote>
+  <h3 id="-值班时长-"><center> 值班时长 </center></h3>
+
+  <p>on-call值班期间每天需要处理一个或几个报警，因此值班安排必须是合理可持续的：我们建议将时长限制为12小时。较短的值班时长对on-call工程师的健康是有利的。当在岗时间太长时，团队成员大概率会觉得疲惫，随之而来的是他们在工作中可能会犯错误。如果一直进行on-call工作，大多数人无法保持高质量的产出。许多国家都有关于最长工作时间，休息时间和工作条件的法律。</p>
+
+  <p>虽然理想情况下是一直在白天值班，但12小时轮岗制也并不需要全球分布的团队。整夜12小时处于on-call中比on-call24小时或更长时间更好。即使工作在一个地方，你也可以进行12小时轮岗值班。例如，在为期一周的班次中，不是让一名工程师每天24小时on-call，而是两名工程师一人在白天on-call，一人在夜间on-call。</p>
+
+  <p>根据我们的经验，如果没有缓解机制，24小时on-call是不可持续的。虽然不理想，但偶尔on-call一整夜至少可以确保你的工程师的休息时间。另一个选择是缩短值班时间——比如3天值班，4天休息。</p>
+
+</blockquote>
+
+<h4 id="情景个人情况的变化">情景：个人情况的变化</h4>
+
+<p>想象一下，你是一个大型服务的on-call团队成员，该服务具有跨越两个站点的24/7跟随太阳模型。为了在提高服务可靠性的同时保持运维负载的可控性，虽然你并不乐意在上午6点可能会接到报警，但你对你和团队正在进行的工作感到满意。</p>
+
+<p>一切都很好…直到某天你才意识到on-call的时间表和你个人生活的需求开始发生冲突。有许多潜在的原因——例如，成为父母，需要短期旅行，休假或生病。</p>
+
+<p>你需要on-call的职责和新的个人日程表能够共存。</p>
+
+<p>许多团队和组织在成熟时都面临这一挑战。随着时间推移，人们的需求发生变化，为了保持多元化团队成员的健康平衡，on-call轮值的需求变的多样化。保持健康，公平以及on-call工作和个人生活健康的平衡的关键在于灵活性。</p>
+
+<p>为满足团队成员的需求，确保覆盖到你的服务或产品，你可以通过多种方式灵活的进行on-call轮转。指定一套全面的，一刀切的指导方针是不可能的。我们鼓励将灵活性作为一项原则，而不是简单的采用此处列举的实例。</p>
+
+<p><strong>自动化on-call时间安排</strong>。随着团队的发展，时间表的安排受到以下约束——休假计划，on-call工作日与周末的分布，个人偏好，宗教要求等，时间表的安排变得越来越困难。你无法手动管理此任务，很难找到任何解决方案，更不用说公平的解决方案了。</p>
+
+<p>“公平”并不意味着跨团队成员的每个变化都是一致的。不同的人有不同的需求和不同的偏好。因此，团队应该分享这些偏好并尝试以智能的方式满足这些偏好。团队组成和首选项决定了你的团队是更喜欢统一分发，还是以自定义的方式来满足日程安排首选项。</p>
+
+<p>使用自动化工具来安排on-call班次会更容易。这个自动化工具应该有这些基本特征：</p>
+
+<ul>
+  <li>它应该重新安排on-call班次以适应团队成员不断变化的需求。</li>
+  <li>它应该自动重新平衡报警负载以响应任何更改。</li>
+  <li>应该尽量通过考虑个人偏好来确保公平，例如“4月份周末不用上学”，以及历史信息，例如最近每位on-call的值班负载。</li>
+  <li>因此，on-call工程师可以依据on-call班次进行计划，但绝不能改变已经生成的时间表。</li>
+</ul>
+
+<p>时间表既可以是完全自动化的，也可以是团队人员安排。同时，一些团队更愿意让成员明确遵守时间表，而其他团队则对完全自动化的流程感到满意。如果你的需求很复杂，可以选择在内部开发自己的工具，此外也有许多商业和开源软件包可以帮助自动化生产on-call时间表。</p>
+
+<p><strong>短期互换的计划</strong>。on-call时间表通常会收到的短期变化请求。没人能在周一就承诺周四肯定不会感冒。或者你可能需要在on-call期间处理无法预料的紧急事务。</p>
+
+<p>你可能还希望因为非常规原因能够在on-call中换岗——例如，允许on-call人员参加运动训练课程。在这种情况下，团队成员可以交换一天的on-call日（例如，周日的一半）。非竞争性的互换通常是更好的选择。</p>
+
+<p>具有严格报警响应SLO的团队需要考虑通勤时间。如果你的报警响应SLO为5分组，而你的通勤时间为30，那么要确保其他人在你上班途中能处理紧急情况。</p>
+
+<p>为了在灵活性方面实现这些目标，我们建议给予团队成员权利更新on-call轮值表。此外，有一个记录下来的策略描述转换如何操作。权利下放的策略包括只有经理可以改变的完全集中的政策，到任何成员都可以改变的完全分散的政策。根据我们的经验，对变更进行同行评审可以在安全性和灵活性之间进行良好的权衡。</p>
+
+<p><strong>长期休息的计划</strong>。由于个人情况或职业倦怠的变化，有时团队成员需要停止on-call工作。团队的结构应该能够允许on-call人员暂时不参与值班。</p>
+
+<p>理想情况下，团队规模应该满足在（临时）员工减少时其他成员能够承受增加的运维负担。根据我们的经验，每个站点至少需要五个人进行多站点全天候的on-call，至少需要8个人进行单站点全天候的on-call。因此，假设每个站点需要一名额外的工程师来防止人员减少，每个站点（多站点）最多需要6名工程师，每个站点（单站点）为9名。</p>
+
+<p><strong>兼职工作的时间表计划</strong>。on-call工作的时间表看起来是不兼容的，但我们发现如果你采取某些预防措施，on-call工作和兼职工作是能够做到兼容的。以下讨论假设你的on-call成员是兼职工作，他们无法在兼职工作周之外完成值班工作。</p>
+
+<p>兼职工作主要有两种模式：</p>
+
+<ul>
+  <li>每周工作减少一天——例如，每周工作4天，而非5天</li>
+  <li>每天减少工作时间——例如，每天工作6小时，而非8小时
+两种模式都可以兼容on-call工作，但需要对on-call时间进行调整。</li>
+</ul>
+
+<p>如果非工作日是一直不变的，那么第一个模式很容易和on-call工作兼容。对应的，你可以采用每周少于7天的on-call时间（例如，周一至周四，或周五至周日），并自动调整时间表以便在兼职工程师非工作时间不会参与on-call工作。</p>
+
+<p>第二种模式可以通过以下几种方式实现：</p>
+
+<ul>
+  <li>与另一名工程师分担on-call时间，这样当兼职工程师不在时，仍然有人值班。例如，如果on-call工程师需要从上午9点工作到下午4点，你可以将值班的前半部分（上午9点到下午3点）分配给他们，后半部分（下午3点到晚上9点）可以以相同的方式分配给其他on-call成员。</li>
+  <li>如果on-call频率不是太高，兼职工程师可以在on-call日工作整整几个小时也是可行的。
+如站点可靠性工程的第11章所述，根据当地劳动法和法规，Google SRE会在正常工作时间之外补偿小时工资或休假时间。在确定on-call补偿时，要考虑兼职工程师的时间表。</li>
+</ul>
+
+<p>为了平衡项目时间和on-call时间，工作时间较少的工程师对应的工作内容应该少点。与小型团队相比，较大的团队更容易吸收额外的on-call负载。</p>
+
+<h3 id="on-call团队动态">on-call团队动态</h3>
+
+<p>我们的第一本书谈到了高报警负载和时间压力等压力因素是如何迫使on-call工程师采用基于直觉的未经详细考虑而非基于理性和数据的决策策略（参加该书第11章“安全感”一节）。基于团队心理学的讨论，你如何建立一个积极的动态团队？考虑一个on-call团队，其中包含以下一组假设问题。</p>
+
+<h4 id="情景一周生存的文化">情景：“一周生存”的文化</h4>
+
+<p>一家公司从几位创始人和少数员工开始，他们都是开发人员，每个人都相互了解，每个人都需要接收报警。</p>
+
+<p>公司规模开始变大。on-call的职责仅限于一小部分更有经验的功能开发人员，因为他们更了解系统。</p>
+
+<p>公司变得更大。他们增加了ops角色来解决可靠性问题。该团队负责生产环境监控，成员主要集中在运维，而非编码。功能开发人员和ops人员轮流进行on-call工作。功能开发人员在维护服务方面有最终决定权，而ops仅限于运维任务。到目前为止，有30名工程师参与on-call工作：25名功能开发人员和5名ops，都位于同一站点。</p>
+
+<p>团队被高报警量所困扰，尽管遵循了本章前面所述的建议，尽量减少报警负载，但团队的士气仍然很低落。由于功能开发人员优先考虑开发新功能，因此on-call的后续工作需要很长时间才能实现。</p>
+
+<p>更糟糕的是，由于功能开发人员关注的是自己子系统的健康状况，尽管团队中其他人提出了投诉，但有位功能开发人员坚持按错误率而非关键模块错误比率来进行报警。这些报警很嘈杂，会有很多误报或者不可执行的报警。</p>
+
+<p>高报警负载对on-call岗的其他成员的影响不会特别大，确实有许多报警，但大多数报警都没有花太多时间来解决。正如一名on-call工程师所说：“我快速浏览一下报警主题，知道它们是重复的。所以我要做的就是忽略它们。”</p>
+
+<p>听起来很熟悉？</p>
+
+<p>Google的一些团队在成熟的早期阶段遇到过类似问题。如果不小心处理，这些问题可能扰乱功能开发团队和运维团队，并阻碍on-call的操作。没有灵丹妙药能解决这些问题，但我们发现了一些特别有用的方法。虽然你的方法可能有所不同，但总体目标应该是相同的：建立积极的团队氛围，避免混乱。</p>
+
+<p><strong>建议一：给你的ops工程师授权</strong>。你可以根据本书和站点可靠性工程中列出的指南对运维组织进行重新构建，甚至可以更改名称（SRE或类似名称）来表示角色的更改。重新命名你的运维组织并非灵丹妙药，但它有助于体现别于旧的以操作为中心的模型的新的责任变化。向团队和整个公司明确说明SRE拥有站点操作权限，包括定义可靠性的共享路线图，推动问题的全面解决，维护监控策略等。功能开发人员是必要的协作者，但没有这些权限。</p>
+
+<p>回到我们之前假设的团队，本公告引入了以下运维变化：</p>
+
+<ul>
+  <li>操作项仅分配给5个DevOps工程师——即SRE。SRE与项目专家合作——大多为开发人员——来完成这些任务。SRE就前面提到的：“错误率与错误比例”的报警策略与功能开发人员进行协商。</li>
+  <li>如果可能，鼓励SRE深入研究代码以自行进行更改。他们将代码审查发送给项目专家。这样有利于在SRE之间建立主人翁意识，并在未来的场合提升他们的技能和权威。
+通过这种安排，功能开发人员是可靠性功能的明确协作者，且SRE有权利拥有站点以及改进站点的责任。</li>
+</ul>
+
+<p><strong>建议二：改善团队关系</strong>。另一种可能的解决方案是建立更强有力的团队关系。Google设置了一个“有趣的预算”，专门用于组织异地活动来加强团队合作。</p>
+
+<p>我们发现，强大的团队关系可以增强团队成员之间的理解和协作精神。因此，工程师修复bug，完成操作项目并且帮助同事的几率更高。例如，假设你关闭了夜间管道工作，但忘记关闭检查管道是否成功运行的监控。结果，同事在凌晨3点收到了报警。如果你和那位同事为处理报警花了点时间，你对这件事感到很抱歉，并在将来对此类操作更加小心。“我要保护我的同事”这一心态会转化成为更富有成效的工作氛围。</p>
+
+<p>我们还发现，无论职称和职能如何，让on-call的所有成员坐在一起，有助于改善团队关系。还可以鼓励团队一起吃午饭，不要低估这些相对简单的变化，它会直接影响团队动力。</p>
+
+<h2 id="结论">结论</h2>
+
+<p>SRE on-call与传统的ops角色不同。SRE不仅专注于日常运维，且拥有生产环境权限，并通过定义适当的可靠性阈值，开发自动化工具以及开展战略工程项目来获得更好的生产环境。on-call的站点操作十分重要，公司必须正确处理。</p>
+
+<p>on-call是个人和集体压力的根源。但如果你盯着怪物的眼睛看久了，就会发现智慧。本章阐述了一些关于on-call的案例；希望我们的经验可以帮助他人避免或解决类似的问题。</p>
+
+<p>如果你的on-call团队淹没在无休止的报警中，我们建议你退一步观察更顶层的情况，和其他SRE和合作伙伴团队对比讨论，一旦收集了必要的信息，就要系统的解决问题。对on-call工程师，on-call团队以及整个公司来说，构建合理的on-call机制是值得投入时间的。</p>
+
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" rel="tag"># 《SRE-Google运维实践》</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sre/2020/01/09/%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94/" rel="next" title="第九章 故障响应">
+                <i class="fa fa-chevron-left"></i> 第九章 故障响应
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sre/2020/01/07/%E7%AE%80%E5%8D%95%E5%8C%96/" rel="prev" title="第七章 简单化">
+                第七章 简单化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="ZX" />
+          <p class="site-author-name" itemprop="name">ZX</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#回顾第一本sre书中on-call轮值"> <span class="nav-number">1</span> <span class="nav-text">回顾第一本SRE书中“On-Call轮值”</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#google内部和其他公司的on-call设定示例"> <span class="nav-number">2</span> <span class="nav-text">Google内部和其他公司的On-Call设定示例</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#google组建新团队"> <span class="nav-number">2.1</span> <span class="nav-text">Google：组建新团队</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#初始场景"> <span class="nav-number">2.1.1</span> <span class="nav-text">初始场景</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#培训方案"> <span class="nav-number">2.1.2</span> <span class="nav-text">培训方案</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#-维护操作指南-"> <span class="nav-number">2.1.3</span> <span class="nav-text"> 维护操作指南 </center</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#后续"> <span class="nav-number">2.1.4</span> <span class="nav-text">后续</span> </a> </li> </ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#evernote在云中寻找我们的根"> <span class="nav-number">2.2</span> <span class="nav-text">Evernote：在云中寻找我们的根</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#将我们的本地基础架构迁移到云"> <span class="nav-number">2.2.1</span> <span class="nav-text">将我们的本地基础架构迁移到云</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#调整on-call策略和流程"> <span class="nav-number">2.2.2</span> <span class="nav-text">调整on-call策略和流程</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#重构监控和指标"> <span class="nav-number">2.2.3</span> <span class="nav-text">重构监控和指标</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#追踪观察我们的表现"> <span class="nav-number">2.2.4</span> <span class="nav-text">追踪观察我们的表现</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#与cre合作"> <span class="nav-number">2.2.5</span> <span class="nav-text">与CRE合作</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#保持自我延续的循环"> <span class="nav-number">2.2.6</span> <span class="nav-text">保持自我延续的循环</span> </a> </li> </ol> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#实际实施细节"> <span class="nav-number">3</span> <span class="nav-text">实际实施细节</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#手机报警负载剖析"> <span class="nav-number">3.1</span> <span class="nav-text">手机报警负载剖析</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#-合适的响应时间-"> <span class="nav-number">3.2</span> <span class="nav-text"> 合适的响应时间 </center</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#场景超负荷的团队"> <span class="nav-number">3.2.1</span> <span class="nav-text">场景：超负荷的团队</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#报警负载来源"> <span class="nav-number">3.2.2</span> <span class="nav-text">报警负载来源</span> </a> </li> </ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#on-call灵活性"> <span class="nav-number">3.3</span> <span class="nav-text">on-call灵活性</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#-值班时长-"> <span class="nav-number">3.4</span> <span class="nav-text"> 值班时长 </center</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#情景个人情况的变化"> <span class="nav-number">3.4.1</span> <span class="nav-text">情景：个人情况的变化</span> </a> </li> </ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#on-call团队动态"> <span class="nav-number">3.5</span> <span class="nav-text">on-call团队动态</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#情景一周生存的文化"> <span class="nav-number">3.5.1</span> <span class="nav-text">情景：“一周生存”的文化</span> </a> </li> </ol> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#结论"> <span class="nav-number">4</span> <span class="nav-text">结论</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZX</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://jekyllrb.com">Jekyll</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+

@@ -1,0 +1,1481 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="《SRE-Google运维实践》," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="说明">
+<meta name="keywords" content="《SRE-Google运维实践》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十一章 应对过载">
+<meta property="og:url" content="http://localhost:4000/sre/2020/01/11/%E5%BA%94%E5%AF%B9%E8%BF%87%E8%BD%BD/">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="说明">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/blog/something/images/SRE/11-1.jpg">
+<meta property="og:image" content="/blog/something/images/SRE/11-2.jpg">
+<meta property="og:image" content="/blog/something/images/SRE/11-3.jpg">
+<meta property="og:image" content="/blog/something/images/SRE/11-4.jpg">
+<meta property="og:image" content="/blog/something/images/SRE/11-5.jpg">
+<meta property="og:image" content="/blog/something/images/SRE/11-6.jpg">
+<meta property="og:image" content="/blog/something/images/SRE/11-7.jpg">
+<meta property="og:image" content="/blog/something/images/SRE/11-8.jpg">
+<meta property="og:image" content="/blog/something/images/SRE/11-9.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第十一章 应对过载">
+<meta name="twitter:description" content="说明">
+<meta name="twitter:image" content="/blog/something/images/SRE/11-1.jpg">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>第十一章 应对过载 | Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6d1adeb8cec8ffce64c7106d77e66ce";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-something">
+          <a href="/something/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            奇奇怪怪
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/sre/2020/01/11/%E5%BA%94%E5%AF%B9%E8%BF%87%E8%BD%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            第十一章 应对过载
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-11T00:00:00+08:00">
+                2020-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/SRE" itemprop="url" rel="index">
+                    <span itemprop="name">SRE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <p>服务永远不会100％可用：比如突发的流量高峰导致系统崩溃；或者船锚意外扯住了跨大西洋的光缆造成网络不可用。作为服务提供者，我们要为客户提供持久稳定的服务。面对这些突发的情况，如何才能使我们的基础设施尽可能具备可靠性？本章介绍了Google应对过载的方法，希望能够使用这些最佳实践来提高服务的可靠性和可用性。多年来，我们发现，没有单一的解决方案来均衡和稳定网络负载。因此，多种工具、技术和策略的组合才是帮助保持我们的服务可靠性的方法。在我们深入讨论本章之前，我们建议阅读《SRE：Google运维解密》第19章《前端服务器的负载均衡》和20《数据中心内部的负载均衡系统》中的内容。</p>
+
+<h2 id="google云服务负载均衡">Google云服务负载均衡</h2>
+<p>目前，大多数公司都没有开发和维护自己的全局负载均衡解决方案，而是选择使用来自更大的公有云供应商提供的负载均衡服务。我们将讨论Google云负载均衡（GCLB）作为大规模负载平衡的具体示例，但我们描述的所有最佳实践的案例几乎也适用于其他云提供商的负载均衡。</p>
+
+<p>过去18年来，谷歌一直致力于基础设施的建设，以提高服务的可靠性。今天，YouTube使用了我们的系统，地图，Gmail，搜索以及许多其他产品和服务也在用我们的系统。GCLB是我们面向用户的全球负载均衡解决方案。</p>
+
+<p>本节介绍GCLB的组件以及面对用户的请求时是如何协同工作的。我们跟踪典型的用户请求的全生命周期。Niantic PokémonGO的案例具体描述了GCLB的具体实施。</p>
+
+<p>我们的第一本SRE书的第19章描述了基于DNS的负载均衡。他是在用户开始连接阶段进行平衡均衡最简单和最有效的方法。我们还讨论了这种方法的一个地域性问题：它依靠客户端来正确地获取DNS记录。而GCLB不使用DNS进行负载均衡。相反，我们使用任播“anycast”，一种将客户端的请求发送到最近的群集，而不依赖DNS地理定位的方法。Google的全局负载均衡知道客户端所在的位置，并将数据包定向到最近的Web服务，从而在使用单个VIP（虚拟IP）时为用户提供低延迟的服务。使用单个VIP意味着我们可以增加DNS记录的生存时间（TTL），从而进一步减少延迟。</p>
+
+<h3 id="任播">任播</h3>
+<p>任播是一种网络寻址和路由方法。它将数据报从发送方路由到一组潜在接收方中拓扑最近的节点。这些接收方都由相同的目标IP地址标识。Google通过我们网络中多个点的边界网关协议（BGP）确定IP的地址。我们依靠BGP路由网格将来自用户的数据包传递到TCP会话最近的前端路由位置。此部署消除了单播IP扩散和为用户找到最接近的目标接口上。但这仍有两个主要问题：</p>
+
+<p>若附近具有太多用户可能会压倒前端的接口。</p>
+
+<ul>
+  <li>BGP路由计算可能会重置连接。</li>
+  <li>考虑这么一个ISP供应商，提供频繁的BGP路由计算以便给用户提供延迟更低的服务。但是每次BGP路由“振荡”时，所有正在进行的TCP流都会被重置，导致得结果就是用户的数据包被重定向到没有TCP会话状态的新的前端。为了解决这些问题，我们利用我们的连接层负载均衡器——Maglev，即使在路由振荡时也能够汇集TCP流。我们将此技术称为“稳定的任播”。</li>
+</ul>
+
+<h4 id="稳定的任播">稳定的任播</h4>
+
+<p>如图11-1所示，Google使用自定义的负载均衡器Maglev实现“稳定的任播”。为了稳定任播，我们为每个Maglev节点提供一种将客户端IP映射到最近的Google前端站点的方法。有时Maglev会为一个靠近另一个前端站点的客户端处理发往任播VIP的数据包。在这种情况下，Maglev会将该数据包转发到最近的前端站点。然后最近的前端站点的Maglev简单地其路由到本地后端。</p>
+
+<p><img src="/blog/something/images/SRE/11-1.jpg" alt="" /> <center>
+图11-1 稳定的任播） </center></p>
+
+<h3 id="maglev">Maglev</h3>
+
+<p>Maglev，如图11-2所示，是Google的定制分布式数据包层负载均衡器。作为云架构不可或缺的部分，Maglev集群管理传入的流量。它们在我们的前端服务器上提供有状态的TCP层负载均衡。Maglev在一些关键方面与其他传统硬件负载均衡器不同点如下：</p>
+
+<ul>
+  <li>所有发往给定IP地址的数据包可以通过等价多路径（ECMP）均匀的转发到maglev集群中。这使我们只需扩容服务器即可提高maglev集群容量。均匀分布数据包使Maglev集群的冗余度建模为N+1，从而提高了传统负载均衡系统（通常依靠主动/被动提供1+1的冗余）的可用性和可靠性。</li>
+  <li>Maglev是Google自定义解决方案。我们可以对系统进行端到端地控制，这使我们能够快速进行实验和迭代。</li>
+  <li>Maglev在我们数据中心的商用硬件上运行，极大地简化了部署。</li>
+</ul>
+
+<p><img src="/blog/something/images/SRE/11-2.jpg" alt="" /> <center>
+图11-2 Maglev </center></p>
+
+<p>maglev数据包传送使用一致型散列和连接跟踪。这些技术在我们的HTTP反向代理（也称为Google前端或GFE）中合并为TCP流，这些代理终止TCP会话。一致型散列和连接跟踪是Maglev按包扩展而不是按连接数扩展的关键。当路由器收到发往Maglev托管的VIP的数据包时，路由器会通过ECMP将数据包转发到集群中的任何的Maglev节点。</p>
+
+<p>当Maglev收到数据包时，它会计算数据包的5元组散列，并在其连接跟踪表中查找散列值，该表包含最近连接的路由结果。如果Maglev找到匹配项且所选后端服务仍然是健康的，则会重新使用该连接。否则，maglev将回归利用哈希来选择后端。这些技术的组合消除了在各个Maglev机器之间共享连接状态的需要。</p>
+
+<h3 id="全球软件负载均衡">全球软件负载均衡</h3>
+
+<p>GSLB是谷歌的全球软件负载均衡器。它允许我们平衡集群之间的实时用户流量，以便我们可以将用户需求与可用服务容量相匹配，因此我们可以对用户透明的方式处理服务故障。如图11-3所示，GSLB控制到GFE的连接分配和后端服务请求的分配。GSLB允许我们为后端运行的用户和在不同集群中运行的GFE提供服务。除了前端和后端之间的负载均衡之外，GSLB还了解后端服务的运行状况，并可以自动从失败的集群中摘除流量。</p>
+
+<p><img src="/blog/something/images/SRE/11-3.jpg" alt="" /> <center>
+图11-3 GSLB </center></p>
+
+<h3 id="谷歌前端">谷歌前端</h3>
+
+<p>如图11-4所示，GFE位于外部和Google服务（网络搜索，图像搜索，Gmail等）之间，并且通常是客户端HTTP(S)请求时遇到的第一个Google服务器。GFE终止客户端的TCP和SSL会话，并检查HTTP标头和URL路径，以确定哪个后端服务应该处理请求。一旦GFE决定将请求发送到某处，它就会重新加密数据并转发请求。有关此加密过程如何工作的详细信息，请参阅白皮书“Google Cloud中的传输加密”。</p>
+
+<p>GFE还负责对其后端进行健康检查。如果后端服务器返回异常(NACKs请求)或运行健康检查超时，GFE将停止向失败的后端发送流量。我们使用此信号更新GFE后端，而不会影响正常的链接时间。通过将GFE后端置于健康检查失败的模式，同时继续响应正在进行的请求，我们可以在不中断任何用户请求的情况下优雅地从服务中剔除GFE后端。我们称之为“跛脚鸭”模式，我们将在第一本SRE书的第20章中对其进行更详细的讨论。</p>
+
+<p><img src="/blog/something/images/SRE/11-4.jpg" alt="" /> <center>
+图11-3 GFE </center></p>
+
+<p>GFE还为所有活跃的后端维护持久的会话，以便在请求到达时就可以立即进行连接。此策略有助于减少用户的延迟，尤其是在我们使用SSL保护GFE和后端之间的连接时。</p>
+
+<h3 id="gclb低延迟">GCLB：低延迟</h3>
+
+<p>网络配置策略旨在减少用户访问的延迟。因为通过“TTPS协商安全连接”需要在客户端和服务器之间进行两次网络往返，所以我们最大限度地减少“请求时间”的延迟尤为重要。为此，我们将网络边缘扩展到主机Maglev和GFE。这些组件尽可能靠近用户的进行SSL连接，然后通过长期加密连接将请求转发到我们网络中更深层次的后端服务。</p>
+
+<p>我们在这个组合的Maglev/GFE增强边缘网络上构建了GCLB。当客户创建负载均衡器时，我们会设置任播VIP并对Maglev进行编程，以便在我们网络边缘的GFE上对其进行全局负载均衡。GFE的作用是终止SSL，接受和缓冲HTTP请求，将这些请求转发给客户的后端服务，然后将代理响应回用户。GSLB提供每层之间的粘合剂：它使Maglev能够找到具有可用容量的最近的GFE位置，并使GFE能够将请求路由到具有可用容量的最近的VM实例组。</p>
+
+<h3 id="gclb-高可用性">GCLB: 高可用性</h3>
+
+<p>为了向我们的客户提供高可用性，GCLB提供99.99％的可用性SLA。此外，GCLB还提供支持工具，使我们的客户能够改进和管理自己的应用程序的可用性。将负载均衡系统视为一种流量管理器是有用的。在正常操作期间，GCLB将流量路由到具有可用容量的最近的后端。当服务的实例失败时，GCLB会检测到故障并将流量路由到健康的实例。金丝雀发布有助于GCLB保持高可用性。金丝雀发布是我们的标准发布程序之一。如第16章所述，这个过程是程序首先发布到极少数的服务器，然后逐渐增加流量并仔细观察系统行为以确认是否需要回滚。这种做法通过在金丝雀发布的早期阶段捕捉异常来减少影响。如果新版本崩溃或无法进行健康检查，负载均衡器则进行重新路由请求。如果检测到非致命的回滚，则可以从负载均衡器中以管理方式删除实例组，而无需触及应用程序的主要版本。</p>
+
+<h3 id="案例研究1gclb上的pokemongo">案例研究1：GCLB上的PokemonGO</h3>
+
+<p>Niantic在2016年夏天推出了PokémonGO。这是第一款神奇宝贝相关的游戏，也是Niantic与一家大型娱乐公司的第一个项目。这个游戏受到了超过预期的欢迎——那个夏天你会经常看到球员们在虚拟世界中带着神奇宝贝进行决斗。PokémonGO的成功大大超过了Niantic的期望。在发布之前，他们对系统的堆栈进行了负载测试，最多可处理最乐观估算5倍的流量。实际每秒启动请求数（RPS）估计接近50倍——足以应对几乎所有的用户的挑战的堆栈容量。</p>
+
+<p>为了使游戏体验更加愉快，PokémonGO支持世界范围内的高度互动，并在用户之间进行全球共享。特定区域内的所有玩家都会看到同样的游戏世界，并在这个世界里互相交流。这要求游戏近乎实时的产生并分发状态给所有参与者。为了达到50倍以上RPS的目标，Niantic研发团队需要应对巨大的挑战。此外，谷歌的许多工程师也给他们提供了帮助——为成功发布扩展服务。在迁移到GCLB两天之内，PokémonGO应用程序成为最大的单一GCLB服务，很轻松与其他十大GCLB服务相提并论。</p>
+
+<p>如图11-5所示，当它推出时，神奇宝贝GO使用了谷歌的区域性网络负载均衡器（NLB），用于对Kubernetes中的入口流量进行负载均衡。每个集群都包含一组Nginx实例，它们用作第7层反向代理，建立SSL，缓冲HTTP请求，执行路由并使用跨应用程序服务器后端的实例进行负载平衡。</p>
+
+<p><img src="/blog/something/images/SRE/11-5.jpg" alt="" /> <center>
+图11-5 神奇宝贝GO （预GCLB） </center></p>
+
+<p>NLB负责IP层的负载均衡，因此使用NLB的服务有效地成为Maglev的后端。 在这种情况下，依赖NLB对Niantic有以下问题：</p>
+
+<ul>
+  <li>Nginx后端负责终止客户端的SSL，这需要从客户端设备到Niantic的前端代理两次往返。</li>
+  <li>缓冲来自客户端的HTTP请求的会导致代理层上的资源耗尽，导致客户端只能缓慢发送字节时。</li>
+  <li>数据包级代理无法有效改善SYN Flood等低级网络攻击。</li>
+</ul>
+
+<p>为了解决这些问题，Niantic需要在大型边缘网络上使用高级别的代理。使用NLB无法实现此解决方案。</p>
+
+<h4 id="迁移到gclb">迁移到GCLB</h4>
+<p>大型SYN泛洪攻击使PokémonGO迁移到GCLB成为优先事项。这个迁移是Niantic CRE团队与Google SRE团队共同开展。最初的迁移发生在用户使用量的低谷时期。当时，并没有发现问题。然而，随着流量的增加达到峰值，对于Niantic和Google来说都出现了无法预料的问题。Google和Niantic发现客户流量的需求高于以往峰值的200％。Niantic前端代理收到了过多的请求以至于他们无法响应所有的以接收的请求。任何连接都以拒绝方式返回给用户。</p>
+
+<p>这种流量激增导致了经典的级联故障情景。众多API-Cloud数据存储区，PokémonGO后端和API服务器以及负载均衡系统——超出了Niantic云的可用容量。过载导致Niantic的后端变得极其缓慢，请求超时波及到了负载平衡层。在这种情况下，负载均衡器重试GET请求。极高的请求量和重试机制的组合使得GFE中的SSL客户端代码处于前所未有的水平，因为它试图重新构建对于无响应的后端。这在GFE中引起严重的性能退化，使得GCLB的全球产能有效减少了50％。</p>
+
+<p>由于后端失败，PokémonGO应用程序试图重试失败的请求用户时，应用程序的重试策略是立即重启，接下来是不断的重启。随着重启的进行，服务有时会返回大量错误报告 - 例如，重新启动共享后端时，这些错误响应有助于有效地同步客户端重试，产生“雷鸣般的”群体问题，其中许多客户请求基本上是相同的时间。如图11-6所示，这些同步请求峰值增加了小到20倍之前的全球RPS峰值。</p>
+
+<p><img src="/blog/something/images/SRE/11-6.jpg" alt="" /> <center>
+图11-6 由同步客户机重试引起的流量峰值 </center></p>
+
+<h4 id="解决问题">解决问题</h4>
+
+<p>这些请求峰值与GFE容量回归相结合，导致所有GCLB服务的排队和高延迟。Google的SRE通过执行以下操作来减少对其他GCLB用户的附带损害：</p>
+
+<ol>
+  <li>隔离可以从主负载平衡器池中提供PokémonGO流量的GFE。</li>
+  <li>扩大Pokémon GO 应用的集群池，直到它能够处理峰值流量，尽管性能下降。此操作将容量瓶颈从GFE转移到Niantic堆栈，其中服务器仍在超时，特别是在客户端重试开始同步和峰值时。</li>
+  <li>在Niantic的协助下，TrafficSRE实施了管理覆盖，以限制负载均衡代表PokémonGO接受的流量。该策略包含客户端需求，足以让Niantic重新建立正常连接并开始垂直扩展。</li>
+</ol>
+
+<p>图11-7显示了最终的网络配置。</p>
+
+<p><img src="/blog/something/images/SRE/11-7.jpg" alt="" /> <center>
+图11-7 Pokémon GO GCLB </center></p>
+
+<h4 id="面向未来">面向未来</h4>
+<p>在此事件发生后，Google和Niantic都对其系统进行了重大调整。Niantic为其客户端引入了抖动和截断指数降级，从而抑制了级联故障期间经历的大规模同步重试峰值。谷歌将GFE后端视为潜在的重要负载来源，并制定了检测GFE和负载测试由后端缓慢或以其他方式引起的性能下降。最后，两家公司都意识到他们应该尽可能地靠近客户来衡量负载。如果Niantic和Google CRE能够准确预测客户的RPS需求，那么我们会先行扩容给Niantic，这比我们在迁移到GCLB之前所做的要及时的多。</p>
+
+<h2 id="自动弹性伸缩">自动弹性伸缩</h2>
+<p>像GCLB这样的工具可以帮助有效地均衡整个系统的负载，使服务更加稳定可靠。有时根本没有足够的资源来管理现有流量。此时可以使用自动弹性伸缩来扩展系统。无论是增加每台计算机的资源（垂直扩展）还是增加池中的计算机总数（水平扩展），弹性伸缩都是一种功能强大的工具，如果使用得当，可以提高服务可用性和利用率。相反，如果配置错误或误用，弹性伸缩可能会对服务产生负面影响。本节介绍弹性伸缩的一些最佳实践，常见故障模式和当前限制。</p>
+
+<h3 id="处理不健康的实例">处理不健康的实例</h3>
+<p>自动调节所有实例的利用率，无论其状态如何，并假设实例在请求处理效率方面是同质的。当计算机无法提供服务时（称为不健康的实例），自动调节会遇到问题，但仍然会计入平均利用率。在这种情况下，不会发生弹性伸缩。以下情况都可以触发此故障模式，包括：</p>
+<ul>
+  <li>需要很长时间准备服务的实例（例如，加载二进制文件或预热时）</li>
+  <li>陷入非保存状态的实例（即僵尸）</li>
+</ul>
+
+<p>我们可以使用各种策略改善这种情况。可以组合或单独进行以下改进：</p>
+
+<p><code class="highlighter-rouge">负载均衡</code><br />
+使用负载均衡观察到的容量指标进行自动弹性伸缩。这将自动从平均值中扣除不健康的实例。</p>
+
+<p><code class="highlighter-rouge">在收集指标之前，请等待新实例稳定下来</code><br />
+您可以将autoscaler配置为仅在新实例变为健康状态时收集有关新实例的信息（GCE将此不活动时段称为冷却时段）。</p>
+
+<p><code class="highlighter-rouge">自动弹性伸缩和自动修复</code><br />
+自动修复监视系统实例，并尝试在不健康的情况下重新启动它们。通常，将自动加密器配置为监视实例公开的运行状况指标。如果自动修复检测到实例已关闭或运行状况不佳，则会尝试重新启动。配置时，务必确保在重新启动后为实例留出足够的时间使其恢复正常。</p>
+
+<p>使用这些解决方案的混合，可以优化水平弹性伸缩以仅跟踪健康的实例。请记住，在运行服务时，自动调节器会不断调整系统实例的大小。创建新实例绝不是即时的（需要一定的时间）。</p>
+
+<h3 id="有状态的系统">有状态的系统</h3>
+<p>有状态的系统将用户会话中的所有请求一致地发送到同一后端服务器。如果这些路径负担过重，添加更多实例（即水平扩展）将无济于事。分散负载的智能任务型路由（例如，使用一致性哈希）是对有状态系统的更好策略。</p>
+
+<p>垂直自动伸缩在有状态系统中很有用。当与任务型平衡结合使用以均衡系统负载时，垂直自动弹性伸缩可以帮助吸收短期热点。但请谨慎使用此策略：由于垂直自动调节通常在所有实例中均匀分布，因此低流量的实例可能会出现资源的浪费。</p>
+
+<h3 id="谨慎的配置">谨慎的配置</h3>
+<p>使用自动弹性伸缩扩展比使用缩放更重要且风险更小，因为无法扩展可能导致过载和流量下降。按照设计，大多数自动调节器实现对流量的跳跃都比对流量的下降更敏感。扩展时，自动缩放器倾向于快速增加额外的服务容量。按比例缩小时，它们会更加谨慎，并且在缓慢减少资源之前等待更长时间以使其缩放条件成立。</p>
+
+<p>当服务进一步远离瓶颈时，你可以吸收的负载峰值会增加。我们建议配置自动扩展器，以使服务远离关键系统瓶颈（例如CPU）。自动定标器还需要足够的时间来做出反应，特别是当新实例无法启动并立即投入使用时。我们建议面向用户的服务为过载保护和冗余保留足够的备用容量。</p>
+
+<h3 id="设置约束">设置约束</h3>
+<p>Autoscaler是一款功能强大的工具; 如果配置错误，它可能会造成意想不到的后果。例如，请考虑以下方案：</p>
+
+<ul>
+  <li>您已将自动扩展配置为根据CPU利用率进行扩展。您发布了系统的新版本，其中包含导致服务器在不执行任何工作的情况下使用CPU的错误。Autoscaler通过反复升级此作业来做出反应，直到浪费了所有可用配额。</li>
+  <li>服务中没有任何变化，但依赖性失败。此故障导致所有请求卡在您的服务器上并且永远不会完成，从而消耗资源。Autoscaler将扩大工作范围，导致越来越多的流量卡住。失败的依赖项上的负载增加可以防止依赖项恢复。</li>
+</ul>
+
+<p>限制允许自动缩放器执行的工作很有用。设置缩放的最小和最大界限，确保您有足够的配额可以缩放到设置的限制。这样做可以防止您耗尽配额并帮助您进行容量规划。</p>
+
+<h3 id="支持禁用和手动执行">支持禁用和手动执行</h3>
+<p>如果您的自动伸缩出现问题，最好使用kill开关。确保工程师了解如何禁用自动弹性伸缩以及如何在必要时手动进行弹性伸缩。自动弹性伸缩终止开关功能应该简单，明显，迅速且运行良好。</p>
+
+<h3 id="避免重载后端">避免重载后端</h3>
+<p>正确配置的自动缩放器将根据流量的增加进行扩展。流量的增加会对堆栈产生影响。后端服务（如数据库）需要吸收服务器可能产生的任何额外负载。因此，在部署自动缩放器之前对后端服务执行详细的依赖性分析是个好主意，特别是因为某些服务可能比其他服务更加线性扩展。确保您的后端有足够的额外容量来提供增加的流量，并且在超载时能够优雅地降级。使用分析中的数据来告知自动缩放器配置的限制。</p>
+
+<p>服务部署通常运行各种共享配额的微服务。如果微服务扩大以响应流量峰值，它可能会使用大部分配额。如果单个微服务上的流量增加意味着其他微服务上的流量增加，则剩余的微服务将无法增加可用配额。在这种情况下，依赖性分析可以帮助指导您预先实施有限的扩展。或者，您可以为每个微服务实现单独的配额（这可能需要将您的服务拆分为单独的项目）。</p>
+
+<h3 id="避免流量不平衡">避免流量不平衡</h3>
+<p>一些自动调节器（例如，AWS EC2，GCP）可以跨区域实例组（RMiG）平衡实例。除了常规的自动弹性伸缩之外，这些自动编程器还运行一个单独的工作，不断尝试均衡整个区域中每个区域的大小。以这种方式重新平衡避免流量集中在某一区域。如果使用的系统为每个区域分配配额，则此策略可以均衡您的配额使用情况。此外，跨区域的自动调整为故障域提供了更多的多样性。</p>
+
+<h2 id="结合管理负载均衡的策略">结合管理负载均衡的策略</h2>
+<p>如果系统足够复杂，可能需要使用多种负载管理。例如，可以运行多个托管实例组，这些实例组可以按负载进行扩展，但是可以跨多个区域克隆容量; 因此，还需要平衡区域之间的流量。在这种情况下，系统需要同时使用负载均衡和基于负载的自动扩展。</p>
+
+<p>或者可能在世界各地的三个共同设施中运营一个网站，希望在本地提供延迟服务，但由于部署更多计算机需要数周时间，因此溢出的流量需要定位到其他位置。如果网站在社交媒体上受欢迎，并且突然间流量增加了五倍。因此，实施减载以减少多余的流量。在这种情况下系统需要同时使用负载平衡和减载。</p>
+
+<p>或者，数据处理管道可能位于一个云区域的Kubernetes集群中。当数据处理速度显着降低时，它会提供更多的pod来处理工作。但是，当数据进入如此之快以至于读取它会导致内存不足或减慢垃圾收集时，pod可能需要临时或永久地释放该负载。在这种情况下，系统需要使用基于负载的自动弹性伸缩和减载技术。</p>
+
+<p>负载均衡，减载都是为同一目标而设计的系统：均衡和稳定系统负载。由于这些系统通常是分别实现、安装和配置的，因此它们看起来是独立的。但是，如图11-8所示，它们并非完全独立。以下案例研究说明了这些系统如何相互作用。</p>
+
+<p><img src="/blog/something/images/SRE/11-8.jpg" alt="" /> <center>
+图11-8 一个完整的流量管理系统 </center></p>
+
+<h3 id="案例研究2减载以应对流量攻击">案例研究2：减载以应对流量攻击</h3>
+
+<p>Dressy是一家流量驱动的服装电商销售平台。其开发团队将应用部署到了三个地区已应对单区域故障问题（他们是这样认为的）。</p>
+
+<p>在一次故障案例中，Dressy的客户服务团队开收到客户投诉：无法访问该应用程序。 Dressy的开发团队调查并注意到一个问题:他们的负载均衡系统将所有用户流量吸引到区域A，即使该区域是满溢的，B和C都是空的（同样的资源规模下），这是令人费解的。故障的时间表（见图11-9）如下：</p>
+
+<ol>
+  <li>在一天开始时，仪表盘流量图显示所有三个集群稳定在90 RPS的访问。</li>
+  <li>在上午10:46，由于购物者开始寻找便宜货，所有三个地区的流量开始上升。</li>
+  <li>在上午11点，区域A在区域B和C之前达到120 RPS。</li>
+  <li>在上午11点10分，A区继续增长到400 RPS，而B和C下降到40 RPS。</li>
+  <li>负载均衡器稳定了流量请求，将大部分的请求指向A区。</li>
+  <li>击中A区的大多数请求都返回503错误。</li>
+  <li>请求到达此群集的用户开始抱怨。</li>
+</ol>
+
+<p><img src="/blog/something/images/SRE/11-9.jpg" alt="" /> <center>
+图11-9 区域流量 </center></p>
+
+<p>如果开发团队排查负载均衡器的饱和度图表，他们会看到一些意料之外的东西。负载均衡器从Dressy的容器中读取CPU利用率并根据此信息来估计饱和度。而每个请求的CPU利用率在区域A时比B和C都低10倍。负载均衡确定所有区域的负载均等，认为其工作正常。</p>
+
+<h4 id="发生了什么事">发生了什么事？</h4>
+<p>本周早些时候，为了防止级联过载，该团队实现了减载。每当CPU利用率达到某个阈值时，服务器就会为其收到的任何新请求返回错误响应，而不是尝试处理它们。在这一天，A区域略微超过其他区域。每个服务器开始拒绝收到的10％的请求，然后是20％的请求，然后是50％。在此时间范围内，CPU使用率保持不变。</p>
+
+<p>就负载均衡器系统而言，每个连续丢弃的请求使CPU利用率降低。区域A比区域B和C更有效。它在80％CPU（上限）下服务240RPS，而B和C仅有120 RPS。从逻辑上讲，它决定向A发送更多请求。</p>
+
+<h4 id="什么地方出了错">什么地方出了错？</h4>
+<p>简而言之，负载均衡器不知道“有效”请求是错误的，因为负载减少和负载平衡系统没有通信。每个系统都是由不同的工程师单独添加和启用的。没有人将它们视为一个统一的负载管理系统。</p>
+
+<h4 id="经验总结">经验总结</h4>
+<p>为了有效地管理系统负载，我们需要慎重考虑各个负载管理工具的配置和他们的交互管理。例如，Dressy案例研究中，将错误处理添加到负载均衡器逻辑可以解决问题。假设每个“错误”请求计为120％的CPU利用率（超过100的任何数字都可以）。现在区域A看起来超载了。请求将扩展到B和C，系统将平衡。</p>
+
+<p>可以使用类似的逻辑将此示例推断为任何负载管理策略的组合。采用新的负载管理工具时，请仔细检查它与系统已使用的其他工具的交互方式，并检测是否有交集的地方。添加监控以检测反馈循环是否存在。确保有紧急关闭触发器以便在负载管理系统之间进行协调，并且如果这些系统的行为严重失控，请考虑添加自动关闭触发器。如果没有预先采取适当的预防措施，以下的预案可能需要的。以下是可能会需要的预防措施，具体取决于负载管理的类型：</p>
+
+<p><code class="highlighter-rouge">负载均衡</code> <br />
+负载均衡通过路由到最靠近用户的位置来最小化延迟。自动弹性伸缩可以与负载均衡协同工作，更靠近用户，然后在那里路由更多流量，从而创建正反馈循环。</p>
+
+<p>如果需求主要靠近一个位置，那么该位置的负载将会增加，增加该位置的服务容量以应对请求。如果此位置出现故障，其余位置将出现过载，并且可能会丢弃一部分流量。弹性伸缩不是即时的应对措施。您可以通过为每个位置设置最小实例数来避免这种情况，以保留备用容量进行故障转移。</p>
+
+<p><code class="highlighter-rouge">减载</code><br />
+最好设置一个阈值，以便在减载开始之前系统自动调整。否则，如果设置值过，系统可能会开始减少它可能服务的流量。</p>
+
+<p><code class="highlighter-rouge">使用RPC管理负载</code><br />
+处理正确的请求对于提高效率非常重要：不希望自动调整以提供不会使用户受益的请求，或者因为处理不重要的请求而不必要地减少负载。在同时使用自动缩放和减载时，在RPC请求上设置截止日期非常重要。</p>
+
+<p>进程为所有正在进行的请求保留资源，并在请求完成时释放这些资源。在没有特定截止日期的情况下，系统将为所有正在进行的请求保留资源，直至达到最大可能限制。默认情况下，此截止日期是一个非常大的数字（这取决于语言实现 - 某些语言API在固定时间点工作，而其他语言API在一段时间内工作）。此行为会导致客户端（最终用户）遇到更高的延迟。该服务还存在资源（如内存）耗尽和崩溃的风险。</p>
+
+<p>为了优雅地处理这种情况，我们建议服务器终止花费太长时间的请求，并且客户端取消对它们不再有用的请求。例如，如果客户端已向用户返回错误，则服务器不应启动昂贵的搜索操作。要设置服务的行为期望，只需在API的.proto文件中提供注释即可建议默认的截止日期。此外，为客户设置有意的截止日期（例如，请参阅我们的博客文章“gRPC和截止日期”）。</p>
+
+<h2 id="结论">结论</h2>
+
+<p>根据Google的经验，没有完美的负载管理配置。自动弹性伸缩是一种强大的工具，但很容易出错。除非是详细定制的配置，否则自动伸缩可能会导致灾难性后果 - 例如，当这些工具单独配置时，负载平衡，负载切除和自动扩展之间可能存在灾难性的反馈周期。正如PokémonGO案例那样，当负载管理是基于系统级别的整体架构时，负载管理效果最佳。</p>
+
+<p>一次又一次案例中，我们已经看到，减载，自动弹性伸缩或限制它们之间没有协调配置时，系统是会出现灾难性故障的。例如，在PokémonGO案例研究中，我们有一个“雷鸣般的群体问题”，即客户端重试以及等待无响应的后端服务器的负载均衡器。要应对服务的过载，需要提前计划以减少潜在问题。缓解策略可能涉及设置标志，更改默认行为，启用日志记录，或流量管理系统的参数值引入制定管理决策中。</p>
+
+<p>我们希望本章提供的策略和见解可以帮助您，管理自己服务的流量并让用户满意。</p>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" rel="tag"># 《SRE-Google运维实践》</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sre/2020/01/14/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="next" title="第十四章 系统配置最佳实践">
+                <i class="fa fa-chevron-left"></i> 第十四章 系统配置最佳实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sre/2020/01/10/%E4%BA%8B%E5%90%8E%E6%80%BB%E7%BB%93-%E4%BB%8E%E5%A4%B1%E8%B4%A5%E4%B8%AD%E5%AD%A6%E4%B9%A0/" rel="prev" title="第十章 事后总结：从失败中学习">
+                第十章 事后总结：从失败中学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="ZX" />
+          <p class="site-author-name" itemprop="name">ZX</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#google云服务负载均衡"> <span class="nav-number">1</span> <span class="nav-text">Google云服务负载均衡</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#任播"> <span class="nav-number">1.1</span> <span class="nav-text">任播</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#稳定的任播"> <span class="nav-number">1.1.1</span> <span class="nav-text">稳定的任播</span> </a> </li> </ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#maglev"> <span class="nav-number">1.2</span> <span class="nav-text">Maglev</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#全球软件负载均衡"> <span class="nav-number">1.3</span> <span class="nav-text">全球软件负载均衡</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#谷歌前端"> <span class="nav-number">1.4</span> <span class="nav-text">谷歌前端</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#gclb低延迟"> <span class="nav-number">1.5</span> <span class="nav-text">GCLB：低延迟</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#gclb-高可用性"> <span class="nav-number">1.6</span> <span class="nav-text">GCLB: 高可用性</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#案例研究1gclb上的pokemongo"> <span class="nav-number">1.7</span> <span class="nav-text">案例研究1：GCLB上的PokemonGO</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#迁移到gclb"> <span class="nav-number">1.7.1</span> <span class="nav-text">迁移到GCLB</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#解决问题"> <span class="nav-number">1.7.2</span> <span class="nav-text">解决问题</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#面向未来"> <span class="nav-number">1.7.3</span> <span class="nav-text">面向未来</span> </a> </li> </ol> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#自动弹性伸缩"> <span class="nav-number">2</span> <span class="nav-text">自动弹性伸缩</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#处理不健康的实例"> <span class="nav-number">2.1</span> <span class="nav-text">处理不健康的实例</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#有状态的系统"> <span class="nav-number">2.2</span> <span class="nav-text">有状态的系统</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#谨慎的配置"> <span class="nav-number">2.3</span> <span class="nav-text">谨慎的配置</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#设置约束"> <span class="nav-number">2.4</span> <span class="nav-text">设置约束</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#支持禁用和手动执行"> <span class="nav-number">2.5</span> <span class="nav-text">支持禁用和手动执行</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#避免重载后端"> <span class="nav-number">2.6</span> <span class="nav-text">避免重载后端</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#避免流量不平衡"> <span class="nav-number">2.7</span> <span class="nav-text">避免流量不平衡</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#结合管理负载均衡的策略"> <span class="nav-number">3</span> <span class="nav-text">结合管理负载均衡的策略</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#案例研究2减载以应对流量攻击"> <span class="nav-number">3.1</span> <span class="nav-text">案例研究2：减载以应对流量攻击</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#发生了什么事"> <span class="nav-number">3.1.1</span> <span class="nav-text">发生了什么事？</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#什么地方出了错"> <span class="nav-number">3.1.2</span> <span class="nav-text">什么地方出了错？</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#经验总结"> <span class="nav-number">3.1.3</span> <span class="nav-text">经验总结</span> </a> </li> </ol> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#结论"> <span class="nav-number">4</span> <span class="nav-text">结论</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZX</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://jekyllrb.com">Jekyll</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
