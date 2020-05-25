@@ -23,8 +23,8 @@ Edited by:
 > worked for them and what didn’t.
 
 
-《The Site Reliability Workbook》操作手册 具体的用途来展示如何在工作中实践SRE。 本书包含了Google自身经历
-或是从Google's Cloud Platform的客户案例，Evernote、The Home Depot、The New York Times。
+《The Site Reliability Workbook》操作手册 通过具体的案例来展示如何在工作中实践SRE。 本书包含了Google自身经历
+或是从Google's Cloud Platform的客户案例。例如：Evernote、The Home Depot、The New York Times。
 
 本书目录结构：
 
@@ -32,30 +32,47 @@ Edited by:
 ### 第一部分：基本原理  
 第二章  SLO实施  
 第三章  SLO工程案例学习  
-第四章  
-第五章   
+第四章  监控  
+第五章  SLO报警  
 第六章  减少琐事  
-第七章  简单化   
-第八章  On-Call  
-### 第二部分： 实践
-第九章  
-第十章       
-第十一章  
-第十二章  
-第十三章  
-第十四章  
-第十五章  
-第十六章   灰度发布（金丝雀部署）
-### 第三部分： 发展
-第十七章  
-第十八章  
-第十九章  
-第二十章  
-第二十一章  
+第七章  简单化    
+第八章  On-Call   
+### 第二部分： 实践  
+第九章   故障响应  
+第十章   故障总结：从失败中学习  
+第十一章  应对过载  
+第十二章  非抽象大系统设计介绍  
+第十三章  数据处理管道  
+第十四章  系统配置最佳实践  
+第十五章  配置细节    
+第十六章  灰度发布（金丝雀部署）  
+### 第三部分： 发展  
+第十七章  从过载中识别和恢复     
+第十八章  SRE：参与模式  
+第十九章  SRE：超出界限  
+第二十章  SRE：团队生命周期  
+第二十一章  SRE：组织变更管理  
+
+### SRE？
+>
+>  网站可靠性工程师（SRE）Site Reliability Engineering
+>
 
 
+### Google的SRE具体会负责哪些事情？
+> 
+> SRE在Google不负责某个服务的上线、部署，SRE主要是保障服务的可靠性和性能，同时负责数据中资源分配，为重要服务预留资源，SRE并不负责某个业务逻辑的具体编写，主要负责在服务出现宕机等紧急事故时，可以快速作出响应，尽快恢复服务，减少服务掉线而造成的损失。
+>
 
+### SRE日常工作和职责包含哪些?
+>
+> 一般来说，SRE团队要承担以下几类职责：可用性改进、延迟优化、性能优化、效率优化、变更管理、监控、紧急事物处理以及容量规划与管理。
+> 
+> Tools Don't create reliability. Humans do. But tools can help.
+>
 
 * 相关资料
 英文原版：[the-site-reliability-workbook-next18.pdf](/something/pdf/SRE/the-site-reliability-workbook-next18.pdf)
+悟冥：[读《SRE：Google运维解密》一点思考](https://zhuanlan.zhihu.com/p/97600369)
+SRE Google运维解密
 

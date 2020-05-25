@@ -488,8 +488,8 @@ Evernote, The Home Depot, The New York Times, and other companies outline hard-w
 worked for them and what didn’t.</p>
 </blockquote>
 
-<p>《The Site Reliability Workbook》操作手册 具体的用途来展示如何在工作中实践SRE。 本书包含了Google自身经历
-或是从Google’s Cloud Platform的客户案例，Evernote、The Home Depot、The New York Times。</p>
+<p>《The Site Reliability Workbook》操作手册 通过具体的案例来展示如何在工作中实践SRE。 本书包含了Google自身经历
+或是从Google’s Cloud Platform的客户案例。例如：Evernote、The Home Depot、The New York Times。</p>
 
 <p>本书目录结构：</p>
 
@@ -497,30 +497,55 @@ worked for them and what didn’t.</p>
 <h3 id="第一部分基本原理">第一部分：基本原理</h3>
 <p>第二章  SLO实施<br />
 第三章  SLO工程案例学习<br />
-第四章<br />
-第五章 <br />
+第四章  监控<br />
+第五章  SLO报警<br />
 第六章  减少琐事<br />
-第七章  简单化 <br />
+第七章  简单化  <br />
 第八章  On-Call</p>
 <h3 id="第二部分-实践">第二部分： 实践</h3>
-<p>第九章<br />
-第十章     <br />
-第十一章<br />
-第十二章<br />
-第十三章<br />
-第十四章<br />
-第十五章<br />
-第十六章   灰度发布（金丝雀部署）</p>
+<p>第九章   故障响应<br />
+第十章   故障总结：从失败中学习<br />
+第十一章  应对过载<br />
+第十二章  非抽象大系统设计介绍<br />
+第十三章  数据处理管道<br />
+第十四章  系统配置最佳实践<br />
+第十五章  配置细节  <br />
+第十六章  灰度发布（金丝雀部署）</p>
 <h3 id="第三部分-发展">第三部分： 发展</h3>
-<p>第十七章<br />
-第十八章<br />
-第十九章<br />
-第二十章<br />
-第二十一章</p>
+<p>第十七章  从过载中识别和恢复   <br />
+第十八章  SRE：参与模式<br />
+第十九章  SRE：超出界限<br />
+第二十章  SRE：团队生命周期<br />
+第二十一章  SRE：组织变更管理</p>
+
+<h3 id="sre">SRE？</h3>
+<blockquote>
+
+  <p>网站可靠性工程师（SRE）Site Reliability Engineering</p>
+
+</blockquote>
+
+<h3 id="google的sre具体会负责哪些事情">Google的SRE具体会负责哪些事情？</h3>
+<blockquote>
+
+  <p>SRE在Google不负责某个服务的上线、部署，SRE主要是保障服务的可靠性和性能，同时负责数据中资源分配，为重要服务预留资源，SRE并不负责某个业务逻辑的具体编写，主要负责在服务出现宕机等紧急事故时，可以快速作出响应，尽快恢复服务，减少服务掉线而造成的损失。</p>
+
+</blockquote>
+
+<h3 id="sre日常工作和职责包含哪些">SRE日常工作和职责包含哪些?</h3>
+<blockquote>
+
+  <p>一般来说，SRE团队要承担以下几类职责：可用性改进、延迟优化、性能优化、效率优化、变更管理、监控、紧急事物处理以及容量规划与管理。</p>
+
+  <p>Tools Don’t create reliability. Humans do. But tools can help.</p>
+
+</blockquote>
 
 <ul>
   <li>相关资料
-英文原版：<a href="/something/pdf/SRE/the-site-reliability-workbook-next18.pdf">the-site-reliability-workbook-next18.pdf</a></li>
+英文原版：<a href="/something/pdf/SRE/the-site-reliability-workbook-next18.pdf">the-site-reliability-workbook-next18.pdf</a>
+悟冥：<a href="https://zhuanlan.zhihu.com/p/97600369">读《SRE：Google运维解密》一点思考</a>
+SRE Google运维解密</li>
 </ul>
 
 
@@ -735,7 +760,7 @@ worked for them and what didn’t.</p>
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#前言"> <span class="nav-number">1</span> <span class="nav-text">前言</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第一部分基本原理"> <span class="nav-number">1.1</span> <span class="nav-text">第一部分：基本原理</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第二部分-实践"> <span class="nav-number">1.2</span> <span class="nav-text">第二部分： 实践</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第三部分-发展"> <span class="nav-number">1.3</span> <span class="nav-text">第三部分： 发展</span> </a> </li> </ol> </li>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#前言"> <span class="nav-number">1</span> <span class="nav-text">前言</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第一部分基本原理"> <span class="nav-number">1.1</span> <span class="nav-text">第一部分：基本原理</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第二部分-实践"> <span class="nav-number">1.2</span> <span class="nav-text">第二部分： 实践</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第三部分-发展"> <span class="nav-number">1.3</span> <span class="nav-text">第三部分： 发展</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre"> <span class="nav-number">1.4</span> <span class="nav-text">SRE？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#google的sre具体会负责哪些事情"> <span class="nav-number">1.5</span> <span class="nav-text">Google的SRE具体会负责哪些事情？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre日常工作和职责包含哪些"> <span class="nav-number">1.6</span> <span class="nav-text">SRE日常工作和职责包含哪些?</span> </a> </li> </ol> </li>
     </ol>
   </div>
             
