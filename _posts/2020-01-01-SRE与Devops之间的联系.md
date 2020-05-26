@@ -1,6 +1,6 @@
 ---
 title: 第一章 SRE与DevOps之间的联系
-description: SRE与DevOps之间的联系
+description: DevOps SRE两种解决方案产生的背景、以及二者之间的联系与区别。
 categories:
  - SRE
 tags: 《SRE-Google运维实践》 

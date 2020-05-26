@@ -111,13 +111,13 @@
 
 
 
-<meta name="description" content="灰度部署">
+<meta name="description" content="在部署系统的新版本或其关键组件(如配置或数据)时，我们将变更(通常未公开给真实输入的更改，如面向用户的流量、或用户提供的批处理数据)打包。变更会带来新的特性和功能，但也存在部署之后出现问题的风险。我们的目标是通过测试一小部分流量来降低风险，以确保没有任何不良影响。我们将在本章后面讨论评估过程。灰度过程还让我们对变更充满信心，因为我们将其暴露给越来越大的流量。为变更引入实际生产流量还使我们能够识别在单元测试或负载测试等测试框架中可能不可见的问题，这些问题通常更为人为。">
 <meta name="keywords" content="《SRE-Google运维实践》">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第十六章 灰度部署 (金丝雀部署)">
 <meta property="og:url" content="http://localhost:4000/sre/2020/01/16/%E7%81%B0%E5%BA%A6%E9%83%A8%E7%BD%B2/">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="灰度部署">
+<meta property="og:description" content="在部署系统的新版本或其关键组件(如配置或数据)时，我们将变更(通常未公开给真实输入的更改，如面向用户的流量、或用户提供的批处理数据)打包。变更会带来新的特性和功能，但也存在部署之后出现问题的风险。我们的目标是通过测试一小部分流量来降低风险，以确保没有任何不良影响。我们将在本章后面讨论评估过程。灰度过程还让我们对变更充满信心，因为我们将其暴露给越来越大的流量。为变更引入实际生产流量还使我们能够识别在单元测试或负载测试等测试框架中可能不可见的问题，这些问题通常更为人为。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/blog/something/images/SRE/16-1.jpg">
 <meta property="og:image" content="/blog/something/images/SRE/16-2.jpg">
@@ -125,7 +125,7 @@
 <meta property="og:image" content="/blog/something/images/SRE/16-4.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十六章 灰度部署 (金丝雀部署)">
-<meta name="twitter:description" content="灰度部署">
+<meta name="twitter:description" content="在部署系统的新版本或其关键组件(如配置或数据)时，我们将变更(通常未公开给真实输入的更改，如面向用户的流量、或用户提供的批处理数据)打包。变更会带来新的特性和功能，但也存在部署之后出现问题的风险。我们的目标是通过测试一小部分流量来降低风险，以确保没有任何不良影响。我们将在本章后面讨论评估过程。灰度过程还让我们对变更充满信心，因为我们将其暴露给越来越大的流量。为变更引入实际生产流量还使我们能够识别在单元测试或负载测试等测试框架中可能不可见的问题，这些问题通常更为人为。">
 <meta name="twitter:image" content="/blog/something/images/SRE/16-1.jpg">
 
 
@@ -134,7 +134,7 @@
   var CONFIG = {
     root: '',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -256,6 +256,18 @@
         
         
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -274,18 +286,6 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
-          </a>
-        </li>
-      
-        
-        
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -440,12 +440,27 @@
 
           
           
-
+             <span id="/sre/2020/01/16/%E7%81%B0%E5%BA%A6%E9%83%A8%E7%BD%B2/" class="leancloud_visitors" data-flag-title="第十六章 灰度部署 (金丝雀部署)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
 
           
+
+          
+            
+                <div class="post-description">
+                    在部署系统的新版本或其关键组件(如配置或数据)时，我们将变更(通常未公开给真实输入的更改，如面向用户的流量、或用户提供的批处理数据)打包。变更会带来新的特性和功能，但也存在部署之后出现问题的风险。我们的目标是通过测试一小部分流量来降低风险，以确保没有任何不良影响。我们将在本章后面讨论评估过程。灰度过程还让我们对变更充满信心，因为我们将其暴露给越来越大的流量。为变更引入实际生产流量还使我们能够识别在单元测试或负载测试等测试框架中可能不可见的问题，这些问题通常更为人为。
+                </div>
             
           
 
@@ -867,7 +882,7 @@
                alt="ZX" />
           <p class="site-author-name" itemprop="name">ZX</p>
            
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">zxzxzxzx</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -918,12 +933,53 @@
 
         <div class="links-of-author motion-element">
           
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/ZXANG" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
         </div>
 
         
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/" title="首页" target="_blank">首页</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/categories/" title="分类" target="_blank">分类</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" title="《SRE-Google运维实践》" target="_blank">《SRE-Google运维实践》</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
         
@@ -1475,6 +1531,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("<app_id>", "<app_key>");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

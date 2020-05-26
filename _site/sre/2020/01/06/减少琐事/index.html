@@ -111,13 +111,13 @@
 
 
 
-<meta name="description" content="减少琐事">
+<meta name="description" content="SRE要把更多的实践花费在长期项目研发而非日常运维中，因为术语日常运维可能会被误解，因此我们使用专门的赐予进行描述--琐事(toil)，琐事就是运维服务中手动性的、重复性的、可以被自动化的、战术性、没有持久价值的工作。">
 <meta name="keywords" content="《SRE-Google运维实践》">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第六章 减少琐事">
 <meta property="og:url" content="http://localhost:4000/sre/2020/01/06/%E5%87%8F%E5%B0%91%E7%90%90%E4%BA%8B/">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="减少琐事">
+<meta property="og:description" content="SRE要把更多的实践花费在长期项目研发而非日常运维中，因为术语日常运维可能会被误解，因此我们使用专门的赐予进行描述--琐事(toil)，琐事就是运维服务中手动性的、重复性的、可以被自动化的、战术性、没有持久价值的工作。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/blog/something/images/SRE/6-1.jpg">
 <meta property="og:image" content="/blog/something/images/SRE/6-2.jpg">
@@ -131,7 +131,7 @@
 <meta property="og:image" content="/blog/something/images/SRE/6-10.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第六章 减少琐事">
-<meta name="twitter:description" content="减少琐事">
+<meta name="twitter:description" content="SRE要把更多的实践花费在长期项目研发而非日常运维中，因为术语日常运维可能会被误解，因此我们使用专门的赐予进行描述--琐事(toil)，琐事就是运维服务中手动性的、重复性的、可以被自动化的、战术性、没有持久价值的工作。">
 <meta name="twitter:image" content="/blog/something/images/SRE/6-1.jpg">
 
 
@@ -140,7 +140,7 @@
   var CONFIG = {
     root: '',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -262,6 +262,18 @@
         
         
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -280,18 +292,6 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
-          </a>
-        </li>
-      
-        
-        
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -446,12 +446,27 @@
 
           
           
-
+             <span id="/sre/2020/01/06/%E5%87%8F%E5%B0%91%E7%90%90%E4%BA%8B/" class="leancloud_visitors" data-flag-title="第六章 减少琐事">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
 
           
+
+          
+            
+                <div class="post-description">
+                    SRE要把更多的实践花费在长期项目研发而非日常运维中，因为术语日常运维可能会被误解，因此我们使用专门的赐予进行描述--琐事(toil)，琐事就是运维服务中手动性的、重复性的、可以被自动化的、战术性、没有持久价值的工作。
+                </div>
             
           
 
@@ -480,7 +495,12 @@
 
 
 
-  <!-- more -->
+  <blockquote>
+  <p>战术性的：
+  琐事是突然出现的，应对性的工作，而非策略驱动和主动安排的，处理紧急报警是琐事，我们可能永远无法完全消除这种类型的工作，但我们必须继续努力减少它。</p>
+</blockquote>
+
+<!-- more -->
 <p>Google SRE的大量时间用于系统优化，通过工程化的方法，与开发一起协同努力，追求卓越。哪怕是很少的性能收益也是值得的。但优化范围不仅局限于服务器资源，SRE的工作耗时也是优化的范畴。首先，SRE的工作不是琐事（关于琐事请参阅《SRE：Google运维解密》第5章内容）。本章我们将琐事定义为：与维护服务相关的，重复的、可预测的、持续的任务流。</p>
 
 <p>对于产品运维团队来说，琐事不可避免。运维不可避免地需要处理部署、升级、重启、告警等工作。如果没有系统的方法，这些工作很快将耗尽整个团队精力。Google将SRE团队日常操作的耗时占比限制在50%以内（包括琐事和非劳动密集型工作。这样做的原因，请参阅《SRE：Google运维解密》书中第5章内容）。虽然这个目标可能不适合所有团队，但花费在琐事上的时间上限仍然很重要，因为识别和量化琐事是团队时间优化的第一步。</p>
@@ -1132,7 +1152,7 @@
                alt="ZX" />
           <p class="site-author-name" itemprop="name">ZX</p>
            
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">zxzxzxzx</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -1183,12 +1203,53 @@
 
         <div class="links-of-author motion-element">
           
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/ZXANG" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
         </div>
 
         
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/" title="首页" target="_blank">首页</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/categories/" title="分类" target="_blank">分类</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" title="《SRE-Google运维实践》" target="_blank">《SRE-Google运维实践》</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
         
@@ -1740,6 +1801,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("<app_id>", "<app_key>");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

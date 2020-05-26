@@ -1,6 +1,6 @@
 ---
 title: 《SRE Google运维实践》介绍
-description: 《SRE Google运维实践》 综述
+description: 《SRE Google运维实践》 综述; Google SRE系列的第二本书。是对第一本书说描述的内容的更详细的解读。
 categories:
  - SRE
 tags: 《SRE-Google运维实践》 
@@ -26,6 +26,36 @@ Edited by:
 《The Site Reliability Workbook》操作手册 通过具体的案例来展示如何在工作中实践SRE。 本书包含了Google自身经历
 或是从Google's Cloud Platform的客户案例。例如：Evernote、The Home Depot、The New York Times。
 
+
+> ### <center>How to Read This Book</center>
+> This book is the companion volume to Google’s first book, Site Reliability Engineering. To get the most out of this volume, we recommend that you have read, or can refer to, the first SRE book (available to read online for free at google.com/sre). The two works complement each other in the following ways:
+> * The previous work was an introduction to principles and philosophy. This volume concentrates on how those principles are applied. (In a few areas—particu‐larly configuration management and canarying—we also cover some new ground to provide background for the practical treatment of other subjects.)
+>
+> * The earlier volume concentrated exclusively on how SRE is practiced at Google. This work includes perspectives from a number of other firms—from traditional enterprises (including The Home Depot and the New York Times) to digital natives (Evernote, Spotify, and others).
+>
+> * The first book didn’t directly refer to the larger operations community—especially DevOps—whereas this book speaks directly to how SRE and DevOps relate to each other.
+> 
+> This volume assumes that you will bounce between this volume and its predecessor.  You might, for example, read Chapter 4, “Service Level Objectives” in the first book and then read its implementation complement (Chapter 2) in this volume.
+>
+> This book assumes that every chapter is just the starting point for a longer discussion and journey. Accordingly, this book is intended to be a conversation starter rather than the last word.
+> 
+> —The Editors
+
+
+> ### <center>如何阅读本书</center>
+> This book is the companion volume to Google’s first book, Site Reliability Engineer‐ing. To get the most out of this volume, we recommend that you have read, or can refer to, the first SRE book (available to read online for free at google.com/sre). The two works complement each other in the following ways:
+> * The previous work was an introduction to principles and philosophy. This vol‐ume concentrates on how those principles are applied. (In a few areas—particu‐larly configuration management and canarying—we also cover some new ground to provide background for the practical treatment of other subjects.)
+>
+> * The earlier volume concentrated exclusively on how SRE is practiced at Google. This work includes perspectives from a number of other firms—from traditional enterprises (including The Home Depot and the New York Times) to digital natives (Evernote, Spotify, and others).
+>
+> * The first book didn’t directly refer to the larger operations community—espe‐ cially DevOps—whereas this book speaks directly to how SRE and DevOps relate to each other.
+> 
+> This volume assumes that you will bounce between this volume and its predecessor.  You might, for example, read Chapter 4, “Service Level Objectives” in the first book and then read its implementation complement (Chapter 2) in this volume.
+>
+> This book assumes that every chapter is just the starting point for a longer discussion and journey. Accordingly, this book is intended to be a conversation starter rather than the last word.
+> 
+> —The Editors
+ 
 本书目录结构：
 
 第一章  SRE与DevOps之间的联系

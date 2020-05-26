@@ -77,10 +77,6 @@
 <lastmod>2020-01-18T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/sre/2020/01/19/SRE-%E8%B6%85%E5%87%BA%E7%95%8C%E9%99%90/</loc>
-<lastmod>2020-01-19T00:00:00+08:00</lastmod>
-</url>
-<url>
 <loc>http://localhost:4000/sre/2020/01/20/SRE-%E5%9B%A2%E9%98%9F%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</loc>
 <lastmod>2020-01-20T00:00:00+08:00</lastmod>
 </url>
@@ -91,6 +87,10 @@
 <url>
 <loc>http://localhost:4000/something/2020/03/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/</loc>
 <lastmod>2020-03-11T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2020/05/26/2020-01-19-SRE-%E8%B6%85%E5%87%BA%E7%95%8C%E9%99%90/</loc>
+<lastmod>2020-05-26T11:22:01+08:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/</loc>
@@ -124,12 +124,6 @@
 </url>
 <url>
 <loc>http://localhost:4000/assets/lib/jquery_lazyload/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/page2/</loc>
-</url>
-<url>
-<loc>http://localhost:4000/page3/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/something/pdf/SRE/the-site-reliability-workbook-next18.pdf</loc>

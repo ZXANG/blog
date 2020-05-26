@@ -111,17 +111,17 @@
 
 
 
-<meta name="description" content="《SRE Google运维实践》 综述">
+<meta name="description" content="《SRE Google运维实践》 综述; Google SRE系列的第二本书。是对第一本书说描述的内容的更详细的解读。">
 <meta name="keywords" content="《SRE-Google运维实践》">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《SRE Google运维实践》介绍">
 <meta property="og:url" content="http://localhost:4000/sre/2020/01/01/SRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5/">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="《SRE Google运维实践》 综述">
+<meta property="og:description" content="《SRE Google运维实践》 综述; Google SRE系列的第二本书。是对第一本书说描述的内容的更详细的解读。">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《SRE Google运维实践》介绍">
-<meta name="twitter:description" content="《SRE Google运维实践》 综述">
+<meta name="twitter:description" content="《SRE Google运维实践》 综述; Google SRE系列的第二本书。是对第一本书说描述的内容的更详细的解读。">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -129,7 +129,7 @@
   var CONFIG = {
     root: '',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -251,6 +251,18 @@
         
         
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -269,18 +281,6 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
-          </a>
-        </li>
-      
-        
-        
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -435,12 +435,27 @@
 
           
           
-
+             <span id="/sre/2020/01/01/SRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5/" class="leancloud_visitors" data-flag-title="《SRE Google运维实践》介绍">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
 
           
+
+          
+            
+                <div class="post-description">
+                    《SRE Google运维实践》 综述; Google SRE系列的第二本书。是对第一本书说描述的内容的更详细的解读。
+                </div>
             
           
 
@@ -490,6 +505,50 @@ worked for them and what didn’t.</p>
 
 <p>《The Site Reliability Workbook》操作手册 通过具体的案例来展示如何在工作中实践SRE。 本书包含了Google自身经历
 或是从Google’s Cloud Platform的客户案例。例如：Evernote、The Home Depot、The New York Times。</p>
+
+<blockquote>
+  <h3 id="how-to-read-this-book"><center>How to Read This Book</center></h3>
+  <p>This book is the companion volume to Google’s first book, Site Reliability Engineering. To get the most out of this volume, we recommend that you have read, or can refer to, the first SRE book (available to read online for free at google.com/sre). The two works complement each other in the following ways:</p>
+  <ul>
+    <li>
+      <p>The previous work was an introduction to principles and philosophy. This volume concentrates on how those principles are applied. (In a few areas—particu‐larly configuration management and canarying—we also cover some new ground to provide background for the practical treatment of other subjects.)</p>
+    </li>
+    <li>
+      <p>The earlier volume concentrated exclusively on how SRE is practiced at Google. This work includes perspectives from a number of other firms—from traditional enterprises (including The Home Depot and the New York Times) to digital natives (Evernote, Spotify, and others).</p>
+    </li>
+    <li>
+      <p>The first book didn’t directly refer to the larger operations community—especially DevOps—whereas this book speaks directly to how SRE and DevOps relate to each other.</p>
+    </li>
+  </ul>
+
+  <p>This volume assumes that you will bounce between this volume and its predecessor.  You might, for example, read Chapter 4, “Service Level Objectives” in the first book and then read its implementation complement (Chapter 2) in this volume.</p>
+
+  <p>This book assumes that every chapter is just the starting point for a longer discussion and journey. Accordingly, this book is intended to be a conversation starter rather than the last word.</p>
+
+  <p>—The Editors</p>
+</blockquote>
+
+<blockquote>
+  <h3 id="如何阅读本书"><center>如何阅读本书</center></h3>
+  <p>This book is the companion volume to Google’s first book, Site Reliability Engineer‐ing. To get the most out of this volume, we recommend that you have read, or can refer to, the first SRE book (available to read online for free at google.com/sre). The two works complement each other in the following ways:</p>
+  <ul>
+    <li>
+      <p>The previous work was an introduction to principles and philosophy. This vol‐ume concentrates on how those principles are applied. (In a few areas—particu‐larly configuration management and canarying—we also cover some new ground to provide background for the practical treatment of other subjects.)</p>
+    </li>
+    <li>
+      <p>The earlier volume concentrated exclusively on how SRE is practiced at Google. This work includes perspectives from a number of other firms—from traditional enterprises (including The Home Depot and the New York Times) to digital natives (Evernote, Spotify, and others).</p>
+    </li>
+    <li>
+      <p>The first book didn’t directly refer to the larger operations community—espe‐ cially DevOps—whereas this book speaks directly to how SRE and DevOps relate to each other.</p>
+    </li>
+  </ul>
+
+  <p>This volume assumes that you will bounce between this volume and its predecessor.  You might, for example, read Chapter 4, “Service Level Objectives” in the first book and then read its implementation complement (Chapter 2) in this volume.</p>
+
+  <p>This book assumes that every chapter is just the starting point for a longer discussion and journey. Accordingly, this book is intended to be a conversation starter rather than the last word.</p>
+
+  <p>—The Editors</p>
+</blockquote>
 
 <p>本书目录结构：</p>
 
@@ -676,7 +735,7 @@ SRE Google运维解密</li>
                alt="ZX" />
           <p class="site-author-name" itemprop="name">ZX</p>
            
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">zxzxzxzx</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -727,12 +786,53 @@ SRE Google运维解密</li>
 
         <div class="links-of-author motion-element">
           
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/ZXANG" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
         </div>
 
         
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/" title="首页" target="_blank">首页</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/categories/" title="分类" target="_blank">分类</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" title="《SRE-Google运维实践》" target="_blank">《SRE-Google运维实践》</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
         
@@ -760,7 +860,7 @@ SRE Google运维解密</li>
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#前言"> <span class="nav-number">1</span> <span class="nav-text">前言</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第一部分基本原理"> <span class="nav-number">1.1</span> <span class="nav-text">第一部分：基本原理</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第二部分-实践"> <span class="nav-number">1.2</span> <span class="nav-text">第二部分： 实践</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第三部分-发展"> <span class="nav-number">1.3</span> <span class="nav-text">第三部分： 发展</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre"> <span class="nav-number">1.4</span> <span class="nav-text">SRE？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#google的sre具体会负责哪些事情"> <span class="nav-number">1.5</span> <span class="nav-text">Google的SRE具体会负责哪些事情？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre日常工作和职责包含哪些"> <span class="nav-number">1.6</span> <span class="nav-text">SRE日常工作和职责包含哪些?</span> </a> </li> </ol> </li>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#前言"> <span class="nav-number">1</span> <span class="nav-text">前言</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#how-to-read-this-book"> <span class="nav-number">1.1</span> <span class="nav-text">How to Read This Book</center</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#如何阅读本书"> <span class="nav-number">1.2</span> <span class="nav-text">如何阅读本书</center</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第一部分基本原理"> <span class="nav-number">1.3</span> <span class="nav-text">第一部分：基本原理</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第二部分-实践"> <span class="nav-number">1.4</span> <span class="nav-text">第二部分： 实践</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第三部分-发展"> <span class="nav-number">1.5</span> <span class="nav-text">第三部分： 发展</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre"> <span class="nav-number">1.6</span> <span class="nav-text">SRE？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#google的sre具体会负责哪些事情"> <span class="nav-number">1.7</span> <span class="nav-text">Google的SRE具体会负责哪些事情？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre日常工作和职责包含哪些"> <span class="nav-number">1.8</span> <span class="nav-text">SRE日常工作和职责包含哪些?</span> </a> </li> </ol> </li>
     </ol>
   </div>
             
@@ -1284,6 +1384,113 @@ SRE Google运维解密</li>
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("<app_id>", "<app_key>");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

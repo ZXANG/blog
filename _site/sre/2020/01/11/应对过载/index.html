@@ -111,13 +111,13 @@
 
 
 
-<meta name="description" content="说明">
+<meta name="description" content="服务永远不会100％可用：比如突发的流量高峰导致系统崩溃；或者船锚意外扯住了跨大西洋的光缆造成网络不可用。作为服务提供者，我们要为客户提供持久稳定的服务。面对这些突发的情况，如何才能使我们的基础设施尽可能具备可靠性？本章介绍了Google应对过载的方法，希望能够使用这些最佳实践来提高服务的可靠性和可用性。多年来，我们发现，没有单一的解决方案来均衡和稳定网络负载。因此，多种工具、技术和策略的组合才是帮助保持我们的服务可靠性的方法。在我们深入讨论本章之前，我们建议阅读《SRE：Google运维解密》第19章《前端服务器的负载均衡》和20《数据中心内部的负载均衡系统》中的内容。">
 <meta name="keywords" content="《SRE-Google运维实践》">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第十一章 应对过载">
 <meta property="og:url" content="http://localhost:4000/sre/2020/01/11/%E5%BA%94%E5%AF%B9%E8%BF%87%E8%BD%BD/">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="说明">
+<meta property="og:description" content="服务永远不会100％可用：比如突发的流量高峰导致系统崩溃；或者船锚意外扯住了跨大西洋的光缆造成网络不可用。作为服务提供者，我们要为客户提供持久稳定的服务。面对这些突发的情况，如何才能使我们的基础设施尽可能具备可靠性？本章介绍了Google应对过载的方法，希望能够使用这些最佳实践来提高服务的可靠性和可用性。多年来，我们发现，没有单一的解决方案来均衡和稳定网络负载。因此，多种工具、技术和策略的组合才是帮助保持我们的服务可靠性的方法。在我们深入讨论本章之前，我们建议阅读《SRE：Google运维解密》第19章《前端服务器的负载均衡》和20《数据中心内部的负载均衡系统》中的内容。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/blog/something/images/SRE/11-1.jpg">
 <meta property="og:image" content="/blog/something/images/SRE/11-2.jpg">
@@ -130,7 +130,7 @@
 <meta property="og:image" content="/blog/something/images/SRE/11-9.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第十一章 应对过载">
-<meta name="twitter:description" content="说明">
+<meta name="twitter:description" content="服务永远不会100％可用：比如突发的流量高峰导致系统崩溃；或者船锚意外扯住了跨大西洋的光缆造成网络不可用。作为服务提供者，我们要为客户提供持久稳定的服务。面对这些突发的情况，如何才能使我们的基础设施尽可能具备可靠性？本章介绍了Google应对过载的方法，希望能够使用这些最佳实践来提高服务的可靠性和可用性。多年来，我们发现，没有单一的解决方案来均衡和稳定网络负载。因此，多种工具、技术和策略的组合才是帮助保持我们的服务可靠性的方法。在我们深入讨论本章之前，我们建议阅读《SRE：Google运维解密》第19章《前端服务器的负载均衡》和20《数据中心内部的负载均衡系统》中的内容。">
 <meta name="twitter:image" content="/blog/something/images/SRE/11-1.jpg">
 
 
@@ -139,7 +139,7 @@
   var CONFIG = {
     root: '',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -261,6 +261,18 @@
         
         
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -279,18 +291,6 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
-          </a>
-        </li>
-      
-        
-        
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -445,12 +445,27 @@
 
           
           
-
+             <span id="/sre/2020/01/11/%E5%BA%94%E5%AF%B9%E8%BF%87%E8%BD%BD/" class="leancloud_visitors" data-flag-title="第十一章 应对过载">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
 
           
+
+          
+            
+                <div class="post-description">
+                    服务永远不会100％可用：比如突发的流量高峰导致系统崩溃；或者船锚意外扯住了跨大西洋的光缆造成网络不可用。作为服务提供者，我们要为客户提供持久稳定的服务。面对这些突发的情况，如何才能使我们的基础设施尽可能具备可靠性？本章介绍了Google应对过载的方法，希望能够使用这些最佳实践来提高服务的可靠性和可用性。多年来，我们发现，没有单一的解决方案来均衡和稳定网络负载。因此，多种工具、技术和策略的组合才是帮助保持我们的服务可靠性的方法。在我们深入讨论本章之前，我们建议阅读《SRE：Google运维解密》第19章《前端服务器的负载均衡》和20《数据中心内部的负载均衡系统》中的内容。
+                </div>
             
           
 
@@ -855,7 +870,7 @@
                alt="ZX" />
           <p class="site-author-name" itemprop="name">ZX</p>
            
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">zxzxzxzx</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -906,12 +921,53 @@
 
         <div class="links-of-author motion-element">
           
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/ZXANG" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
         </div>
 
         
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/" title="首页" target="_blank">首页</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/categories/" title="分类" target="_blank">分类</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" title="《SRE-Google运维实践》" target="_blank">《SRE-Google运维实践》</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
         
@@ -1463,6 +1519,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("<app_id>", "<app_key>");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
