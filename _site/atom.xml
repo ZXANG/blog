@@ -1,4 +1,224 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-27T18:04:30+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><subtitle>zxzxzxzx</subtitle><author><name>ZX</name></author><entry><title type="html">leetcode 16.04 井字游戏 （面）</title><link href="http://localhost:4000/leetcode/2020/05/27/leetcode-mian-16.04/" rel="alternate" type="text/html" title="leetcode 16.04 井字游戏 （面）" /><published>2020-05-27T00:00:00+08:00</published><updated>2020-05-27T00:00:00+08:00</updated><id>http://localhost:4000/leetcode/2020/05/27/leetcode-mian-16.04</id><content type="html" xml:base="http://localhost:4000/leetcode/2020/05/27/leetcode-mian-16.04/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-06-01T14:06:08+08:00</updated><id>http://localhost:4000/atom.xml</id><title type="html">Blog</title><subtitle>zxzxzxzx</subtitle><author><name>ZX</name></author><entry><title type="html">python 读写 execl</title><link href="http://localhost:4000/python/2020/05/29/python%E6%93%8D%E4%BD%9Cexecl/" rel="alternate" type="text/html" title="python 读写 execl" /><published>2020-05-29T00:00:00+08:00</published><updated>2020-05-29T00:00:00+08:00</updated><id>http://localhost:4000/python/2020/05/29/python%E6%93%8D%E4%BD%9Cexecl</id><content type="html" xml:base="http://localhost:4000/python/2020/05/29/python%E6%93%8D%E4%BD%9Cexecl/">&lt;p&gt;由于最近业务上有统计相关的需求，需要对上千多张表进行操作，并且整理成excel，因此使用python openyxl库来进行相关操作&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;概念：&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;workbook： 相当于是一个文件，也就是一个excel&lt;/li&gt;
+    &lt;li&gt;sheet： excel 的一个工作表&lt;/li&gt;
+    &lt;li&gt;cell ： sheet 的一个单元格&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;具体操作&quot;&gt;具体操作&lt;/h1&gt;
+
+&lt;h2 id=&quot;excel文件操作&quot;&gt;excel文件操作&lt;/h2&gt;
+
+&lt;h4 id=&quot;创建excel文件&quot;&gt;创建excel文件&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wb = openpyxl.Workbook() 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;打开excel文件&quot;&gt;打开excel文件&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wb = openpyxl.load_workbook('/Users/python操作excel.xlsx')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;保存excel文件&quot;&gt;保存excel文件&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wb.save('/Users/python操作excel.xlsx')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;sheet表操作&quot;&gt;sheet表操作&lt;/h2&gt;
+
+&lt;h4 id=&quot;创建sheet表&quot;&gt;创建sheet表&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet = wb.create_sheet(title=(&quot;创建sheet&quot;.decode('utf-8')))     #插入在末尾  
+or  
+sheet = wb.create_sheet(title=(&quot;创建sheet&quot;.decode('utf-8')）, 0) #插入在最开始  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;打开sheet表&quot;&gt;打开sheet表&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet = wb.active 
+# 返回当前默认的WorkSheet
+
+sheet = wb[&quot;New Title&quot;]
+# 打开title为 &quot;New Title&quot;的表
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;单元格操作&quot;&gt;单元格操作&lt;/h2&gt;
+
+&lt;h4 id=&quot;写入数据&quot;&gt;写入数据&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet.cell(row = 1, column = 1, value = 2)
+第一行的第一格数据写入2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;合并单元格&quot;&gt;合并单元格&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=2)
+合并第一行的 第1格和第2格。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;修改单元格属性&quot;&gt;修改单元格属性&lt;/h4&gt;
+&lt;p&gt;openyxl通过styles模块可以设置单元格、列的属性，通过以下函数分别配置：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Font：来设置文字的大小，颜色和下划线等&lt;/li&gt;
+  &lt;li&gt;PatternFill：填充图案和渐变色&lt;/li&gt;
+  &lt;li&gt;Border：单元格的边框&lt;/li&gt;
+  &lt;li&gt;Alignment：单元格的对齐方式等&lt;/li&gt;
+  &lt;li&gt;protection：写保护&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;传送门：&lt;a href=&quot;https://openpyxl.readthedocs.io/en/default/styles.html#worksheet-additional-properties&quot;&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;导入依赖&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from openpyxl.styles import Font, Alignment, Border,  protection # 导入代码库   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;设置字体大小：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet.cell(row=1, column=1).font = Font(u'宋体',size = 11,bold=True,italic=True,strike=True,color='000000')   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;字体:“宋体”，size：大小, bold：加粗，italic：斜体，strike：删除线，颜色为黑色&lt;/p&gt;
+
+&lt;p&gt;设置单元格填充颜色：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet.cell(row=1, column=1).fill = PatternFill(fill_type = None, start_color='FFFFFF', end_color='000000')  
+sheet.cell(row=1, column=1).fill = PatternFill(fill_type='solid', fgColor=&quot;FF0000&quot;) # 设置填充为红色
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;start_color：前景色， end_color：背景色&lt;/p&gt;
+
+&lt;p&gt;设置单元格居中：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet.cell(row=1, column=1).align = Alignment(horizontal='left',vertical='center',wrap_text=True)    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;horizontal: 水平方向&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;居中 center&lt;/li&gt;
+  &lt;li&gt;左对齐 left&lt;/li&gt;
+  &lt;li&gt;右对齐 right&lt;/li&gt;
+  &lt;li&gt;分散对齐 distributed&lt;/li&gt;
+  &lt;li&gt;跨列居中 centerContinuous&lt;/li&gt;
+  &lt;li&gt;两端对齐 justify&lt;/li&gt;
+  &lt;li&gt;填充 fill&lt;/li&gt;
+  &lt;li&gt;常规 general&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;vertical:  垂直方向&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;居中 center&lt;/li&gt;
+  &lt;li&gt;靠上 top&lt;/li&gt;
+  &lt;li&gt;靠下 bottom&lt;/li&gt;
+  &lt;li&gt;两端对齐 justify&lt;/li&gt;
+  &lt;li&gt;分散对齐 distributed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;wrap_text：自动换行，布尔类型的参数，这个参数还可以写作wrapText&lt;/p&gt;
+
+&lt;h2 id=&quot;行列&quot;&gt;行/列&lt;/h2&gt;
+&lt;p&gt;Worksheet 对象的 row_dimensions 和 column_dimensions 属性，分别控制行高和列宽。&lt;/p&gt;
+
+&lt;h4 id=&quot;设置行高&quot;&gt;设置行高&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet.row_dimensions[1].height=100 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;设置列宽&quot;&gt;设置列宽&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sheet.column_dimensions['A'].width=100  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;元素属性&quot;&gt;元素属性&lt;/h1&gt;
+
+&lt;h2 id=&quot;workbook属性&quot;&gt;workbook属性&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;sheetnames： 返回所有WorkSheet的名字列表，类型为list&lt;/li&gt;
+  &lt;li&gt;worksheets： 返回所有WorkSheet的列表，类型为list&lt;/li&gt;
+  &lt;li&gt;active： 返回当前默认选中的WorkSheet&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;workbook方法&quot;&gt;workbook方法：&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;get_sheet_names()： 同sheetnames&lt;/li&gt;
+  &lt;li&gt;get_active_sheet()： 同active属性&lt;/li&gt;
+  &lt;li&gt;get_sheet_by_name(name)： 根据名称获取WorkSheet&lt;/li&gt;
+  &lt;li&gt;remove(worksheet)： 删除一个WorkSheet，注意是WorkSheet对象，不是名字&lt;/li&gt;
+  &lt;li&gt;save(filename)： 保存到文件，记住有写入操作记得保存。&lt;/li&gt;
+  &lt;li&gt;copy_worksheet(worksheet)： 复制一个WorkSheet，注意是WorkSheet对象，不是名字&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;sheet属性&quot;&gt;sheet属性&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;rows： 返回所有有效数据行，有数据时类型为generator，无数据时为tuple&lt;/li&gt;
+  &lt;li&gt;columns： 返回所有有效数据列，类型同rows&lt;/li&gt;
+  &lt;li&gt;max_column： 有效数据最大列&lt;/li&gt;
+  &lt;li&gt;max_row： 有效数据最大行&lt;/li&gt;
+  &lt;li&gt;min_column： 有效数据最小列，起始为1&lt;/li&gt;
+  &lt;li&gt;min_row： 有效数据最大行，起始为1&lt;/li&gt;
+  &lt;li&gt;values： 返回所有单元格的值的列表，类型为tuple&lt;/li&gt;
+  &lt;li&gt;title： WorkSheet的名称&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cell属性&quot;&gt;cell属性&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;column： 所在列，起始为1&lt;/li&gt;
+  &lt;li&gt;row： 所在行，起始为1&lt;/li&gt;
+  &lt;li&gt;coordinate：  所在坐标，如’A1’&lt;/li&gt;
+  &lt;li&gt;parent： 所属的WorkSheet&lt;/li&gt;
+  &lt;li&gt;value： 单元格的值&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>ZX</name></author><category term="something" /><summary type="html">由于最近业务上有统计相关的需求，需要对上千多张表进行操作，并且整理成excel，因此使用python openyxl库来进行相关操作 概念： workbook： 相当于是一个文件，也就是一个excel sheet： excel 的一个工作表 cell ： sheet 的一个单元格 具体操作 excel文件操作 创建excel文件 wb = openpyxl.Workbook() 打开excel文件 wb = openpyxl.load_workbook('/Users/python操作excel.xlsx') 保存excel文件 wb.save('/Users/python操作excel.xlsx') sheet表操作 创建sheet表 sheet = wb.create_sheet(title=(&quot;创建sheet&quot;.decode('utf-8'))) #插入在末尾 or sheet = wb.create_sheet(title=(&quot;创建sheet&quot;.decode('utf-8')）, 0) #插入在最开始 打开sheet表 sheet = wb.active # 返回当前默认的WorkSheet sheet = wb[&quot;New Title&quot;] # 打开title为 &quot;New Title&quot;的表 单元格操作 写入数据 sheet.cell(row = 1, column = 1, value = 2) 第一行的第一格数据写入2 合并单元格 sheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=2) 合并第一行的 第1格和第2格。 修改单元格属性 openyxl通过styles模块可以设置单元格、列的属性，通过以下函数分别配置： Font：来设置文字的大小，颜色和下划线等 PatternFill：填充图案和渐变色 Border：单元格的边框 Alignment：单元格的对齐方式等 protection：写保护 传送门：官方文档 导入依赖 from openpyxl.styles import Font, Alignment, Border, protection # 导入代码库 设置字体大小： sheet.cell(row=1, column=1).font = Font(u'宋体',size = 11,bold=True,italic=True,strike=True,color='000000') 字体:“宋体”，size：大小, bold：加粗，italic：斜体，strike：删除线，颜色为黑色 设置单元格填充颜色： sheet.cell(row=1, column=1).fill = PatternFill(fill_type = None, start_color='FFFFFF', end_color='000000') sheet.cell(row=1, column=1).fill = PatternFill(fill_type='solid', fgColor=&quot;FF0000&quot;) # 设置填充为红色 start_color：前景色， end_color：背景色 设置单元格居中： sheet.cell(row=1, column=1).align = Alignment(horizontal='left',vertical='center',wrap_text=True) horizontal: 水平方向 居中 center 左对齐 left 右对齐 right 分散对齐 distributed 跨列居中 centerContinuous 两端对齐 justify 填充 fill 常规 general vertical: 垂直方向 居中 center 靠上 top 靠下 bottom 两端对齐 justify 分散对齐 distributed wrap_text：自动换行，布尔类型的参数，这个参数还可以写作wrapText 行/列 Worksheet 对象的 row_dimensions 和 column_dimensions 属性，分别控制行高和列宽。 设置行高 sheet.row_dimensions[1].height=100 设置列宽 sheet.column_dimensions['A'].width=100 元素属性 workbook属性 sheetnames： 返回所有WorkSheet的名字列表，类型为list worksheets： 返回所有WorkSheet的列表，类型为list active： 返回当前默认选中的WorkSheet workbook方法： get_sheet_names()： 同sheetnames get_active_sheet()： 同active属性 get_sheet_by_name(name)： 根据名称获取WorkSheet remove(worksheet)： 删除一个WorkSheet，注意是WorkSheet对象，不是名字 save(filename)： 保存到文件，记住有写入操作记得保存。 copy_worksheet(worksheet)： 复制一个WorkSheet，注意是WorkSheet对象，不是名字 sheet属性 rows： 返回所有有效数据行，有数据时类型为generator，无数据时为tuple columns： 返回所有有效数据列，类型同rows max_column： 有效数据最大列 max_row： 有效数据最大行 min_column： 有效数据最小列，起始为1 min_row： 有效数据最大行，起始为1 values： 返回所有单元格的值的列表，类型为tuple title： WorkSheet的名称 cell属性 column： 所在列，起始为1 row： 所在行，起始为1 coordinate： 所在坐标，如’A1’ parent： 所属的WorkSheet value： 单元格的值</summary></entry><entry><title type="html">leetcode 1343. 大小为 K 且平均值大于等于阈值的子数组数目</title><link href="http://localhost:4000/leetcode/2020/05/27/leetcode-1343/" rel="alternate" type="text/html" title="leetcode 1343. 大小为 K 且平均值大于等于阈值的子数组数目" /><published>2020-05-27T00:00:00+08:00</published><updated>2020-05-27T00:00:00+08:00</updated><id>http://localhost:4000/leetcode/2020/05/27/leetcode-1343</id><content type="html" xml:base="http://localhost:4000/leetcode/2020/05/27/leetcode-1343/">&lt;p&gt;leetcode 1343. 大小为 K 且平均值大于等于阈值的子数组数目&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;输入：arr = [2,2,2,2,5,5,5,8], k = 3, threshold = 4&lt;br /&gt;
+输出：3&lt;br /&gt;
+解释：子数组 [2,5,5],[5,5,5] 和 [5,5,8] 的平均值分别为 4，5 和 6 。其他长度为 3 的子数组的平均值都小于 4 （threshold 的值)。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;来源：力扣（LeetCode）&lt;br /&gt;
+链接：&lt;a href=&quot;https://leetcode-cn.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold&quot;&gt;力扣（LeetCode）&lt;/a&gt; &lt;br /&gt;
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;注：此题所描述的子数字为&lt;code class=&quot;highlighter-rouge&quot;&gt;连续的&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;解：&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;定义长度为k的滑动窗口, Sum为滑动窗口之和, num为符合条件的子数组个数,（滑动窗口为逻辑上的，实际代码无需实现）&lt;/p&gt;
+
+  &lt;p&gt;循环遍历arr，当遍历到 i 时，Sum的值为 减去窗口最前值，加上窗口最后值， 然后比较Sum 与 threshold*k 大小, 如果Sum 累加num.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;定义初始条件&quot;&gt;定义初始条件：&lt;/h3&gt;
+&lt;p&gt;k = 3,  滑动窗口为 [2, 2, 2], Sum = 6, num = 0&lt;br /&gt;
+Sum &amp;gt; threshold*k  num = 1 否则 num = 0&lt;/p&gt;
+
+&lt;p&gt;遍历arr, 起始为k, 因为当前 前三个数已经在窗口了，因此遍历初始是第四个值，即 arr[3]&lt;/p&gt;
+
+&lt;p&gt;i = 3:  [2, 2, 2]  Sum = 6  , num = 0 &lt;br /&gt;
+i = 4:  [2, 2, 5]  Sum = 9  , num = 0&lt;br /&gt;
+i = 5:  [2, 5, 5]  Sum = 12 , num + 1 &lt;br /&gt;
+i = 6:  [5, 5, 5]  Sum = 15 , num + 1&lt;br /&gt;
+i = 7:  [5, 5, 8]  Sum = 18 , num + 1&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class Solution(object):
+    def numOfSubarrays(self, arr, k, threshold):
+
+        Sum = sum(arr[:k]) #获取滑动窗口之和
+        num = 1 if Sum &amp;gt;= threshold*k else 0
+
+        for i in range(k, len(arr)):
+            Sum = Sum - arr[i - k] + arr[i]
+            if Sum &amp;gt;= threshold*k:
+                num += 1
+        return num
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>ZX</name></author><category term="array" /><summary type="html">leetcode 1343. 大小为 K 且平均值大于等于阈值的子数组数目 输入：arr = [2,2,2,2,5,5,5,8], k = 3, threshold = 4 输出：3 解释：子数组 [2,5,5],[5,5,5] 和 [5,5,8] 的平均值分别为 4，5 和 6 。其他长度为 3 的子数组的平均值都小于 4 （threshold 的值)。 来源：力扣（LeetCode） 链接：力扣（LeetCode） 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。 注：此题所描述的子数字为连续的。 解： 定义长度为k的滑动窗口, Sum为滑动窗口之和, num为符合条件的子数组个数,（滑动窗口为逻辑上的，实际代码无需实现） 循环遍历arr，当遍历到 i 时，Sum的值为 减去窗口最前值，加上窗口最后值， 然后比较Sum 与 threshold*k 大小, 如果Sum 累加num. 定义初始条件： k = 3, 滑动窗口为 [2, 2, 2], Sum = 6, num = 0 Sum &amp;gt; threshold*k num = 1 否则 num = 0 遍历arr, 起始为k, 因为当前 前三个数已经在窗口了，因此遍历初始是第四个值，即 arr[3] i = 3: [2, 2, 2] Sum = 6 , num = 0 i = 4: [2, 2, 5] Sum = 9 , num = 0 i = 5: [2, 5, 5] Sum = 12 , num + 1 i = 6: [5, 5, 5] Sum = 15 , num + 1 i = 7: [5, 5, 8] Sum = 18 , num + 1 class Solution(object): def numOfSubarrays(self, arr, k, threshold): Sum = sum(arr[:k]) #获取滑动窗口之和 num = 1 if Sum &amp;gt;= threshold*k else 0 for i in range(k, len(arr)): Sum = Sum - arr[i - k] + arr[i] if Sum &amp;gt;= threshold*k: num += 1 return num</summary></entry><entry><title type="html">leetcode 16.04 井字游戏 （面）</title><link href="http://localhost:4000/leetcode/2020/05/27/leetcode-mian-16.04/" rel="alternate" type="text/html" title="leetcode 16.04 井字游戏 （面）" /><published>2020-05-27T00:00:00+08:00</published><updated>2020-05-27T00:00:00+08:00</updated><id>http://localhost:4000/leetcode/2020/05/27/leetcode-mian-16.04</id><content type="html" xml:base="http://localhost:4000/leetcode/2020/05/27/leetcode-mian-16.04/">&lt;blockquote&gt;
   &lt;p&gt;设计一个算法，判断玩家是否赢了井字游戏。输入是一个 N x N 的数组棋盘，由字符” “，”X”和”O”组成，其中字符” “代表一个空位。&lt;/p&gt;
 
   &lt;p&gt;以下是井字游戏的规则：&lt;/p&gt;
@@ -92,53 +312,7 @@ all()  x中的所有元素均不为空、0、false, 返回True，否则返回Fal
         return 'Draw'
 
         
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>ZX</name></author><category term="array" /><summary type="html">设计一个算法，判断玩家是否赢了井字游戏。输入是一个 N x N 的数组棋盘，由字符” “，”X”和”O”组成，其中字符” “代表一个空位。 以下是井字游戏的规则： 玩家轮流将字符放入空位（” “）中。 第一个玩家总是放字符”O”，且第二个玩家总是放字符”X”。 “X”和”O”只允许放置在空位中，不允许对已放有字符的位置进行填充。 当有N个相同（且非空）的字符填充任何行、列或对角线时，游戏结束，对应该字符的玩家获胜。 当所有位置非空时，也算为游戏结束。 如果游戏结束，玩家不允许再放置字符。 如果游戏存在获胜者，就返回该游戏的获胜者使用的字符（”X”或”O”）；如果游戏以平局结束，则返回 “Draw”；如果仍会有行动（游戏未结束），则返回 “Pending”。 示例 1： 输入： board = [“O X”,” XO”,”X O”] 输出： “X” 示例 2： 输入： board = [“OOX”,”XXO”,”OXO”] 输出： “Draw” 解释： 没有玩家获胜且不存在空位 示例 3： 输入： board = [“OOX”,”XXO”,”OX “] 输出： “Pending” 解释： 没有玩家获胜且仍存在空位 提示： 1 &amp;lt;= board.length == board[i].length &amp;lt;= 100 输入一定遵循井字棋规则 来源：力扣（LeetCode） 链接：力扣（LeetCode） 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。 解： 根据描述，仅存在以下三种情况： 有人获胜 没有玩家获胜且存在空位 没有玩家获胜且不存在空位 有人获胜： 无论是’X’ 还是’O’获胜，必须满足以下条件之一 全行相等 any([all([char == C for char in row]) for row in board]） 全列相等 any([all([char == C for char in col]) for col in zip(*board)]) 左对角线相等 all([board[i][i] == C for i in range(N)] ) 右对角线相等 all([board[i][N-1-i] == C for i in range(N)] ) 没有玩家获胜且存在空位 没人获胜 存在空位 any([ “ “ in row for row in board]) any() x中有一个不为空、0、false, 返回True，否则返回False x 可以为list、tuple all() x中的所有元素均不为空、0、false, 返回True，否则返回False x 可以为list、tuple class Solution(object): def tictactoe(self, board): &quot;&quot;&quot; :type board: List[str] :rtype: str &quot;&quot;&quot; N = len(board) def check(C): if C == &quot; &quot;: # 判断是否有空位 return any([ &quot; &quot; in row for row in board]) return any(( any([all([char == C for char in row]) for row in board]), # 判断行 any([all([char == C for char in col]) for col in zip(*board)]), #判断列 all([board[i][i] == C for i in range(N)] ), #判断左对角线 \ all([board[i][N-1-i] == C for i in range(N)] ) #判断右对角线 / )) if check('X'): return 'X' if check('O'): return 'O' if check(' '): return 'Pending' return 'Draw'</summary></entry><entry><title type="html">leetcode 1343. 大小为 K 且平均值大于等于阈值的子数组数目</title><link href="http://localhost:4000/leetcode/2020/05/27/leetcode-1343/" rel="alternate" type="text/html" title="leetcode 1343. 大小为 K 且平均值大于等于阈值的子数组数目" /><published>2020-05-27T00:00:00+08:00</published><updated>2020-05-27T00:00:00+08:00</updated><id>http://localhost:4000/leetcode/2020/05/27/leetcode-1343</id><content type="html" xml:base="http://localhost:4000/leetcode/2020/05/27/leetcode-1343/">&lt;p&gt;leetcode 1343. 大小为 K 且平均值大于等于阈值的子数组数目&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;输入：arr = [2,2,2,2,5,5,5,8], k = 3, threshold = 4&lt;br /&gt;
-输出：3&lt;br /&gt;
-解释：子数组 [2,5,5],[5,5,5] 和 [5,5,8] 的平均值分别为 4，5 和 6 。其他长度为 3 的子数组的平均值都小于 4 （threshold 的值)。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;来源：力扣（LeetCode）&lt;br /&gt;
-链接：&lt;a href=&quot;https://leetcode-cn.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold&quot;&gt;力扣（LeetCode）&lt;/a&gt; &lt;br /&gt;
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;注：此题所描述的子数字为&lt;code class=&quot;highlighter-rouge&quot;&gt;连续的&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;解：&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;定义长度为k的滑动窗口, Sum为滑动窗口之和, num为符合条件的子数组个数,（滑动窗口为逻辑上的，实际代码无需实现）&lt;/p&gt;
-
-  &lt;p&gt;循环遍历arr，当遍历到 i 时，Sum的值为 减去窗口最前值，加上窗口最后值， 然后比较Sum 与 threshold*k 大小, 如果Sum 累加num.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;定义初始条件&quot;&gt;定义初始条件：&lt;/h3&gt;
-&lt;p&gt;k = 3,  滑动窗口为 [2, 2, 2], Sum = 6, num = 0&lt;br /&gt;
-Sum &amp;gt; threshold*k  num = 1 否则 num = 0&lt;/p&gt;
-
-&lt;p&gt;遍历arr, 起始为k, 因为当前 前三个数已经在窗口了，因此遍历初始是第四个值，即 arr[3]&lt;/p&gt;
-
-&lt;p&gt;i = 3:  [2, 2, 2]  Sum = 6  , num = 0 &lt;br /&gt;
-i = 4:  [2, 2, 5]  Sum = 9  , num = 0&lt;br /&gt;
-i = 5:  [2, 5, 5]  Sum = 12 , num + 1 &lt;br /&gt;
-i = 6:  [5, 5, 5]  Sum = 15 , num + 1&lt;br /&gt;
-i = 7:  [5, 5, 8]  Sum = 18 , num + 1&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class Solution(object):
-    def numOfSubarrays(self, arr, k, threshold):
-
-        Sum = sum(arr[:k]) #获取滑动窗口之和
-        num = 1 if Sum &amp;gt;= threshold*k else 0
-
-        for i in range(k, len(arr)):
-            Sum = Sum - arr[i - k] + arr[i]
-            if Sum &amp;gt;= threshold*k:
-                num += 1
-        return num
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>ZX</name></author><category term="array" /><summary type="html">leetcode 1343. 大小为 K 且平均值大于等于阈值的子数组数目 输入：arr = [2,2,2,2,5,5,5,8], k = 3, threshold = 4 输出：3 解释：子数组 [2,5,5],[5,5,5] 和 [5,5,8] 的平均值分别为 4，5 和 6 。其他长度为 3 的子数组的平均值都小于 4 （threshold 的值)。 来源：力扣（LeetCode） 链接：力扣（LeetCode） 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。 注：此题所描述的子数字为连续的。 解： 定义长度为k的滑动窗口, Sum为滑动窗口之和, num为符合条件的子数组个数,（滑动窗口为逻辑上的，实际代码无需实现） 循环遍历arr，当遍历到 i 时，Sum的值为 减去窗口最前值，加上窗口最后值， 然后比较Sum 与 threshold*k 大小, 如果Sum 累加num. 定义初始条件： k = 3, 滑动窗口为 [2, 2, 2], Sum = 6, num = 0 Sum &amp;gt; threshold*k num = 1 否则 num = 0 遍历arr, 起始为k, 因为当前 前三个数已经在窗口了，因此遍历初始是第四个值，即 arr[3] i = 3: [2, 2, 2] Sum = 6 , num = 0 i = 4: [2, 2, 5] Sum = 9 , num = 0 i = 5: [2, 5, 5] Sum = 12 , num + 1 i = 6: [5, 5, 5] Sum = 15 , num + 1 i = 7: [5, 5, 8] Sum = 18 , num + 1 class Solution(object): def numOfSubarrays(self, arr, k, threshold): Sum = sum(arr[:k]) #获取滑动窗口之和 num = 1 if Sum &amp;gt;= threshold*k else 0 for i in range(k, len(arr)): Sum = Sum - arr[i - k] + arr[i] if Sum &amp;gt;= threshold*k: num += 1 return num</summary></entry><entry><title type="html">kafka相关运维案例</title><link href="http://localhost:4000/%E5%A4%A7%E6%95%B0%E6%8D%AE/2020/05/26/kafka%E7%9B%B8%E5%85%B3%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B/" rel="alternate" type="text/html" title="kafka相关运维案例" /><published>2020-05-26T00:00:00+08:00</published><updated>2020-05-26T00:00:00+08:00</updated><id>http://localhost:4000/%E5%A4%A7%E6%95%B0%E6%8D%AE/2020/05/26/kafka%E7%9B%B8%E5%85%B3%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B</id><content type="html" xml:base="http://localhost:4000/%E5%A4%A7%E6%95%B0%E6%8D%AE/2020/05/26/kafka%E7%9B%B8%E5%85%B3%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B/">&lt;blockquote&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>ZX</name></author><category term="array" /><summary type="html">设计一个算法，判断玩家是否赢了井字游戏。输入是一个 N x N 的数组棋盘，由字符” “，”X”和”O”组成，其中字符” “代表一个空位。 以下是井字游戏的规则： 玩家轮流将字符放入空位（” “）中。 第一个玩家总是放字符”O”，且第二个玩家总是放字符”X”。 “X”和”O”只允许放置在空位中，不允许对已放有字符的位置进行填充。 当有N个相同（且非空）的字符填充任何行、列或对角线时，游戏结束，对应该字符的玩家获胜。 当所有位置非空时，也算为游戏结束。 如果游戏结束，玩家不允许再放置字符。 如果游戏存在获胜者，就返回该游戏的获胜者使用的字符（”X”或”O”）；如果游戏以平局结束，则返回 “Draw”；如果仍会有行动（游戏未结束），则返回 “Pending”。 示例 1： 输入： board = [“O X”,” XO”,”X O”] 输出： “X” 示例 2： 输入： board = [“OOX”,”XXO”,”OXO”] 输出： “Draw” 解释： 没有玩家获胜且不存在空位 示例 3： 输入： board = [“OOX”,”XXO”,”OX “] 输出： “Pending” 解释： 没有玩家获胜且仍存在空位 提示： 1 &amp;lt;= board.length == board[i].length &amp;lt;= 100 输入一定遵循井字棋规则 来源：力扣（LeetCode） 链接：力扣（LeetCode） 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。 解： 根据描述，仅存在以下三种情况： 有人获胜 没有玩家获胜且存在空位 没有玩家获胜且不存在空位 有人获胜： 无论是’X’ 还是’O’获胜，必须满足以下条件之一 全行相等 any([all([char == C for char in row]) for row in board]） 全列相等 any([all([char == C for char in col]) for col in zip(*board)]) 左对角线相等 all([board[i][i] == C for i in range(N)] ) 右对角线相等 all([board[i][N-1-i] == C for i in range(N)] ) 没有玩家获胜且存在空位 没人获胜 存在空位 any([ “ “ in row for row in board]) any() x中有一个不为空、0、false, 返回True，否则返回False x 可以为list、tuple all() x中的所有元素均不为空、0、false, 返回True，否则返回False x 可以为list、tuple class Solution(object): def tictactoe(self, board): &quot;&quot;&quot; :type board: List[str] :rtype: str &quot;&quot;&quot; N = len(board) def check(C): if C == &quot; &quot;: # 判断是否有空位 return any([ &quot; &quot; in row for row in board]) return any(( any([all([char == C for char in row]) for row in board]), # 判断行 any([all([char == C for char in col]) for col in zip(*board)]), #判断列 all([board[i][i] == C for i in range(N)] ), #判断左对角线 \ all([board[i][N-1-i] == C for i in range(N)] ) #判断右对角线 / )) if check('X'): return 'X' if check('O'): return 'O' if check(' '): return 'Pending' return 'Draw'</summary></entry><entry><title type="html">kafka相关运维案例</title><link href="http://localhost:4000/%E5%A4%A7%E6%95%B0%E6%8D%AE/2020/05/26/kafka%E7%9B%B8%E5%85%B3%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B/" rel="alternate" type="text/html" title="kafka相关运维案例" /><published>2020-05-26T00:00:00+08:00</published><updated>2020-05-26T00:00:00+08:00</updated><id>http://localhost:4000/%E5%A4%A7%E6%95%B0%E6%8D%AE/2020/05/26/kafka%E7%9B%B8%E5%85%B3%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B</id><content type="html" xml:base="http://localhost:4000/%E5%A4%A7%E6%95%B0%E6%8D%AE/2020/05/26/kafka%E7%9B%B8%E5%85%B3%E8%BF%90%E7%BB%B4%E6%A1%88%E4%BE%8B/">&lt;blockquote&gt;
 
   &lt;p&gt;版本：kafka_2.11-0.10.1.1&lt;br /&gt;
 数据：1P+&lt;br /&gt;
@@ -1708,263 +1882,4 @@ Ares工程师和Abuse SRE之间的协作带来了以下改进：&lt;/p&gt;
 
 &lt;p&gt;特别实在运营工作方面，过度的中断很容易导致团队从正常工作负载滑落到过载。频繁的中断可能导致过载，过载会对健康和生产力产生负面影响。超载会给团队成员带来心理社会压力因素，进一步影响工作，导致自我强制循环。&lt;/p&gt;
 
-&lt;p&gt;感知过载是一种特殊的过载形式，无法通过劳动量或操作量来衡量。很难确定和消除。为了使团队的工作量保持平衡，持续监控（感知的或为感知的）过载非常重要。为了更好地为用户服务并做好工作，你需要首先尊重自己和团队。在日常工作中保持健康的平衡对于帮助你和你的团队实现这一目标有很大帮助。&lt;/p&gt;</content><author><name>ZX</name></author><category term="《SRE-Google运维实践》" /><summary type="html">当SRE团队顺利运行时，团队成员应该感觉他们可以轻松地处理所有工作。他们应该能够处理工单，并且还有时间处理长期项目，以便将来更容易地管理服务。 但有时现实情况会妨碍团队的工作目标，比如，成员长期病假或转移到新的团队。组织为SRE制定了新的生产范围计划，对服务或更大系统的更改带来了新的技术挑战。随着工作量的增加，团队成员开始工作更长时间来处理工单和紧急警报，以至于减少了花在工程工作上的时间。整个团队开始感到压力并沮丧，因为他们努力工作却没有取得进步。反过来，压力会导致人们犯更多的错误，影响可靠性最终影响最终用户。简而言之，该团队失去了管理日常工作和有效管理服务的能力。 因此，团队需要找到摆脱这种过载状态的方法。他们需要重新平衡工作量，以便团队成员可以专注于必要的工程工作。运维负载（或运维工作负载）是一个术语，描述的是使系统和服务以最佳性能运行的持续维护工作。有三种不同类型的运维负载：紧急警报、工单和日常运维任务。紧急警报通常需要立即关注，与紧急问题相关的工单可能会有紧迫的截止日期。报警和紧急工单都会中断SRE的工程工作来支持团队的运维工作。出于这个原因，我们将它们称为中断。SRE（Site Reliability Engineering）的第29章讨论了管理团队在维护复杂系统的运行状态时处理自然中断的技术。当运维负载超过团队管理能力时，团队最终将处于运维过载状态（也称为工作超负荷）。当团队无法在关键优先事项方面取得进展时，团队处于运营超负荷状态，因为紧急问题不断取代项目工作。除了降低团队的优先级和服务改进之外，过载还会增加工程师出错的可能性。 运维过载的阈值因团队而异，Google SRE团队将工作量限制在工程师工作时间的50%。从长远来看，成功的SRE团队必须有信心他们将能够完成所需的工程项目，以减少他们所管理服务的运维负担。 本章描述了Google的团队如何从一个以运维过载为特征的困难局面发展到管理良好的工作负载。两个案例研究显示了运维过载对团队健康的不利影响，以及团队如何改变他们的日常任务，以便可以专注于长期有影响力的项目。在案例研究1中，当身处于一个不断缩小的团队中的成员无法跟上工作负载时，便会导致过载。在案例研究2中，团队遭受他们所认为的过载——这是一种与运维过载具有相同效果的状态，但最初是对实际工作负荷的误解。 虽然案例研究突出了两个Google SRE团队的具体行为，但“减轻过载的策略”一节第366页提供了适用于任何公司或组织辨别和减轻过载的实践。因此，本章应该对过载团队的管理者或任何关注过载的SRE团队有用。 从负载到过载 无论其起源如何，过载都是一种可能削弱生产力的职业压力。如果不加以控制，可能会导致严重的疾病。对于SRE团队而言，运维负载通常是认知上困难任务的组合（如调试内存泄漏或分段故障）和一些需要频繁环境切换的小任务（通过配额请求，启动二进制分发等）。 当团队没有足够的时间来处理所有这些任务时，通常会发生工作超负荷——当分配给团队的任务数量无法在每个任务的给定截止日期内完成时，这是客观现实。感知过载更为主观，并且当团队中的个人觉得他们有太多工作时就会发生。这通常发生在短期内有多次组织或工作变更时，但团队几乎没有机会与领导层就变更进行沟通。 当你值班时，你永远不会清楚会出现什么问题，或者你的工作量是什么。一方面，看似单一的磁盘空间不足问题可能会导致对重复的垃圾收集工作进行深入调查。另一方面，20次以上的紧急报警风暴可能会成为监控不良的情况。当很难估计或预测你的工作量时，很容易成为认知偏差的受害者并误判工作量——例如，你可能会任务在你on-call期间工单队列太大而无法完成，即使你可以快速完成所有工单并且实际工作负载较低，你在第一次查看工单队列时也会感到超载。这种感知过载本身是一种影响工作方式和态度的心理因素，如果你没有以一种有很多工作的预想开始一天的工作，你将很可能潜心的按照你自己的方式完成工单序列。也许你整天都在工作，但并没有完成你的工作量（因此面临工作超负荷），但是这将比一开始就感觉不堪重负更有进步。 累积很多工作中断可能会导致工作超载，但也并非如此。但是，当频繁的中断与外部压力因素配对时，大的工作量（甚至是小的工作量）很容易变成感知的过载。这种压力可能源于担心其他团队成员失望，工作安全感，工作相关或个人矛盾，疾病或健康相关问题，如缺乏睡眠或运动。如果你的工作没有得到适当的优先排序，那么每项任务都会显得同样紧迫，从而导致实际和感知过载。在实际的过载情况下，工单和警报的紧急程度可能导致团队成员工作到知道解决问题，即使这样做意味着持续的长时间工作。当一个团队面临被认为的过载时，重新确定优先级可以帮助减少紧急工作量，为他们创造空间，通过项目工作来解决过载源。 在分析具体情况时，不一定要假设工作量本身需要更改，相反，我们建议首先量化团队所面临的工作，以及它如何（或没有）随时间变化。例如，你可以根据团队处理的故障单和紧急警报数量来衡量工作负载。如果你的工作量实际上没有随着时间的推移而发生变化，那么团队可能会感到超载仅仅是因为他们认为工作是压倒性的。可以通过要求每个成员列出他们面临的所有的工作任务来收集一次性快照，以更全面的了解团队当前的工作负载。然后看看你的团队面临的心理压力因素，例如组织变化或重新优化排序。完成研究后，就可以就改变工作量做出决定。 第366页的“减轻过载的策略”更多的讨论了如何识别真是和感知的过载。首先，我们提出两个认可的团队案例研究，他们处于超负荷状态并采取措施缓解它。 案例研究1：当半数团队成员离开时工作超载 背景 Google的一个内部存储SRE团队负责多种服务的后端维护，包括Gmail，Google云端硬盘和Google网上论坛，以及许多其他内部或面向用户的服务。我们在2016年中期经历了一场危机，当时三分之二的团队成员，包括最高级工程师（经理），在相对较短的时间内因为完全不相干的原因而离职。这个时间显然导致了巨大的工作量管理问题：可用于处理日常工作和项目工作的SRE越来越少，导致团队过载。我们的工作也遇到了瓶颈，因为每个团队成员的专业知识都被划分到不同的生产领域。虽然增加新的团队成员和三名实习生可以改善我们的工作量，但增加这些工程师需要花费大量的时间和精力进行培训。 问题陈述 上述因素显著降低了团队生产力。我们的开始落后于项目工作，并且我们管理的许多服务相关的工单开始堆积。我们没有足够的时间来处理这个积压，因为我们的所有工作都被更高优先级的任务所消耗。过不了多久我们就无法完成所需要的所有重要且紧急的工作。与此同时，我们的团队很快将获得更多高优先级的工作。 如果我们没有把一些工作从我们的主要版块上移开，那么我们只能放弃重要工作。然而，一旦我们开始放弃一些工作，我们就会遇到一些心理问题： 放弃任何正在进行的工作，感觉就像我们刚刚浪费了我们努力的时间。大多数积压工作似乎要么至关重要，要么值得我们付出努力，所以只有无限期地推迟或取消项目。我们没有意识到我们正处于一种沉没成本谬论的控制之中。 努力实现流程自动化或修复工作负载的根本原因并不像立即处理高优先级故障那样重要。当这项工作被添加到已经庞大的堆积工作的顶部时，所有的工作都感到压力很大。 我们决定做什么 我们将团队成员聚集在一个房间中，并列出了团队的所有职责，包括积压项目、运维工作和工单。然后我们队每个列表项进行了分类，查看我们的每一项工作任务，这有助于我们确定并重新定义我们的实际优先级。然后，我们找到了最小化、切换或消除低优先级工作的方法。 实现 我们将一些自动化低成本较低的工作自动化，可能这不会很多，但一旦部署，将大大降低运维负荷。 我们还确定了可以实现自助服务的常见问题。编写客户所需的程序并不需要很长时间，并从队列中删除了一些重复的工作。 我们合理地关闭了许多积压这的工单，这些工单中的大多数都是过时的、多余的，或者是紧急的（虽然他们声称是紧急的）。有些工单是监控那些不可操作的工作，所以我们修复了相关的监控。在某些情况下，我们积极解决不重要的问题。我们将这些问题放在一边处理更紧急的工单，但首先要记录我们的进度，以便在我们能够再次处理他们之前不会失去之前的环境。 当有疑问时，我们放弃一项工作，但标记为第二阶段的分流。一旦我们的盘子（几乎）空了，我们将重新审视这个暂定列表，以决定恢复哪些任务。事实证明，这些任务几乎都不具有影响力或重要性，无法恢复。 两天——一天的密集分流加上一天的记录流程和实施自动化——我们很小的团队解决了几个月的工单积压。然后我们可以处理剩余的几个故障，这些故障与生产中的活动问题有关。 经验总结 我们的团队了解到识别和确认过载是解决问题的第一步。在我们帮助我们团队恢复健康状态之前，我们需要让每个人都进入同一个房间并重新评估积压工作。 为了避免新的中断性任务积累，我们开始每两周对中断性任务进行一次分类。我们的技术负责人会定期检查任务队列，并评估团队是否有过载风险。我们决定每个团队成员应该有10张或更少的开放工单，以避免过载。如果团队领导同志团队成员的工单数超过10张，他们可以执行以下一项或多项组合： 提醒团队关闭陈旧的工单。 与过载的团队成员同步并从他们那卸载工单。 提示各个团队成员解决他们的工单队列。 组织团队范围的一日工单修复工作。 分配工作以修复故障单来源或操作工作以减少将来的故障单。 案例研究2：组织和工作量变化后的感知过载 背景 本案例研究中的Google SRE团队分处两个地方，每个站点有六到七名随叫随到的工程师（有关团队规模的更多讨论，请参阅第11章站点可靠性工程)。虽然悉尼团队健康运作，但苏黎世团队在超负荷运转。 在苏黎世团队进入超负荷之前，我们很稳定且满足。我们管理的服务数量相对稳定，每个服务都多种多样，维护度也很高。虽然我们所支持服务的SLO与其外部依赖的SLO不匹配，但这种不匹配并未引起任何问题。我们正在开展一些项目来改进我们管理的服务（例如，改善负载均衡）。 同时致使苏黎世团队陷入过载的诱因是：我们开始在谷歌的基础架构中加入噪音更大、整合程度更低的新服务，技术主管和另一名团队成员也离开了我们团队，导致团队缺少两个人。额外工作量和知识流失的结合引发了更多问题： 对新服务的未调优监控和与迁移相关的监控导致每个班次增加了更多的页面。这种积累是渐进的，所以当它出现时我们没有注意到它的增加。 SRE对新服务感到相对无助，我们对它们的了解还不够，无法做出适当的反应，而且经常需要询问开发团队问题。虽然过载可能保证将服务交还给开发人员，但我们的团队从未返回过服务，所以我们并不认为这是一个可行的选择。 5人值班小组轮班缩短了我们通常花在业务工作上的时间。 新的故障单报警出现了问题，这种问题在最近的团队变更之前就存在了。我们过去只是简单地忽略了这些问题，但我们现在需要将被忽略的电子邮件报警移至故障单。项目规划并没有考虑到这一新的技术债务来源。 新的票据SLO要求我们在三天内处理票据，这意味着值班人员必须更快地处理在他们值班期间产生的票据。SLO旨在减少添加到我们（大部分被忽略的）积压工单中的票据数量，但这可能产生了更糟糕的副作用。现在，SREs觉得他们在轮班后无法得到他们所需要的休息，因为他们必须立即解决后续工作。对这些工单的优先考虑也意味着SREs没有足够的时间进行其它操作。 在此期间，我们团队被指派给一位新的经理，他同时管理另外两个团队。这位新上任的经理并不是值班轮值人员，因此没有直接感受到团队成员所面临的压力。当团队向经理解释情况时，没有任何改变。团队成员认为他们没有被听到，这让他们感到与管理团队的距离太远了。工单的超载持续了几个月，让团队成员变得脾气暴躁，直到一连串的不愉快情绪蔓延到整个团队。 问题陈述 在失去两个人并接受额外和各种各样的工作后，我们的团队感到超负荷。当我们试图将这种感觉传达给我们的直接经理时，经理不以为然。随着工作时间的延长，人们开始精疲力竭，生产力正在下降，任务增加的速度开始快于团队解决问题的速度。感知到的过载现在变成了客观过载，使情况变得更糟。 超负荷造成的情绪压力降低了士气，导致一些团队成员倦怠。当个人处理工作过度对身体的影响（疾病和低生产力）时，团队中的其他人不得不承担更多的工作，在每周的团队会议上分配的工作没有完成。 然后我们开始假设我们不能依赖其他人来完成他们的工作，这削弱了团队内部的信任和可靠性。因此，我们对人际风险承担感到不安全，这是心理安全的一个重要因素（见第11章网站可靠性工程）。团队成员感觉不被其他团队成员接受和尊重，因此他们之间没有自由地相互协作。随着团队心理安全的减弱，协作停止，信息共享速度减慢，导致效率进一步低下。 团队调查还显示，他们的心理安全受损——团队成员表示，他们并不觉得自己属于团队。他们不再关心他们的职业发展，团队晋升率也降到了历史最低点。 当高层管理人员为我们分配了新的强制性全公司项目时，我们终于达到了一个突破点，在这一点上，我们重新与管理层就过载问题进行了对话。一系列的讨论表明，我们不愉快的情况不仅仅是工作太多的结果——我们对团队安全的看法使我们不再相互信任和合作。 我们决定做什么 上层管理人员为我们团队指派了一位新经理，他不是供职于三个团队。新经理采用参与式管理方式来改善团队的心理安全，以便我们再次合作。该方法使团队成员能够积极参与解决团队问题。整个团队，包括我们的直接经理，都参与了一系列简单的团建活动，以提高我们的团队效率（其中一些活动就像一起喝茶一样简单）。最终，我们能够起草一套目标： 短期：缓解压力，提高心理安全，营造健康的工作氛围。 中期：通过培训建立团队成员的信心；找到导致过载问题的根本原因。 长期：解决正在发生的导致级联的问题。 为了设定这些目标，我们首先必须在团队中达到某种基本的心理安全。随着士气的提高，我们开始分享知识、并在彼此想法的基础上找到让我们的工作负荷得到控制的方法。 实现 短期行为 长期压力，无论是过度工作还是对团队安全的看法，都会降低生产力并影响人们的健康。因此，我们最重要的短期行动是减轻压力，提高信任和心理安全。一旦缓解了一些压力，团队成员就可以更清晰地思考并参与推动整个团队向前发展。在确定过载的一个月内，我们实施了以下措施： 开始了一个非定期的圆桌会议来讨论问题。该团队释放了挫败感，并对可能导致超负荷的原因进行了头脑风暴。 找到更好的衡量负载的指标。我们决定改进我们原有的页数标准，我们自动给值班人员分配工单，即使在轮班结束后，值班人也要负责这些工单。我们的新指标衡量了一位值班人在轮班后处理工单所需的时间。 审核并删除垃圾邮件警报。我们审核了警报，并删除了那些不代表面向用户问题的警报。 屏蔽大量警报。这个团队故意不去寻找每一个警报的来源，而是专注于减轻压力，避免因为我们已经知道的问题而不断接到警报和提工单。我们使用了以下策略： ——已知的警报在被修复之前一直处于屏蔽状态。 ——警报只能在有限的一段时间内被屏蔽（通常是一天，有时长达一周）。否则，他们可能会掩盖故障。 ——几分钟内无法修复的警报被分配到一个跟踪工单上。 增加了一个专门针对单个团队的直接经理。让一个受人尊敬的团队成员成为新经理重新建立了对管理的信任。新经理可以将更多时间集中在团队及其成员上，而不是管理三个团队。 重新平衡团队。我们通过添加技术经验丰富的SREs来引入新的视角并减轻值班人员的压力，这些SREs对团队或组织没有先入为主的观念。找到合适的人并不是一件容易的事，但值得付出努力。 举办团体活动，如午餐和棋盘游戏。谈论与工作无关的话题，一起大笑，缓解团队的紧张局势，提高心理安全性。 中期行为 单靠短期解决方案无法维持良好的氛围——例如，我们的短期策略之一就是在没有真正解决问题的情况下屏蔽报警。在三个月内，我们还采取了一下行动： 值班期间尽可能减少运维工作（参见SRE第29章），以便团队可以专注于永久性修复和项目工作。 将一项服务的责任归还给其开发团队。 相互培训（和新的团队成员）。虽然培训需要投入时间和精力，但传播知识意味着所有团队成员（以及未来的雇员）可以在未来更快地排除故障并解决问题。培训同时提高了我们的信心，因为我们意识到我们实际上对服务有很多了解。当他们获得知识时，团队成员开始寻找管理服务的新方法，提高可靠性和减少过载。 从其他团队中引入SREs来安排我们的一些值班工作并参与培训。他们注意到了团队的压力，并提供了一些有价值的新视角。 在团队中重新扮演了两个开放的角色。 在报警屏蔽过期解决每个报警。我们在周会中讨论了没有采取任何操作的重复报警，这让我们调整了报警或修复了潜在的问题。虽然这些是重要的（和明显的）行为，我们只有在报警被屏蔽情况下才有足够的空间进行分析和采取行动而不是制造持续的噪音。 有组织的聆听活动。管理层（包括跳级经理和团队领导）有意识地倾听团队的痛点并找到一个团队驱动的解决方案。 增加视角。希望不是一种策略，但它确实有助于提升团队士气。随着新成员加入on-call，转变为更清晰的优先事项，以及结束产生报警的项目，团队的情绪得到了改善。 长期行为 为了保持我们新发现的稳定，我们目前正在将我们的SLO与其服务后端的SLO保持一致，并努力使服务更加统一。统一具有双重好处：它降低了SRE的心理负荷，并使编写可以跨服务使用的自动化变得更加容易。我们还回顾了已经存在了很长时间的服务，并将它们更新到当前的生产标准。例如，一些服务在负载下运行很差，这些年来显著增加。某些服务更需要根据其后端服务策略的更改进行更新。其它服务几年来一直没有更新。 成效 我们在第一次头脑风暴会议后的几个月，结果开始浮出水面：on-call轮班期间变得更安静了，我们的团队成功地快速有效地处理了一个棘手的时间。不久，新的团队成员加入。当我们在圆桌会议上讨论心理安全时，新成员说他们无法想象团队会有这样的问题。事实上，他们认为我们的团队是一个温暖而安全的工作场所。在最初的升级后大约一年，最初的超负荷几乎没有，一项匿名调查显示，团队成员现在觉得这个团队是高效和安全的。 经验总结 工作场所的变化会对团队中的人产生心理影响——毕竟，你的队友不是机器。你需要关注团队的压力水平这样人们就会开始互相信任，一起工作；否则，团队可能会进入导致压力的过载中恶性循环，从而阻止你应对过载。 事实上，感知过载是过载，并且对团队的影响与其他因素造成的工作过载一样大。在我们的案例中，我们在悉尼的姐妹团队没有遇到同样的问题，与前几年相比，我们解决的报警数量并没有太大的变化。相反，失去两名团队成员，感知过载增加，工单增加以及新的3天的工单让团队感觉超负荷了。最终，客观和感知超载之间的区别并不重要：一些团队成员的管制过载会很快导致整个团队的超负荷。 减轻过载的策略 外部视角有时可以很容易地识别团队何时超负荷。同样，回顾一下应该采取什么行动也很容易。但当你正在体验它时，你将如何识别过载？当你陷入过载困境时，通往健康、友好和快乐的工作氛围的道路很难想象。本节介绍了识别和减轻团队过载的实践。 识别过载的症状 如果你知道过载的症状，很容易识别出一个超负荷的团队： 团队士气降低： 过载可能表现为咆哮和抱怨。相关主题（工作条件、工作满意度、项目、同事和经理）的调查通常反映团队士气，并在团队超负荷时产生更多负面结果。与团队领导定期积极的聆听会议可以解决你不了解的问题。积极倾听的一个基本要素是不经过判断就倾听。 团队成员长时间工作，或生病时工作： 没有补偿的加班可能是心理压力源。领导者应该梳理一个好榜样：生病时待在家里。 更频繁的疾病： 过度工作的团队成员往往会经常沮丧和生病 不健康的任务队列： 我们建议定期查看团队的任务队列，已查看积压的工单，处理哪些问题以及可以延迟或删除那些任务。如果团队错过最后期限，或者紧急事件阻止你定期执行此审核，那么团队很可能会比他们所能处理的更快地累积中断。 不平衡的指标： 一些关键的指标可能表明你的团队过载 * 长时间关闭某个问题 * 长时间花费在艰难进行的工作上 * 大量的时间来关闭来自于调用会话的问题 团队应该共同决定使用哪些措施。没有一种适合所有人的方法；每个团队的超负荷都会以不同的方式放映出来。作为经理，在不了解每个人的工作量和工作习惯的情况下，不要对团队施加措施。如果坚持使用特定措施，团队成员可能会觉得你不理解工作。例如，如果你按照修复问题所需的天数来评估负载，那么一个人可能会整整一天解决问题，而另一个人可能会在几天内将工作分配到其他工作中。 减少团队压力维持团队健康状态 阅读完标准后，你可能会认为你的团队已经超负荷了。不要绝望！本节提供了一个让你的团队恢复健康状态的方法。 通常，给团队成员更多的控制和权力可以减少感知到的压力。虽然有压力的情况下求助于微管理，但重要的是要让团队处于循环状态中，并将优先级放在一起，以提高绩效和工作满意度。这个模型假设一个团队成员之间有着健康的人际关系之中。 识别并减轻心理压力源 当要调整一个超负载的团队时，最重要的是团队成员需要重建心理安全。团队和每个成员都是息息相关的。 你可以从识别每个人和整个团队的心理压力源开始。实际哪些因素影响团队的压力？你无法控制团队成员是否患有重大疾病，但你可以控制团队面临压力的大小（如案例研究1中所示）或屏蔽报警（如案例研究2）。 与你的合作的产品开发人员团队沟通，让他们知道你的团队的压力。他们或许可以伸出援助之手，甚至接管整个项目。 当你的团队成员相互依赖并达到一定程度的心理安全（这样他们能够承担人际风险）时，你可以让个别成员承担更多的责任，学习其他领域的专业知识，并将专业人员物尽其用，从而提高他们的自信心，使他们能够承担风险的重任。 决策应该是透明的，如果可能的话，应该是民主的。每个团队成员都应该对面对的情况有一种控制感。例如，案例研究2中的头脑风暴会议帮助团队识别和讨论问题。 在四分之一的范围内优先处理和分类 健康的团队会首先处理重要的问题并对问题进行分类。案例研究1为这个观点提供了一个很好的例子：团队坐在一起并审查他们积压的问题。审查帮助他们意识到他们超载了。他们重新确定了工作优先级后，并完成了可以迅速减少负载的任务。案例研究2中的团队现在每个季度末召开会议，共同规划现有和未来工作并确定其优先顺序。 如果可能，我们建议SRE在其日历上安排无中断时间（没有on-call），这样他们就有时间处理技术深度上很困难的任务，如开发自动化和调查中断你的根本原因。在案例研究2中，当外部团队给予on-call一些解脱时，团队成员则有宝贵的时间专注于他们的项目。 如果绝对必要，放弃一些工作内容：在案例研究2中，团队通过将此职责交还给开发团队，放弃了对其中一项服务的on-call支持。 在未来保护自己 我们强烈建议制定指标来评估团队的工作量。定期查看指标，确保他们正在衡量正确的事情。 一旦你的团队出现过载，你可以通过采取措施监控或解决潜在问题来防止过载进一步恶化。例如，案例研究1中的团队现在维护一个轻量级的分类流程，以检测不断增加的积压任务。案例研究2中的团队目前正在制定一项长期计划，以协调后端和服务SLO。 当你的团队处于超负荷状态时，优先考虑工程工作，即使你没有超负荷工作，也会比重复工作更重要，在将来你会获得利益。 最后，团队中的每个人都应对预警信号负责（请参见第366也的“识别过载症状”），以指示可能出现的过载情况。如果管理人员认为团队正在走向过载，他们应该坐下来与团队成员交谈。 结论 在完美的世界中，SRE团队始终能够使用我们的第一本书中描述的策略来管理中断。但我们只是人类，我们的团队没有达到那个理想状态。本章研究了过载情况下如何建立团队健康的方法，并讨论了如何在它发生时检测和响应。 特别实在运营工作方面，过度的中断很容易导致团队从正常工作负载滑落到过载。频繁的中断可能导致过载，过载会对健康和生产力产生负面影响。超载会给团队成员带来心理社会压力因素，进一步影响工作，导致自我强制循环。 感知过载是一种特殊的过载形式，无法通过劳动量或操作量来衡量。很难确定和消除。为了使团队的工作量保持平衡，持续监控（感知的或为感知的）过载非常重要。为了更好地为用户服务并做好工作，你需要首先尊重自己和团队。在日常工作中保持健康的平衡对于帮助你和你的团队实现这一目标有很大帮助。</summary></entry><entry><title type="html">第十六章 灰度部署 (金丝雀部署)</title><link href="http://localhost:4000/sre/2020/01/16/%E7%81%B0%E5%BA%A6%E9%83%A8%E7%BD%B2/" rel="alternate" type="text/html" title="第十六章 灰度部署 (金丝雀部署)" /><published>2020-01-16T00:00:00+08:00</published><updated>2020-01-16T00:00:00+08:00</updated><id>http://localhost:4000/sre/2020/01/16/%E7%81%B0%E5%BA%A6%E9%83%A8%E7%BD%B2</id><content type="html" xml:base="http://localhost:4000/sre/2020/01/16/%E7%81%B0%E5%BA%A6%E9%83%A8%E7%BD%B2/">&lt;blockquote&gt;
-  &lt;p&gt;发布工程是一个术语，用来描述从存储库中获取代码发布到生产环境中，之间相关的全部过程和所有组件。自动化发布可以帮助避免许多发布工程的传统缺陷: 重复性和手工任务的辛苦、手动流程的不一致性、无法了解上线的确切状态以及回滚困难。发布工程的自动化已经在其他文献中得到了很好的介绍——例如，关于持续集成和持续交付的书籍(CI/CD)。&lt;br /&gt;
-  我们将灰度发布定义为：对服务进行部分且有时间限制的变更部署，并同时进行评估。该评估将帮助我们决定是否继续上线。变更的服务部分是&lt;code class=&quot;highlighter-rouge&quot;&gt;the canary&lt;/code&gt;，服务的其余部分是&lt;code class=&quot;highlighter-rouge&quot;&gt;the control&lt;/code&gt;。支持这种方法的逻辑是，灰度发布通常在线上进行小流量发布，或者影响比&lt;code class=&quot;highlighter-rouge&quot;&gt;the control&lt;/code&gt;部分少得多的用户上。灰度发布是一个有效的A/B测试过程。&lt;br /&gt;
-  我们将首先介绍发布工程的基础知识，以及通过自动化发布来建立共享词汇的益处。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!-- more --&gt;
-&lt;h2 id=&quot;发布工程原理&quot;&gt;发布工程原理&lt;/h2&gt;
-&lt;p&gt;发布工程的基本原理如下:&lt;/p&gt;
-&lt;h5 id=&quot;可再生构建&quot;&gt;可再生构建&lt;/h5&gt;
-&lt;p&gt;构建系统应该能够接受构建输入(源代码、资产等)并生成相同结果。与上周相同的输入(构建代码)应该在本周产生相同的输出。&lt;/p&gt;
-&lt;h5 id=&quot;自动化构建&quot;&gt;自动化构建&lt;/h5&gt;
-&lt;p&gt;一旦代码上传之后，能够自动化生成构建组件并将其上传到存储系统。&lt;/p&gt;
-&lt;h5 id=&quot;自动化测试&quot;&gt;自动化测试&lt;/h5&gt;
-&lt;p&gt;一旦自动构建系统构建了组件，某种类型的测试套件应该确保它们正常工作。&lt;/p&gt;
-&lt;h5 id=&quot;自动化部署&quot;&gt;自动化部署&lt;/h5&gt;
-&lt;p&gt;部署应该由计算机执行，而不是人。&lt;/p&gt;
-&lt;h5 id=&quot;小型部署&quot;&gt;小型部署&lt;/h5&gt;
-&lt;p&gt;构建系统应该支持小的、自包含的更改。&lt;/p&gt;
-
-&lt;p&gt;这些原则为运维人员带来直接收益:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;通过消除手工和重复的任务来减轻工程师的操作负担。&lt;/li&gt;
-  &lt;li&gt;强制同行评审和版本控制，因为自动化通常是基于代码的。&lt;/li&gt;
-  &lt;li&gt;建立一致的、可重复的、自动化的流程，从而减少错误。&lt;/li&gt;
-  &lt;li&gt;添加对发布管道的监控，通过解决以下问题进行测量和持续改进:
-    &lt;ul&gt;
-      &lt;li&gt;–发布版本需要多长时间生产环境才生效?&lt;/li&gt;
-      &lt;li&gt;–发布成功的频率是多少?一个成功的版本是一个没有严重缺陷或SLO违规的、客户可用的版本。&lt;/li&gt;
-      &lt;li&gt;–可以做哪些更改来尽早的捕获管道中的缺陷?&lt;/li&gt;
-      &lt;li&gt;–哪些步骤可以并行化或进一步优化?&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;CI/CD与发布自动化相结合可以持续改进开发周期，如图16-1所示。当发布自动化时，你可以更频繁地发布。对于变更率很高的软件来说，更频繁地发布意味着在任何给定的发布工件中捆绑更少的更改。而更小的、自包含的发布工件使得在出现bug时回滚任何给定的发布工件变得成本更低、更容易。更快的发布节奏意味着可以更快地修复bug。
-&lt;img src=&quot;/blog/something/images/SRE/16-1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;平衡发布速度和可靠性&quot;&gt;平衡发布速度和可靠性&lt;/h2&gt;
-
-&lt;p&gt;快速发布(以下称为&lt;code class=&quot;highlighter-rouge&quot;&gt;发布&lt;/code&gt;)和可靠性常常被视为相反的目标。企业希望以100%的可靠性尽快发布新特性和产品改进!然而这个目标是不可能实现的(因为100%从来不是可靠性的正确目标;参见第2章)，但可以在满足特定产品的特定可靠性目标的同时，尽可能快地进行交付。&lt;/p&gt;
-
-&lt;p&gt;实现这个目标的第一步是了解发布对软件可靠性的影响。在谷歌的经验,大多数事件都是由二进制或配置推送导致的(见附录C)。许多类型的软件更改都可能导致系统故障 - 例如，底层组件的行为更改，依赖关系（例如API）的更改，或DNS等配置更改。&lt;/p&gt;
-
-&lt;p&gt;尽管对软件进行变更存在固有的风险，但是这些变更(bug修复、安全补丁和新特性)对业务的成功是必需的。你可以使用SLOs和错误预算的概念来衡量发布新版本对可靠性的影响，而不是提倡反对变更。你的目标应该是在满足用户期望的可靠性目标的同时尽快发布软件。下一节将讨论如何使用canary流程来实现这些目标。&lt;/p&gt;
-
-&lt;h3 id=&quot;分离变更频率不同的组件&quot;&gt;分离变更频率不同的组件&lt;/h3&gt;
-
-&lt;p&gt;服务由具有不同变更频率的多个组件组成:二进制文件或代码、基础环境(如JVM、内核/OS)、库、服务配置或标志、特性/测试配置和用户配置。如果只有一种发布变更的方法，那么这些组件单独变更会比较困难。&lt;/p&gt;
-
-&lt;p&gt;特性标志或测试框架(如Gertrude、Feature和PlanOut)允许你将特性启动从二进制版本中分离出来。如果二进制版本包含多个特性，你可以通过更改测试配置一次启用一个特性。这样，就没有必要将这些小的变更集合为一个大的变更，或者为每个特性执行单独的版本。更重要的是，如果只有一些新特性的行为不像预期的那样，你可以选择性地禁用这些特性，直到下一个构建/发布周期可以部署新的二进制文件为止。&lt;/p&gt;
-
-&lt;p&gt;你可以将特性标志/试验原则应用于服务的任何类型的更改，而不仅仅是软件版本。&lt;/p&gt;
-
-&lt;h2 id=&quot;canarying是什么&quot;&gt;Canarying是什么？&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Canarying&lt;/code&gt;一词是指将金丝雀带入煤矿以确定该矿是否对人类安全的做法。 由于鸟类比人类更小，呼吸更快，因此它们被危险气体毒害的速度比人类更快。&lt;/p&gt;
-
-&lt;p&gt;即使你的发布管道是完全自动化的，在真正的流量到达服务之前，你依然无法检测到所有与发布相关的缺陷。当一个发布版本准备好部署到生产环境中时，你的测试策略应该充分保证该版本是安全的，并且按预期工作。然而，测试环境与生产环境并不是100%相同的，并且测试不可能会涵盖100％的场景。依然会存在一些会影响生产缺陷。如果一个版本立即部署到系统的全部地方，那么可能存在的缺陷亦将到达系统的全部地方。&lt;/p&gt;
-
-&lt;p&gt;如果你能够快速地检测和解决缺陷，则可以接受此方案。但是，更安全的选择是:首先使用灰度发布向新版本导入一些生产流量。灰度发布允许部署管道在尽可能少地影响你的服务的前提下，更快地检测出问题。&lt;/p&gt;
-
-&lt;h2 id=&quot;发布工程和灰度发布&quot;&gt;发布工程和灰度发布&lt;/h2&gt;
-
-&lt;p&gt;在部署系统的新版本或其关键组件(如配置或数据)时，我们将变更(通常未公开给真实输入的更改，如面向用户的流量、或用户提供的批处理数据)打包。变更会带来新的特性和功能，但也存在部署之后出现问题的风险。我们的目标是通过测试一小部分流量来降低风险，以确保没有任何不良影响。我们将在本章后面讨论评估过程。&lt;/p&gt;
-
-&lt;p&gt;灰度过程还让我们对变更充满信心，因为我们将其暴露给越来越大的流量。为变更引入实际生产流量还使我们能够识别在单元测试或负载测试等测试框架中可能不可见的问题，这些问题通常更为人为。&lt;/p&gt;
-
-&lt;p&gt;我们将使用一个实际的示例来检查灰度过程及其评估，同时避免深入研究统计数据。相反，我们关注点是整个过程和典型的实际考虑。我们使用App Engine上的一个简单应用程序来说明发布的各个方面。&lt;/p&gt;
-
-&lt;h3 id=&quot;灰度发布流程的需求&quot;&gt;灰度发布流程的需求&lt;/h3&gt;
-
-&lt;p&gt;针对特定服务的灰度发布需要特定功能：
-将变更通过灰度发布部署到服务全部子集的方法。      &lt;br /&gt;
-一个评估过程，用来评估变更是&lt;code class=&quot;highlighter-rouge&quot;&gt;好&lt;/code&gt;还是&lt;code class=&quot;highlighter-rouge&quot;&gt;坏&lt;/code&gt;。
-将评估集成到发布过程中。&lt;/p&gt;
-
-&lt;p&gt;最后，当灰度检测到有问题的发布版本，并在没有误报的情况下识别出好的发布版本时，灰度发布展示了它的价值。&lt;/p&gt;
-
-&lt;h3 id=&quot;我们的示例环境&quot;&gt;我们的示例环境&lt;/h3&gt;
-
-&lt;p&gt;我们将使用一个简单的前端web服务应用程序来演示一些灰度发布的概念。该应用程序提供了一个基于http的API，消费者可以使用它来操作各种数据(如产品价格等简单信息)。示例应用程序有一些可调参数，我们可以使用这些参数来模拟各种生产环境，由灰度发布流程进行评估。例如，可以让应用程序为20%的请求返回错误，或者规定5%的请求至少需要两秒钟。&lt;/p&gt;
-
-&lt;p&gt;我们使用部署在谷歌应用程序引擎上的应用程序来演示灰度发布流程，这些原则同样适用于其他环境。虽然示例应用程序是经过设计的，但是在实际场景中，类似的应用程序与我们的示例可以共享灰度发展中使用的指标。&lt;/p&gt;
-
-&lt;p&gt;我们的示例服务有两个可能的版本:当前版本和候选版本。当前版本是当前部署在生产环境中的版本，而候选版本是新构建的版本。使用这两个版本来说明发布概念，以及如何实现灰度发布以使发布过程更安全。&lt;/p&gt;
-
-&lt;h2 id=&quot;回滚部署与简单的canary部署比较&quot;&gt;回滚部署与简单的Canary部署比较&lt;/h2&gt;
-
-&lt;p&gt;我们将在发生中断时根据错误预算节省和一般影响，来对没有灰度发布的部署流程和灰度发布流程进行比较。我们的部署过程以开发环境为基础。一旦我们感觉代码在开发环境中正常工作，我们就将该版本部署到生产环境中。&lt;/p&gt;
-
-&lt;p&gt;在部署之后不久，监视开始报高错误率(参见图16-2，在图16-2中，为了模拟示例服务中的缺陷，对示例应用程序进行配置以使20％的请求失败)。对于示例，假设部署流程不支持回滚到以前已知的配置正常的版本时。修复这些错误的最佳选择就只有在生产版本中查找缺陷，对其进行补救，并在停机期间重新部署一个新版本。这种做法肯定会延长错误对用户的影响。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/blog/something/images/SRE/16-2.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
-图 16-2 部署之后错误率增加 &lt;/center&gt;&lt;/p&gt;
-
-&lt;p&gt;为了改进这个初始部署过程，我们可以在使用灰度发布来减少推送错误代码所造成的影响。 我们需要一种方法来在小部分生产环境中运行候选版本，而不是一次性部署到生产环境。 然后将一小部分流量发送到该生产环境（the canary金丝雀）并将其与其他部分（the control 主控）进行比较。 使用此方法，我们可以在所有生产受到影响之前发现候选版本中的缺陷。&lt;/p&gt;
-
-&lt;p&gt;我们在示例应用程序中的进行简单灰度发布，在应用程序的特定版本之间分配流量。 您可以使用App Engine或其他任何方法来分割流量（例如负载均衡器上的后端权重，代理配置或循环DNS记录）。&lt;/p&gt;
-
-&lt;p&gt;图16-3显示了当我们使用灰度发布，变更的影响会大大降低;事实上，这些错误几乎不可见!这提出了一个有趣的问题:与总体流量趋势相比，灰度发布的流量趋势很难看到和跟踪。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/blog/something/images/SRE/16-3.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
-图 16-3 部署之后错误率增canary部署错误率； 因为进行canary部署的只是系统的一小部分，因此总体错误率降低 &lt;/center&gt;&lt;/p&gt;
-
-&lt;p&gt;为了更清楚地了解需要在合理范围内跟踪的错误，我们可以通过App Engine应用程序版本查看关键指标(HTTP响应代码)，如图16-4所示。当我们查看每个版本的分解趋势图时，我们可以清楚地看到新版本引入的错误。我们还可以从图16-4中观察到当前版本提供的错误非常少。&lt;/p&gt;
-
-&lt;p&gt;现在，我们可以根据应用程序版本的HTTP错误率对部署进行调优。如果灰度发布的错误率大于全部系统的错误率，这表明canary部署是&lt;code class=&quot;highlighter-rouge&quot;&gt;糟糕的&lt;/code&gt;。我们应该暂停并回滚部署，或者联系他人来帮助解决问题。如果错误率相似，我们可以正常地进行部署。在图16-4中，我们的canary部署显然很糟糕，我们应该回滚它。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/blog/something/images/SRE/16-4.jpg&quot; alt=&quot;&quot; /&gt; &lt;center&gt;
-图 16-4 应用程序HTTP响应码； 新版本产生多数错误、当前版本产生小数错误（图中显示10%的log） &lt;/center&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;canary实施&quot;&gt;Canary实施&lt;/h2&gt;
-
-&lt;p&gt;现在我们已经看到了一个相当简单的canary部署实现，接下来让我们更深入地了解成功的canary流程所需的参数。&lt;/p&gt;
-
-&lt;h3 id=&quot;最小化slos和错误预算的风险&quot;&gt;最小化SLOs和错误预算的风险&lt;/h3&gt;
-
-&lt;p&gt;第2章讨论了SLOs如何反映设计服务可用性的业务需求。这些需求也可以通过canary实现。canary进程的风险仅仅是我们错误预算的一小部分，它受到时间和canary规模大小的限制。&lt;/p&gt;
-
-&lt;p&gt;全局部署会很快将SLO置于危险之中。如果实例中为系统全面部署候选版本，我们将面临20%的请求失败的风险。如果我们使用5%的canary规模，我们将为5%的流量提供20%错误，导致1%的总体错误率(如图16-3所示)。这个策略允许我们保留我们的错误预算—预算的影响与暴露于缺陷的流量的数量成正比。我们可以假设，对于全局部署和灰度部署，检测和回滚花费的时间差不多，但是当我们将灰度发布集成到部署过程中时，我们会以更低的成本获得有关新版本的有价值信息。&lt;/p&gt;
-
-&lt;p&gt;这是一个假设负载均匀的极简模型。它还假设我们可以将整个错误预算用于灰度发布。这里我们只考虑新版本引入的不可用性，而不是实际可用性。我们的模型还假设新版本具有100%的失败率，这是最坏的情况。而进行灰度的部分不会导致线上系统100%不可用。我们还允许在灰度部署期间，整个系统的可用性低于SLO。&lt;/p&gt;
-
-&lt;p&gt;这个模型有明显的缺陷，但它是一个可靠的起点，你可以根据业务需求进行调整。我们建议使用最简单的模型来满足你的技术和业务目标。根据我们的经验，专注于使模型在技术上尽可能正确，常常会导致在建模上的过度投资。对于具有高复杂性的服务，过于复杂的模型可能导致持续的模型调优，而没有真正的好处。&lt;/p&gt;
-
-&lt;h3 id=&quot;选择灰度规模和持续时间&quot;&gt;选择灰度规模和持续时间&lt;/h3&gt;
-
-&lt;p&gt;选择合适的灰度持续时间，需要考虑发布频率。 如果需要每天发布，那么在一次只运行一个灰度的情况下，无法使灰度保持一周,如果每周部署一次，就可以执行较长的灰度发布。 如果持续部署（例如，一天20次），灰度的持续时间必须明显缩短。 在一些说明里，虽然可以同时运行多个灰度，但这样做会增加大量精力来跟踪系统状态。 在任何情况下，需要快速推断系统状态时，同时运行多个灰度会成为问题。如果灰度重叠，同时运行多个灰度也会增加信号污染的风险。我们强烈建议一次只运行一个灰度。&lt;/p&gt;
-
-&lt;p&gt;对于基本的评估，不需要大规模的灰度来检测关键条件。然而，一个有代表性的灰度发布流程需要跨多个维度进行决策:&lt;/p&gt;
-
-&lt;h2 id=&quot;规模和持续时间&quot;&gt;规模和持续时间&lt;/h2&gt;
-
-&lt;p&gt;它的规模应够大，持续时间应够长，足以代表整个部署。仅在接收到少量查询后终止canary部署，对于以具有不同功能的不同查询为特征的系统来说，这无法提供有用的信号。处理率越高，获取代表性样本所需的时间就越少，以确保所观察到的行为实际上是由变更引起的，而不仅仅是随机因素。&lt;/p&gt;
-
-&lt;p&gt;流量&lt;/p&gt;
-
-&lt;p&gt;我们需要在系统上接收足够的流量，以确保它是一个具有代表性的示例，并且系统有机会对输入做出负面反应。通常，请求越均匀，所需要的流量就越少。&lt;/p&gt;
-
-&lt;p&gt;时间点&lt;/p&gt;
-
-&lt;p&gt;性能缺陷通常只在高负载下出现，因此在非高峰时间部署可能不会触发性能相关的缺陷。&lt;/p&gt;
-
-&lt;p&gt;度量指标&lt;/p&gt;
-
-&lt;p&gt;灰度的代表性与我们选择评估的指标密切相关(我们将在本章后面讨论)。我们可以快速评估诸如查询成功之类的琐碎指标，但是其他指标(如队列深度)可能需要更多的时间或较大规模的灰度来提供清晰的信号。&lt;/p&gt;
-
-&lt;p&gt;但问题是，这些要求可能相互冲突。Canarying是一种平衡行为，它通过对最坏情况的冷静分析和系统过去的实际记录来实现。一旦您从过去的灰度中收集了指标，您就可以根据典型的canary评估失败率而不是假想的最坏情况来选择canary参数。&lt;/p&gt;
-
-&lt;h3 id=&quot;选择和评估度量标准&quot;&gt;选择和评估度量标准&lt;/h3&gt;
-
-&lt;p&gt;到目前为止，我们一直在研究成功率，这是评估灰度发布的一个非常清晰和明显的指标。但是直觉上，我们知道这个单一的指标对于有意义的canary流程来说是不够的。如果我们以10倍的延迟为所有请求提供服务，或者在这样做时使用10倍的内存，那么我们可能也会遇到问题。并不是所有的指标都适合评估灰度发布。哪些指标最适合评估灰度发布版本是好是坏?&lt;/p&gt;
-
-&lt;h3 id=&quot;度量标准应指出问题&quot;&gt;度量标准应指出问题&lt;/h3&gt;
-
-&lt;p&gt;首先，指标需要能够指出服务中的问题。这很棘手，因为构成&lt;code class=&quot;highlighter-rouge&quot;&gt;问题&lt;/code&gt;的并不总是客观的。我们可能会认为用户请求失败是有问题的。但是如果一个请求的响应时间增加了10%，或者系统内存增加了10%?，这该如何判断？我们通常建议使用sla作为开始考虑canary指标的地方。良好的服务质量指数往往与服务健康状况密切相关。如果已经使用SLIs来度量SLO是否符合，那么我们可以重用这些工作。&lt;/p&gt;
-
-&lt;p&gt;几乎任何指标在极端情况下都可能出现问题，但是向灰度流程中添加太多的指标也会产生成本。我们需要为每个指标正确定义可接受行为。如果可接受行为定义过于严格，我们会得到大量的误报;也就是说，我们会认为灰度很糟糕，即使实际不是这样。相反，如果对可接受行为的定义过于宽松，我们更有可能忽略掉有问题的灰度部署。正确选择什么是可接受的行为可能会成本较大——既耗时又需要分析。然而，如果做得不好，错误的结果会完全误导你。此外，随着服务、其特性集和行为的发展，您需要定期重新评估期望。&lt;/p&gt;
-
-&lt;p&gt;我们应该根据这些指标多大程度上能够表明系统中实际用户的体验来进行排名，选择排名靠前的几个指标(可能不超过12个)。太多的度量标准会带来递减的回报，并且在某种程度上，收益会被维护它们的成本所抵消，或者在发布过程中如果不维护它们，会对发布结果无法保证100%的信任。&lt;/p&gt;
-
-&lt;p&gt;为了使这个指导原则更加具体，让我们回头再来看示例。它有许多我们可以评估的指标:CPU使用量、内存占用、HTTP返回码(2xx、3xx等等)、响应延迟、正确性等等。在这种情况下，我们最好的度量标准可能是HTTP返回码和响应延迟，因为它们的降级最接近于实际用户影响。在这个场景中，CPU使用率并没有那么有用:资源使用的增加不一定会影响服务，并且可能导致不稳定或嘈杂的canary进程。这会导致操作人员禁用或忽略canary进程，这会首先破坏使用canary进程的目的。对于前端服务，我们直观地知道，响应较慢或响应失败通常会真实反映服务中存在的问题。&lt;/p&gt;
-
-&lt;p&gt;HTTP返回码包含一些有趣的复杂情况，例如状态码404，它告诉我们没有找到资源。这可能是因为用户获得了错误的URL(想象一下在一个流行的论坛上分享了一个错误的URL)，或者因为服务器错误地停止了对资源的服务。通常，我们可以通过排除canary评估中的400级状态码，并添加黑盒监控来测试特定URL的存在，从而解决此类问题。然后，我们可以将黑盒数据作为canary分析的一部分，以帮助将canary流程与奇怪的用户行为隔离开来。&lt;/p&gt;
-
-&lt;p&gt;度量标准应该具有代表性和可归属性&lt;/p&gt;
-
-&lt;p&gt;观察到的指标变化其来源，应该清楚地归因于正在进行的变更，并且不应该受到外部因素的影响。&lt;/p&gt;
-
-&lt;p&gt;在一个大的系统中(例如，许多服务器或许多容器)，我们可能会有外部性——超过连接的机器、运行具有不同性能特征的不同内核的机器，或者网络中过载的机器。此时金丝雀部分和主系统部分之间的差异，既是我们所部署的两个基础设施之间的差异，也会是我们变更导致的差异。&lt;/p&gt;
-
-&lt;p&gt;管理金丝雀是多种力量之间的平衡。增加金丝雀的规模是减少这个问题影响的方法(如前所述)。当我们的系统达到我们认为的合理的金丝雀规模时，我们需要考虑我们选择的指标是否会显示出很大的差异。&lt;/p&gt;
-
-&lt;p&gt;我们还应该知道canary和control环境之间共享的失败域;坏金丝雀会对控制产生负面影响，而系统中的坏行为可能会导致我们错误地评估金丝雀。同样，确保您的度量标准是良好隔离的。考虑一个同时运行我们的应用程序和其他进程的系统。整个系统的CPU使用量的急剧增加会导致糟糕的度量，因为系统中的其他进程(数据库负载、日志轮转等)可能会导致这种增加。更好的度量标准是在处理请求时所花费的CPU时间。更好的度量标准是在服务进程实际计划在CPU上的时间窗口上为处理请求服务所花费的CPU时间。虽然与我们的进程相关的严重超额的机器显然是一个问题(监控应该捕捉到它!)，但它不是由我们正在进行的更改引起的，因此不应该将其标记为金丝雀部署失败。&lt;/p&gt;
-
-&lt;p&gt;金丝雀也需要是可归属的;也就是说，您还应该能够将canary度量与SLIs联系起来。如果一个度量可以在不影响服务的情况下发生巨大变化，那么它不适合用来评估灰度发布。&lt;/p&gt;
-
-&lt;h3 id=&quot;评估前评估后依然是有风险的&quot;&gt;评估前/评估后依然是有风险的&lt;/h3&gt;
-
-&lt;p&gt;canary过程的前后是归因问题的延伸。在这个过程中，旧系统被新系统完全替代，你的canary评估将在一段时间内比较变更之前和之后的系统行为。你可以将此过程称为&lt;code class=&quot;highlighter-rouge&quot;&gt;时空中的canary部署&lt;/code&gt;，在此过程中，您通过分割时间来选择A/B组，而不是通过机器、cookie或其他方法来分割总体。由于时间是观察到的指标变化的最大来源之一，因此很难在评估之前/之后来判断性能是否下降。&lt;/p&gt;
-
-&lt;p&gt;虽然canary部署可能导致降级，但原有系统本身也可能会降级。如果需要长时间运行canary部署，就会变得更加复杂。例如，如果在周一进行发布，可能会将工作日的行为与周末的行为进行比较，从而引入大量噪音。在该示例中，用户可能在周末以不同的方式访问该服务。从而在canary进程中引入噪音。&lt;/p&gt;
-
-&lt;p&gt;评估前/后过程本身引入了一个问题，即大而短的错误率(由前/后评估引入)是否优于小而长的错误率(由一个小金丝雀引入)。如果新版本完全被破坏，我们能多快地检测和恢复? 大规模的金丝雀之前/之后可以更快地检测到问题，但恢复的总体时间可能仍然相当长，与较小的金丝雀类似。在此期间，用户会一直受到影响。&lt;/p&gt;
-
-&lt;h3 id=&quot;使用渐进的灰度会更好&quot;&gt;使用渐进的灰度会更好&lt;/h3&gt;
-
-&lt;p&gt;选择的度量标准即使不符合我们理想中的属性，但仍然很有价值。我们可以通过使用更细微的灰度过程来介绍这些指标。&lt;/p&gt;
-
-&lt;p&gt;我们可以使用包含多个阶段的canary来反映我们对度量的推理能力，而不是简单地评估单个canary阶段。在第一阶段，我们对这个版本没有信心或不了解。因此，我们希望使用一个小的阶段，以尽量减少负面影响。在小型灰度中，我们更喜欢能够最清晰地显示问题的指标——应用程序崩溃、请求失败等等。一旦这一阶段成功地过去，下一阶段将增加灰度规模，从而增强我们分析变化影响的信心。&lt;/p&gt;
-
-&lt;h2 id=&quot;依赖和隔离&quot;&gt;依赖和隔离&lt;/h2&gt;
-
-&lt;p&gt;正在测试的系统不会在完全真空中运行。出于实际原因，灰度和主系统可以共享后端、前端、网络、数据存储和其他基础设施。甚至可能与客户端有非常不明显的交互。例如，假设一个客户端发送了两个连续的请求。第一个请求可以由灰度部分来处理。其响应可能会改变第二个请求的内容，第二个请求可能会落在主系统部分，从而改变主系统的行为。&lt;/p&gt;
-
-&lt;p&gt;不完美的隔离会带来几个后果。最重要的是，我们需要知道，如果灰度过程的结果表明我们应该停止生产变更并调查情况，那么灰度并不一定是错误的。这一事实对于一般的canarying来说是正确的，但是在实践中，它经常由于隔离问题而导致被强制执行。&lt;/p&gt;
-
-&lt;p&gt;此外，不完美的隔离意味着灰度部署的错误行为也会对原始系统产生负面影响。Canarying是A/B比较，A和B有可能同时改变;这可能会导致评估灰度变得混乱。还必须使用绝对度量，例如定义的SLOs，以确保系统正确运行。&lt;/p&gt;
-
-&lt;h2 id=&quot;在非交互系统中进行canarying&quot;&gt;在非交互系统中进行Canarying&lt;/h2&gt;
-
-&lt;p&gt;本章重点讨论了交互式请求/响应系统，它在许多方面是最简单和最常讨论的系统设计。其他系统，如异步处理管道，也同样重要，但有不同的canarying注意事项，我们将简要列举。有关数据处理管道的canarying的更多信息，请参见第13章。&lt;/p&gt;
-
-&lt;p&gt;首先，canary的持续时间和部署本质上依赖于工作单元处理的持续时间。当涉及到交互系统时，我们忽略了这个因素，假设工作单元处理的时间不会超过几秒钟，这比canary的持续时间要短。非交互式系统中的工作单元处理(如呈现管道或视频编码)可能需要更长的时间。因此，确保canary持续时间至少跨越单个工作单元的持续时间。&lt;/p&gt;
-
-&lt;p&gt;对于非交互式系统，隔离可能变得更加复杂。许多管道系统只有一个工作分配程序和一组使用应用程序代码的工作人员。在多阶段管道中，工作单元由工作人员处理，然后返回到池中，由同一工作人员或另一个工作人员执行下一阶段的处理。金丝雀分析有助于确保处理特定工作单元的工人总是从相同的工人池中提取——要么是金丝雀池，要么是控制池。否则，信号就会变得越来越混杂(有关理清信号的需要的更多信息，请参见349页的&lt;code class=&quot;highlighter-rouge&quot;&gt;监视数据的要求&lt;/code&gt;)。&lt;/p&gt;
-
-&lt;p&gt;最后，度量标准的选择可能更加复杂。我们可能感兴趣的是端到端处理工作单元的时间(类似于交互系统中的延迟)，以及处理本身的质量(当然，这是完全特定于应用程序的)。&lt;/p&gt;
-
-&lt;p&gt;考虑到这些警告，canarying的一般概念仍然是可行的，并且适用相同的高级原则。&lt;/p&gt;
-
-&lt;h2 id=&quot;监控要求&quot;&gt;监控要求&lt;/h2&gt;
-
-&lt;p&gt;在评估灰度部署时，您必须能够将部署了灰度的系统与未部署灰度的系统进行比较。通常，这需要在构造监视系统时多加注意—有效的比较非常简单，并且能够产生有意义的结果。&lt;/p&gt;
-
-&lt;p&gt;考虑之前的例子，在5%的规模中进行灰度，错误率为20%。因为监视很可能将系统作为一个整体来观察，所以它只能检测到1%的总体错误率。根据系统的不同，这个信号可能与其他错误源无法区分(参见图16-3)。&lt;/p&gt;
-
-&lt;p&gt;如果我们通过按照服务请求的对象来（金丝雀与主系统）分解指标，(参见图16-4)我们可以清楚地看到主系统与canary之间的错误率，这清楚地说明了全局部署将带来什么。在这里，我们看到，对整个服务的监控不足以分析灰度是否ok。在收集监视数据时，能够执行细粒度的分解非常重要，这些分解使得能够区分金丝雀和主系统的指标。&lt;/p&gt;
-
-&lt;p&gt;收集指标的另一个难点是金丝雀的部署受到设计的时间限制。当度量指标在特定时期内进行聚合时，这可能会导致问题。考虑每小时的度量误差。我们可以通过对过去一小时的请求求和来计算这个度量。如果我们使用这个度量来评估我们的canary，我们可能会遇到问题，如下面的时间表所述:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;某些事件会导致一些错误发生。&lt;/li&gt;
-  &lt;li&gt;一只金丝雀被部署在5%的人口中;金丝雀的持续时间是30分钟。&lt;/li&gt;
-  &lt;li&gt;canary系统开始监视每小时的错误度量，以确定部署是好是坏。&lt;/li&gt;
-  &lt;li&gt;部署被检测为错误，因为每小时的错误度量与控制总体的每小时的错误显著不同。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;此场景是使用每小时计算一次的度量来评估仅30分钟长的部署的结果。因此，canary进程提供了一个非常模糊的信号。当使用度量来评估canary的成功时，确保度量的间隔与canary的持续时间相同或小于持续时间。&lt;/p&gt;
-
-&lt;p&gt;相关概念&lt;/p&gt;
-
-&lt;p&gt;通常，与客户的对话涉及到在生产中使用蓝/绿部署、人工负载生成和/或流量测试。这些概念类似于canarying，因此虽然它们不是严格意义上的金丝雀流程，但亦可使用。&lt;/p&gt;
-
-&lt;h3 id=&quot;蓝绿部署&quot;&gt;蓝/绿部署&lt;/h3&gt;
-
-&lt;p&gt;蓝/绿部署维护系统的两个实例：一个提供流量（绿色），另一个准备提供流量（蓝色）。 在蓝色环境中部署新版本后，将流量切换到其中。切换过程不需要停机，并且回滚只是简单逆转路由器而已。 一个缺点是该设置使用的资源是&lt;code class=&quot;highlighter-rouge&quot;&gt;传统&lt;/code&gt;部署的两倍。在该设置中，您正在有效地执行前/后金丝雀（前面已讨论过）。&lt;/p&gt;
-
-&lt;p&gt;通过同时(而不是分开地)使用蓝/绿部署，您可以或多或少地将蓝色/绿色部署用作常规的金丝雀。在此策略中，您可以将canary部署到blue(备用)实例，并在绿色和蓝色环境之间缓慢地分配流量。您的评估和比较蓝色环境和绿色环境的指标都应该与流量控制相关。这种设置类似于A/B金丝雀，此时绿色环境是主系统，蓝色环境是金丝雀部署，金丝雀数量由发送到每个金丝雀的流量控制。&lt;/p&gt;
-
-&lt;h3 id=&quot;人工负载生成&quot;&gt;人工负载生成&lt;/h3&gt;
-
-&lt;p&gt;与其将实时用户流量暴露给canary部署，还不如在安全性方面犯点错误，使用人工负载。通常，您可以在多个部署阶段(QA、预生产，甚至在生产中)运行负载测试。虽然根据我们的定义，这些操作不符合canarying，但是它们仍然是找到缺陷的可行方法，但需要注意一些事项。&lt;/p&gt;
-
-&lt;p&gt;使用人工负载进行测试可以很好地最大化代码覆盖率，但不能提供良好的状态覆盖率。在可变系统(具有缓存、cookie、请求关联等的系统)中人工模拟负载尤其困难。人工负载也可能无法准确地模拟真实系统中流量变化。有些问题可能只在无人工负载的情况下出现，从而导致覆盖率有所差距。&lt;/p&gt;
-
-&lt;p&gt;人工负载在可变系统中也很难工作。例如，试图在计费系统上生成人工负载可能非常危险:系统可能开始向信用卡供应商发送呼叫，然后信用卡供应商将开始主动向客户收费。虽然我们可以避免测试危险的代码逻辑，但是在这些逻辑上缺乏测试会降低我们的测试覆盖率。&lt;/p&gt;
-
-&lt;h3 id=&quot;流量测试&quot;&gt;流量测试&lt;/h3&gt;
-
-&lt;p&gt;如果人工流量不具有代表性，我们可以复制流量并将其发送到生产系统和测试环境。这种技术被称为流量镜像。生产系统服务于实际流量并响应请求，canary部署服务于副本流量并丢弃响应。您甚至可以将canary响应与实际响应进行比较，并运行进一步的分析。&lt;/p&gt;
-
-&lt;p&gt;这种策略可以提供有代表性的流量，但通常比更直接的canary流程更复杂。在有状态系统中，流量测试也不能充分识别风险;流量副本可能会在看似独立的部署之间引入意外的影响。例如，如果canary部署和生产系统共享一个缓存，人为导致的缓存命中率增加将使canary指标的性能度量无效。&lt;/p&gt;
-
-&lt;h2 id=&quot;结论&quot;&gt;结论&lt;/h2&gt;
-
-&lt;p&gt;您可以使用许多工具和方法来自动化版本发布，并将canarying引入到发布管道中。没有一种测试方法是万能的，测试策略应该由系统的需求和行为决定。Canarying可以作为一种简单、健壮且易于集成的方法来补充测试。当您及早发现系统缺陷时，用户受到的影响最小。Canarying还可以为频繁发布提供信心，并提高开发速度。正如测试方法必须随着系统需求和设计而发展一样，canarying也必须如此。&lt;/p&gt;
-
-&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;</content><author><name>ZX</name></author><category term="《SRE-Google运维实践》" /><summary type="html">发布工程是一个术语，用来描述从存储库中获取代码发布到生产环境中，之间相关的全部过程和所有组件。自动化发布可以帮助避免许多发布工程的传统缺陷: 重复性和手工任务的辛苦、手动流程的不一致性、无法了解上线的确切状态以及回滚困难。发布工程的自动化已经在其他文献中得到了很好的介绍——例如，关于持续集成和持续交付的书籍(CI/CD)。 我们将灰度发布定义为：对服务进行部分且有时间限制的变更部署，并同时进行评估。该评估将帮助我们决定是否继续上线。变更的服务部分是the canary，服务的其余部分是the control。支持这种方法的逻辑是，灰度发布通常在线上进行小流量发布，或者影响比the control部分少得多的用户上。灰度发布是一个有效的A/B测试过程。 我们将首先介绍发布工程的基础知识，以及通过自动化发布来建立共享词汇的益处。 发布工程原理 发布工程的基本原理如下: 可再生构建 构建系统应该能够接受构建输入(源代码、资产等)并生成相同结果。与上周相同的输入(构建代码)应该在本周产生相同的输出。 自动化构建 一旦代码上传之后，能够自动化生成构建组件并将其上传到存储系统。 自动化测试 一旦自动构建系统构建了组件，某种类型的测试套件应该确保它们正常工作。 自动化部署 部署应该由计算机执行，而不是人。 小型部署 构建系统应该支持小的、自包含的更改。 这些原则为运维人员带来直接收益: 通过消除手工和重复的任务来减轻工程师的操作负担。 强制同行评审和版本控制，因为自动化通常是基于代码的。 建立一致的、可重复的、自动化的流程，从而减少错误。 添加对发布管道的监控，通过解决以下问题进行测量和持续改进: –发布版本需要多长时间生产环境才生效? –发布成功的频率是多少?一个成功的版本是一个没有严重缺陷或SLO违规的、客户可用的版本。 –可以做哪些更改来尽早的捕获管道中的缺陷? –哪些步骤可以并行化或进一步优化? CI/CD与发布自动化相结合可以持续改进开发周期，如图16-1所示。当发布自动化时，你可以更频繁地发布。对于变更率很高的软件来说，更频繁地发布意味着在任何给定的发布工件中捆绑更少的更改。而更小的、自包含的发布工件使得在出现bug时回滚任何给定的发布工件变得成本更低、更容易。更快的发布节奏意味着可以更快地修复bug。 平衡发布速度和可靠性 快速发布(以下称为发布)和可靠性常常被视为相反的目标。企业希望以100%的可靠性尽快发布新特性和产品改进!然而这个目标是不可能实现的(因为100%从来不是可靠性的正确目标;参见第2章)，但可以在满足特定产品的特定可靠性目标的同时，尽可能快地进行交付。 实现这个目标的第一步是了解发布对软件可靠性的影响。在谷歌的经验,大多数事件都是由二进制或配置推送导致的(见附录C)。许多类型的软件更改都可能导致系统故障 - 例如，底层组件的行为更改，依赖关系（例如API）的更改，或DNS等配置更改。 尽管对软件进行变更存在固有的风险，但是这些变更(bug修复、安全补丁和新特性)对业务的成功是必需的。你可以使用SLOs和错误预算的概念来衡量发布新版本对可靠性的影响，而不是提倡反对变更。你的目标应该是在满足用户期望的可靠性目标的同时尽快发布软件。下一节将讨论如何使用canary流程来实现这些目标。 分离变更频率不同的组件 服务由具有不同变更频率的多个组件组成:二进制文件或代码、基础环境(如JVM、内核/OS)、库、服务配置或标志、特性/测试配置和用户配置。如果只有一种发布变更的方法，那么这些组件单独变更会比较困难。 特性标志或测试框架(如Gertrude、Feature和PlanOut)允许你将特性启动从二进制版本中分离出来。如果二进制版本包含多个特性，你可以通过更改测试配置一次启用一个特性。这样，就没有必要将这些小的变更集合为一个大的变更，或者为每个特性执行单独的版本。更重要的是，如果只有一些新特性的行为不像预期的那样，你可以选择性地禁用这些特性，直到下一个构建/发布周期可以部署新的二进制文件为止。 你可以将特性标志/试验原则应用于服务的任何类型的更改，而不仅仅是软件版本。 Canarying是什么？ Canarying一词是指将金丝雀带入煤矿以确定该矿是否对人类安全的做法。 由于鸟类比人类更小，呼吸更快，因此它们被危险气体毒害的速度比人类更快。 即使你的发布管道是完全自动化的，在真正的流量到达服务之前，你依然无法检测到所有与发布相关的缺陷。当一个发布版本准备好部署到生产环境中时，你的测试策略应该充分保证该版本是安全的，并且按预期工作。然而，测试环境与生产环境并不是100%相同的，并且测试不可能会涵盖100％的场景。依然会存在一些会影响生产缺陷。如果一个版本立即部署到系统的全部地方，那么可能存在的缺陷亦将到达系统的全部地方。 如果你能够快速地检测和解决缺陷，则可以接受此方案。但是，更安全的选择是:首先使用灰度发布向新版本导入一些生产流量。灰度发布允许部署管道在尽可能少地影响你的服务的前提下，更快地检测出问题。 发布工程和灰度发布 在部署系统的新版本或其关键组件(如配置或数据)时，我们将变更(通常未公开给真实输入的更改，如面向用户的流量、或用户提供的批处理数据)打包。变更会带来新的特性和功能，但也存在部署之后出现问题的风险。我们的目标是通过测试一小部分流量来降低风险，以确保没有任何不良影响。我们将在本章后面讨论评估过程。 灰度过程还让我们对变更充满信心，因为我们将其暴露给越来越大的流量。为变更引入实际生产流量还使我们能够识别在单元测试或负载测试等测试框架中可能不可见的问题，这些问题通常更为人为。 我们将使用一个实际的示例来检查灰度过程及其评估，同时避免深入研究统计数据。相反，我们关注点是整个过程和典型的实际考虑。我们使用App Engine上的一个简单应用程序来说明发布的各个方面。 灰度发布流程的需求 针对特定服务的灰度发布需要特定功能： 将变更通过灰度发布部署到服务全部子集的方法。 一个评估过程，用来评估变更是好还是坏。 将评估集成到发布过程中。 最后，当灰度检测到有问题的发布版本，并在没有误报的情况下识别出好的发布版本时，灰度发布展示了它的价值。 我们的示例环境 我们将使用一个简单的前端web服务应用程序来演示一些灰度发布的概念。该应用程序提供了一个基于http的API，消费者可以使用它来操作各种数据(如产品价格等简单信息)。示例应用程序有一些可调参数，我们可以使用这些参数来模拟各种生产环境，由灰度发布流程进行评估。例如，可以让应用程序为20%的请求返回错误，或者规定5%的请求至少需要两秒钟。 我们使用部署在谷歌应用程序引擎上的应用程序来演示灰度发布流程，这些原则同样适用于其他环境。虽然示例应用程序是经过设计的，但是在实际场景中，类似的应用程序与我们的示例可以共享灰度发展中使用的指标。 我们的示例服务有两个可能的版本:当前版本和候选版本。当前版本是当前部署在生产环境中的版本，而候选版本是新构建的版本。使用这两个版本来说明发布概念，以及如何实现灰度发布以使发布过程更安全。 回滚部署与简单的Canary部署比较 我们将在发生中断时根据错误预算节省和一般影响，来对没有灰度发布的部署流程和灰度发布流程进行比较。我们的部署过程以开发环境为基础。一旦我们感觉代码在开发环境中正常工作，我们就将该版本部署到生产环境中。 在部署之后不久，监视开始报高错误率(参见图16-2，在图16-2中，为了模拟示例服务中的缺陷，对示例应用程序进行配置以使20％的请求失败)。对于示例，假设部署流程不支持回滚到以前已知的配置正常的版本时。修复这些错误的最佳选择就只有在生产版本中查找缺陷，对其进行补救，并在停机期间重新部署一个新版本。这种做法肯定会延长错误对用户的影响。 图 16-2 部署之后错误率增加 为了改进这个初始部署过程，我们可以在使用灰度发布来减少推送错误代码所造成的影响。 我们需要一种方法来在小部分生产环境中运行候选版本，而不是一次性部署到生产环境。 然后将一小部分流量发送到该生产环境（the canary金丝雀）并将其与其他部分（the control 主控）进行比较。 使用此方法，我们可以在所有生产受到影响之前发现候选版本中的缺陷。 我们在示例应用程序中的进行简单灰度发布，在应用程序的特定版本之间分配流量。 您可以使用App Engine或其他任何方法来分割流量（例如负载均衡器上的后端权重，代理配置或循环DNS记录）。 图16-3显示了当我们使用灰度发布，变更的影响会大大降低;事实上，这些错误几乎不可见!这提出了一个有趣的问题:与总体流量趋势相比，灰度发布的流量趋势很难看到和跟踪。 图 16-3 部署之后错误率增canary部署错误率； 因为进行canary部署的只是系统的一小部分，因此总体错误率降低 为了更清楚地了解需要在合理范围内跟踪的错误，我们可以通过App Engine应用程序版本查看关键指标(HTTP响应代码)，如图16-4所示。当我们查看每个版本的分解趋势图时，我们可以清楚地看到新版本引入的错误。我们还可以从图16-4中观察到当前版本提供的错误非常少。 现在，我们可以根据应用程序版本的HTTP错误率对部署进行调优。如果灰度发布的错误率大于全部系统的错误率，这表明canary部署是糟糕的。我们应该暂停并回滚部署，或者联系他人来帮助解决问题。如果错误率相似，我们可以正常地进行部署。在图16-4中，我们的canary部署显然很糟糕，我们应该回滚它。 图 16-4 应用程序HTTP响应码； 新版本产生多数错误、当前版本产生小数错误（图中显示10%的log） Canary实施 现在我们已经看到了一个相当简单的canary部署实现，接下来让我们更深入地了解成功的canary流程所需的参数。 最小化SLOs和错误预算的风险 第2章讨论了SLOs如何反映设计服务可用性的业务需求。这些需求也可以通过canary实现。canary进程的风险仅仅是我们错误预算的一小部分，它受到时间和canary规模大小的限制。 全局部署会很快将SLO置于危险之中。如果实例中为系统全面部署候选版本，我们将面临20%的请求失败的风险。如果我们使用5%的canary规模，我们将为5%的流量提供20%错误，导致1%的总体错误率(如图16-3所示)。这个策略允许我们保留我们的错误预算—预算的影响与暴露于缺陷的流量的数量成正比。我们可以假设，对于全局部署和灰度部署，检测和回滚花费的时间差不多，但是当我们将灰度发布集成到部署过程中时，我们会以更低的成本获得有关新版本的有价值信息。 这是一个假设负载均匀的极简模型。它还假设我们可以将整个错误预算用于灰度发布。这里我们只考虑新版本引入的不可用性，而不是实际可用性。我们的模型还假设新版本具有100%的失败率，这是最坏的情况。而进行灰度的部分不会导致线上系统100%不可用。我们还允许在灰度部署期间，整个系统的可用性低于SLO。 这个模型有明显的缺陷，但它是一个可靠的起点，你可以根据业务需求进行调整。我们建议使用最简单的模型来满足你的技术和业务目标。根据我们的经验，专注于使模型在技术上尽可能正确，常常会导致在建模上的过度投资。对于具有高复杂性的服务，过于复杂的模型可能导致持续的模型调优，而没有真正的好处。 选择灰度规模和持续时间 选择合适的灰度持续时间，需要考虑发布频率。 如果需要每天发布，那么在一次只运行一个灰度的情况下，无法使灰度保持一周,如果每周部署一次，就可以执行较长的灰度发布。 如果持续部署（例如，一天20次），灰度的持续时间必须明显缩短。 在一些说明里，虽然可以同时运行多个灰度，但这样做会增加大量精力来跟踪系统状态。 在任何情况下，需要快速推断系统状态时，同时运行多个灰度会成为问题。如果灰度重叠，同时运行多个灰度也会增加信号污染的风险。我们强烈建议一次只运行一个灰度。 对于基本的评估，不需要大规模的灰度来检测关键条件。然而，一个有代表性的灰度发布流程需要跨多个维度进行决策: 规模和持续时间 它的规模应够大，持续时间应够长，足以代表整个部署。仅在接收到少量查询后终止canary部署，对于以具有不同功能的不同查询为特征的系统来说，这无法提供有用的信号。处理率越高，获取代表性样本所需的时间就越少，以确保所观察到的行为实际上是由变更引起的，而不仅仅是随机因素。 流量 我们需要在系统上接收足够的流量，以确保它是一个具有代表性的示例，并且系统有机会对输入做出负面反应。通常，请求越均匀，所需要的流量就越少。 时间点 性能缺陷通常只在高负载下出现，因此在非高峰时间部署可能不会触发性能相关的缺陷。 度量指标 灰度的代表性与我们选择评估的指标密切相关(我们将在本章后面讨论)。我们可以快速评估诸如查询成功之类的琐碎指标，但是其他指标(如队列深度)可能需要更多的时间或较大规模的灰度来提供清晰的信号。 但问题是，这些要求可能相互冲突。Canarying是一种平衡行为，它通过对最坏情况的冷静分析和系统过去的实际记录来实现。一旦您从过去的灰度中收集了指标，您就可以根据典型的canary评估失败率而不是假想的最坏情况来选择canary参数。 选择和评估度量标准 到目前为止，我们一直在研究成功率，这是评估灰度发布的一个非常清晰和明显的指标。但是直觉上，我们知道这个单一的指标对于有意义的canary流程来说是不够的。如果我们以10倍的延迟为所有请求提供服务，或者在这样做时使用10倍的内存，那么我们可能也会遇到问题。并不是所有的指标都适合评估灰度发布。哪些指标最适合评估灰度发布版本是好是坏? 度量标准应指出问题 首先，指标需要能够指出服务中的问题。这很棘手，因为构成问题的并不总是客观的。我们可能会认为用户请求失败是有问题的。但是如果一个请求的响应时间增加了10%，或者系统内存增加了10%?，这该如何判断？我们通常建议使用sla作为开始考虑canary指标的地方。良好的服务质量指数往往与服务健康状况密切相关。如果已经使用SLIs来度量SLO是否符合，那么我们可以重用这些工作。 几乎任何指标在极端情况下都可能出现问题，但是向灰度流程中添加太多的指标也会产生成本。我们需要为每个指标正确定义可接受行为。如果可接受行为定义过于严格，我们会得到大量的误报;也就是说，我们会认为灰度很糟糕，即使实际不是这样。相反，如果对可接受行为的定义过于宽松，我们更有可能忽略掉有问题的灰度部署。正确选择什么是可接受的行为可能会成本较大——既耗时又需要分析。然而，如果做得不好，错误的结果会完全误导你。此外，随着服务、其特性集和行为的发展，您需要定期重新评估期望。 我们应该根据这些指标多大程度上能够表明系统中实际用户的体验来进行排名，选择排名靠前的几个指标(可能不超过12个)。太多的度量标准会带来递减的回报，并且在某种程度上，收益会被维护它们的成本所抵消，或者在发布过程中如果不维护它们，会对发布结果无法保证100%的信任。 为了使这个指导原则更加具体，让我们回头再来看示例。它有许多我们可以评估的指标:CPU使用量、内存占用、HTTP返回码(2xx、3xx等等)、响应延迟、正确性等等。在这种情况下，我们最好的度量标准可能是HTTP返回码和响应延迟，因为它们的降级最接近于实际用户影响。在这个场景中，CPU使用率并没有那么有用:资源使用的增加不一定会影响服务，并且可能导致不稳定或嘈杂的canary进程。这会导致操作人员禁用或忽略canary进程，这会首先破坏使用canary进程的目的。对于前端服务，我们直观地知道，响应较慢或响应失败通常会真实反映服务中存在的问题。 HTTP返回码包含一些有趣的复杂情况，例如状态码404，它告诉我们没有找到资源。这可能是因为用户获得了错误的URL(想象一下在一个流行的论坛上分享了一个错误的URL)，或者因为服务器错误地停止了对资源的服务。通常，我们可以通过排除canary评估中的400级状态码，并添加黑盒监控来测试特定URL的存在，从而解决此类问题。然后，我们可以将黑盒数据作为canary分析的一部分，以帮助将canary流程与奇怪的用户行为隔离开来。 度量标准应该具有代表性和可归属性 观察到的指标变化其来源，应该清楚地归因于正在进行的变更，并且不应该受到外部因素的影响。 在一个大的系统中(例如，许多服务器或许多容器)，我们可能会有外部性——超过连接的机器、运行具有不同性能特征的不同内核的机器，或者网络中过载的机器。此时金丝雀部分和主系统部分之间的差异，既是我们所部署的两个基础设施之间的差异，也会是我们变更导致的差异。 管理金丝雀是多种力量之间的平衡。增加金丝雀的规模是减少这个问题影响的方法(如前所述)。当我们的系统达到我们认为的合理的金丝雀规模时，我们需要考虑我们选择的指标是否会显示出很大的差异。 我们还应该知道canary和control环境之间共享的失败域;坏金丝雀会对控制产生负面影响，而系统中的坏行为可能会导致我们错误地评估金丝雀。同样，确保您的度量标准是良好隔离的。考虑一个同时运行我们的应用程序和其他进程的系统。整个系统的CPU使用量的急剧增加会导致糟糕的度量，因为系统中的其他进程(数据库负载、日志轮转等)可能会导致这种增加。更好的度量标准是在处理请求时所花费的CPU时间。更好的度量标准是在服务进程实际计划在CPU上的时间窗口上为处理请求服务所花费的CPU时间。虽然与我们的进程相关的严重超额的机器显然是一个问题(监控应该捕捉到它!)，但它不是由我们正在进行的更改引起的，因此不应该将其标记为金丝雀部署失败。 金丝雀也需要是可归属的;也就是说，您还应该能够将canary度量与SLIs联系起来。如果一个度量可以在不影响服务的情况下发生巨大变化，那么它不适合用来评估灰度发布。 评估前/评估后依然是有风险的 canary过程的前后是归因问题的延伸。在这个过程中，旧系统被新系统完全替代，你的canary评估将在一段时间内比较变更之前和之后的系统行为。你可以将此过程称为时空中的canary部署，在此过程中，您通过分割时间来选择A/B组，而不是通过机器、cookie或其他方法来分割总体。由于时间是观察到的指标变化的最大来源之一，因此很难在评估之前/之后来判断性能是否下降。 虽然canary部署可能导致降级，但原有系统本身也可能会降级。如果需要长时间运行canary部署，就会变得更加复杂。例如，如果在周一进行发布，可能会将工作日的行为与周末的行为进行比较，从而引入大量噪音。在该示例中，用户可能在周末以不同的方式访问该服务。从而在canary进程中引入噪音。 评估前/后过程本身引入了一个问题，即大而短的错误率(由前/后评估引入)是否优于小而长的错误率(由一个小金丝雀引入)。如果新版本完全被破坏，我们能多快地检测和恢复? 大规模的金丝雀之前/之后可以更快地检测到问题，但恢复的总体时间可能仍然相当长，与较小的金丝雀类似。在此期间，用户会一直受到影响。 使用渐进的灰度会更好 选择的度量标准即使不符合我们理想中的属性，但仍然很有价值。我们可以通过使用更细微的灰度过程来介绍这些指标。 我们可以使用包含多个阶段的canary来反映我们对度量的推理能力，而不是简单地评估单个canary阶段。在第一阶段，我们对这个版本没有信心或不了解。因此，我们希望使用一个小的阶段，以尽量减少负面影响。在小型灰度中，我们更喜欢能够最清晰地显示问题的指标——应用程序崩溃、请求失败等等。一旦这一阶段成功地过去，下一阶段将增加灰度规模，从而增强我们分析变化影响的信心。 依赖和隔离 正在测试的系统不会在完全真空中运行。出于实际原因，灰度和主系统可以共享后端、前端、网络、数据存储和其他基础设施。甚至可能与客户端有非常不明显的交互。例如，假设一个客户端发送了两个连续的请求。第一个请求可以由灰度部分来处理。其响应可能会改变第二个请求的内容，第二个请求可能会落在主系统部分，从而改变主系统的行为。 不完美的隔离会带来几个后果。最重要的是，我们需要知道，如果灰度过程的结果表明我们应该停止生产变更并调查情况，那么灰度并不一定是错误的。这一事实对于一般的canarying来说是正确的，但是在实践中，它经常由于隔离问题而导致被强制执行。 此外，不完美的隔离意味着灰度部署的错误行为也会对原始系统产生负面影响。Canarying是A/B比较，A和B有可能同时改变;这可能会导致评估灰度变得混乱。还必须使用绝对度量，例如定义的SLOs，以确保系统正确运行。 在非交互系统中进行Canarying 本章重点讨论了交互式请求/响应系统，它在许多方面是最简单和最常讨论的系统设计。其他系统，如异步处理管道，也同样重要，但有不同的canarying注意事项，我们将简要列举。有关数据处理管道的canarying的更多信息，请参见第13章。 首先，canary的持续时间和部署本质上依赖于工作单元处理的持续时间。当涉及到交互系统时，我们忽略了这个因素，假设工作单元处理的时间不会超过几秒钟，这比canary的持续时间要短。非交互式系统中的工作单元处理(如呈现管道或视频编码)可能需要更长的时间。因此，确保canary持续时间至少跨越单个工作单元的持续时间。 对于非交互式系统，隔离可能变得更加复杂。许多管道系统只有一个工作分配程序和一组使用应用程序代码的工作人员。在多阶段管道中，工作单元由工作人员处理，然后返回到池中，由同一工作人员或另一个工作人员执行下一阶段的处理。金丝雀分析有助于确保处理特定工作单元的工人总是从相同的工人池中提取——要么是金丝雀池，要么是控制池。否则，信号就会变得越来越混杂(有关理清信号的需要的更多信息，请参见349页的监视数据的要求)。 最后，度量标准的选择可能更加复杂。我们可能感兴趣的是端到端处理工作单元的时间(类似于交互系统中的延迟)，以及处理本身的质量(当然，这是完全特定于应用程序的)。 考虑到这些警告，canarying的一般概念仍然是可行的，并且适用相同的高级原则。 监控要求 在评估灰度部署时，您必须能够将部署了灰度的系统与未部署灰度的系统进行比较。通常，这需要在构造监视系统时多加注意—有效的比较非常简单，并且能够产生有意义的结果。 考虑之前的例子，在5%的规模中进行灰度，错误率为20%。因为监视很可能将系统作为一个整体来观察，所以它只能检测到1%的总体错误率。根据系统的不同，这个信号可能与其他错误源无法区分(参见图16-3)。 如果我们通过按照服务请求的对象来（金丝雀与主系统）分解指标，(参见图16-4)我们可以清楚地看到主系统与canary之间的错误率，这清楚地说明了全局部署将带来什么。在这里，我们看到，对整个服务的监控不足以分析灰度是否ok。在收集监视数据时，能够执行细粒度的分解非常重要，这些分解使得能够区分金丝雀和主系统的指标。 收集指标的另一个难点是金丝雀的部署受到设计的时间限制。当度量指标在特定时期内进行聚合时，这可能会导致问题。考虑每小时的度量误差。我们可以通过对过去一小时的请求求和来计算这个度量。如果我们使用这个度量来评估我们的canary，我们可能会遇到问题，如下面的时间表所述: 某些事件会导致一些错误发生。 一只金丝雀被部署在5%的人口中;金丝雀的持续时间是30分钟。 canary系统开始监视每小时的错误度量，以确定部署是好是坏。 部署被检测为错误，因为每小时的错误度量与控制总体的每小时的错误显著不同。 此场景是使用每小时计算一次的度量来评估仅30分钟长的部署的结果。因此，canary进程提供了一个非常模糊的信号。当使用度量来评估canary的成功时，确保度量的间隔与canary的持续时间相同或小于持续时间。 相关概念 通常，与客户的对话涉及到在生产中使用蓝/绿部署、人工负载生成和/或流量测试。这些概念类似于canarying，因此虽然它们不是严格意义上的金丝雀流程，但亦可使用。 蓝/绿部署 蓝/绿部署维护系统的两个实例：一个提供流量（绿色），另一个准备提供流量（蓝色）。 在蓝色环境中部署新版本后，将流量切换到其中。切换过程不需要停机，并且回滚只是简单逆转路由器而已。 一个缺点是该设置使用的资源是传统部署的两倍。在该设置中，您正在有效地执行前/后金丝雀（前面已讨论过）。 通过同时(而不是分开地)使用蓝/绿部署，您可以或多或少地将蓝色/绿色部署用作常规的金丝雀。在此策略中，您可以将canary部署到blue(备用)实例，并在绿色和蓝色环境之间缓慢地分配流量。您的评估和比较蓝色环境和绿色环境的指标都应该与流量控制相关。这种设置类似于A/B金丝雀，此时绿色环境是主系统，蓝色环境是金丝雀部署，金丝雀数量由发送到每个金丝雀的流量控制。 人工负载生成 与其将实时用户流量暴露给canary部署，还不如在安全性方面犯点错误，使用人工负载。通常，您可以在多个部署阶段(QA、预生产，甚至在生产中)运行负载测试。虽然根据我们的定义，这些操作不符合canarying，但是它们仍然是找到缺陷的可行方法，但需要注意一些事项。 使用人工负载进行测试可以很好地最大化代码覆盖率，但不能提供良好的状态覆盖率。在可变系统(具有缓存、cookie、请求关联等的系统)中人工模拟负载尤其困难。人工负载也可能无法准确地模拟真实系统中流量变化。有些问题可能只在无人工负载的情况下出现，从而导致覆盖率有所差距。 人工负载在可变系统中也很难工作。例如，试图在计费系统上生成人工负载可能非常危险:系统可能开始向信用卡供应商发送呼叫，然后信用卡供应商将开始主动向客户收费。虽然我们可以避免测试危险的代码逻辑，但是在这些逻辑上缺乏测试会降低我们的测试覆盖率。 流量测试 如果人工流量不具有代表性，我们可以复制流量并将其发送到生产系统和测试环境。这种技术被称为流量镜像。生产系统服务于实际流量并响应请求，canary部署服务于副本流量并丢弃响应。您甚至可以将canary响应与实际响应进行比较，并运行进一步的分析。 这种策略可以提供有代表性的流量，但通常比更直接的canary流程更复杂。在有状态系统中，流量测试也不能充分识别风险;流量副本可能会在看似独立的部署之间引入意外的影响。例如，如果canary部署和生产系统共享一个缓存，人为导致的缓存命中率增加将使canary指标的性能度量无效。 结论 您可以使用许多工具和方法来自动化版本发布，并将canarying引入到发布管道中。没有一种测试方法是万能的，测试策略应该由系统的需求和行为决定。Canarying可以作为一种简单、健壮且易于集成的方法来补充测试。当您及早发现系统缺陷时，用户受到的影响最小。Canarying还可以为频繁发布提供信心，并提高开发速度。正如测试方法必须随着系统需求和设计而发展一样，canarying也必须如此。 前言</summary></entry></feed>
+&lt;p&gt;感知过载是一种特殊的过载形式，无法通过劳动量或操作量来衡量。很难确定和消除。为了使团队的工作量保持平衡，持续监控（感知的或为感知的）过载非常重要。为了更好地为用户服务并做好工作，你需要首先尊重自己和团队。在日常工作中保持健康的平衡对于帮助你和你的团队实现这一目标有很大帮助。&lt;/p&gt;</content><author><name>ZX</name></author><category term="《SRE-Google运维实践》" /><summary type="html">当SRE团队顺利运行时，团队成员应该感觉他们可以轻松地处理所有工作。他们应该能够处理工单，并且还有时间处理长期项目，以便将来更容易地管理服务。 但有时现实情况会妨碍团队的工作目标，比如，成员长期病假或转移到新的团队。组织为SRE制定了新的生产范围计划，对服务或更大系统的更改带来了新的技术挑战。随着工作量的增加，团队成员开始工作更长时间来处理工单和紧急警报，以至于减少了花在工程工作上的时间。整个团队开始感到压力并沮丧，因为他们努力工作却没有取得进步。反过来，压力会导致人们犯更多的错误，影响可靠性最终影响最终用户。简而言之，该团队失去了管理日常工作和有效管理服务的能力。 因此，团队需要找到摆脱这种过载状态的方法。他们需要重新平衡工作量，以便团队成员可以专注于必要的工程工作。运维负载（或运维工作负载）是一个术语，描述的是使系统和服务以最佳性能运行的持续维护工作。有三种不同类型的运维负载：紧急警报、工单和日常运维任务。紧急警报通常需要立即关注，与紧急问题相关的工单可能会有紧迫的截止日期。报警和紧急工单都会中断SRE的工程工作来支持团队的运维工作。出于这个原因，我们将它们称为中断。SRE（Site Reliability Engineering）的第29章讨论了管理团队在维护复杂系统的运行状态时处理自然中断的技术。当运维负载超过团队管理能力时，团队最终将处于运维过载状态（也称为工作超负荷）。当团队无法在关键优先事项方面取得进展时，团队处于运营超负荷状态，因为紧急问题不断取代项目工作。除了降低团队的优先级和服务改进之外，过载还会增加工程师出错的可能性。 运维过载的阈值因团队而异，Google SRE团队将工作量限制在工程师工作时间的50%。从长远来看，成功的SRE团队必须有信心他们将能够完成所需的工程项目，以减少他们所管理服务的运维负担。 本章描述了Google的团队如何从一个以运维过载为特征的困难局面发展到管理良好的工作负载。两个案例研究显示了运维过载对团队健康的不利影响，以及团队如何改变他们的日常任务，以便可以专注于长期有影响力的项目。在案例研究1中，当身处于一个不断缩小的团队中的成员无法跟上工作负载时，便会导致过载。在案例研究2中，团队遭受他们所认为的过载——这是一种与运维过载具有相同效果的状态，但最初是对实际工作负荷的误解。 虽然案例研究突出了两个Google SRE团队的具体行为，但“减轻过载的策略”一节第366页提供了适用于任何公司或组织辨别和减轻过载的实践。因此，本章应该对过载团队的管理者或任何关注过载的SRE团队有用。 从负载到过载 无论其起源如何，过载都是一种可能削弱生产力的职业压力。如果不加以控制，可能会导致严重的疾病。对于SRE团队而言，运维负载通常是认知上困难任务的组合（如调试内存泄漏或分段故障）和一些需要频繁环境切换的小任务（通过配额请求，启动二进制分发等）。 当团队没有足够的时间来处理所有这些任务时，通常会发生工作超负荷——当分配给团队的任务数量无法在每个任务的给定截止日期内完成时，这是客观现实。感知过载更为主观，并且当团队中的个人觉得他们有太多工作时就会发生。这通常发生在短期内有多次组织或工作变更时，但团队几乎没有机会与领导层就变更进行沟通。 当你值班时，你永远不会清楚会出现什么问题，或者你的工作量是什么。一方面，看似单一的磁盘空间不足问题可能会导致对重复的垃圾收集工作进行深入调查。另一方面，20次以上的紧急报警风暴可能会成为监控不良的情况。当很难估计或预测你的工作量时，很容易成为认知偏差的受害者并误判工作量——例如，你可能会任务在你on-call期间工单队列太大而无法完成，即使你可以快速完成所有工单并且实际工作负载较低，你在第一次查看工单队列时也会感到超载。这种感知过载本身是一种影响工作方式和态度的心理因素，如果你没有以一种有很多工作的预想开始一天的工作，你将很可能潜心的按照你自己的方式完成工单序列。也许你整天都在工作，但并没有完成你的工作量（因此面临工作超负荷），但是这将比一开始就感觉不堪重负更有进步。 累积很多工作中断可能会导致工作超载，但也并非如此。但是，当频繁的中断与外部压力因素配对时，大的工作量（甚至是小的工作量）很容易变成感知的过载。这种压力可能源于担心其他团队成员失望，工作安全感，工作相关或个人矛盾，疾病或健康相关问题，如缺乏睡眠或运动。如果你的工作没有得到适当的优先排序，那么每项任务都会显得同样紧迫，从而导致实际和感知过载。在实际的过载情况下，工单和警报的紧急程度可能导致团队成员工作到知道解决问题，即使这样做意味着持续的长时间工作。当一个团队面临被认为的过载时，重新确定优先级可以帮助减少紧急工作量，为他们创造空间，通过项目工作来解决过载源。 在分析具体情况时，不一定要假设工作量本身需要更改，相反，我们建议首先量化团队所面临的工作，以及它如何（或没有）随时间变化。例如，你可以根据团队处理的故障单和紧急警报数量来衡量工作负载。如果你的工作量实际上没有随着时间的推移而发生变化，那么团队可能会感到超载仅仅是因为他们认为工作是压倒性的。可以通过要求每个成员列出他们面临的所有的工作任务来收集一次性快照，以更全面的了解团队当前的工作负载。然后看看你的团队面临的心理压力因素，例如组织变化或重新优化排序。完成研究后，就可以就改变工作量做出决定。 第366页的“减轻过载的策略”更多的讨论了如何识别真是和感知的过载。首先，我们提出两个认可的团队案例研究，他们处于超负荷状态并采取措施缓解它。 案例研究1：当半数团队成员离开时工作超载 背景 Google的一个内部存储SRE团队负责多种服务的后端维护，包括Gmail，Google云端硬盘和Google网上论坛，以及许多其他内部或面向用户的服务。我们在2016年中期经历了一场危机，当时三分之二的团队成员，包括最高级工程师（经理），在相对较短的时间内因为完全不相干的原因而离职。这个时间显然导致了巨大的工作量管理问题：可用于处理日常工作和项目工作的SRE越来越少，导致团队过载。我们的工作也遇到了瓶颈，因为每个团队成员的专业知识都被划分到不同的生产领域。虽然增加新的团队成员和三名实习生可以改善我们的工作量，但增加这些工程师需要花费大量的时间和精力进行培训。 问题陈述 上述因素显著降低了团队生产力。我们的开始落后于项目工作，并且我们管理的许多服务相关的工单开始堆积。我们没有足够的时间来处理这个积压，因为我们的所有工作都被更高优先级的任务所消耗。过不了多久我们就无法完成所需要的所有重要且紧急的工作。与此同时，我们的团队很快将获得更多高优先级的工作。 如果我们没有把一些工作从我们的主要版块上移开，那么我们只能放弃重要工作。然而，一旦我们开始放弃一些工作，我们就会遇到一些心理问题： 放弃任何正在进行的工作，感觉就像我们刚刚浪费了我们努力的时间。大多数积压工作似乎要么至关重要，要么值得我们付出努力，所以只有无限期地推迟或取消项目。我们没有意识到我们正处于一种沉没成本谬论的控制之中。 努力实现流程自动化或修复工作负载的根本原因并不像立即处理高优先级故障那样重要。当这项工作被添加到已经庞大的堆积工作的顶部时，所有的工作都感到压力很大。 我们决定做什么 我们将团队成员聚集在一个房间中，并列出了团队的所有职责，包括积压项目、运维工作和工单。然后我们队每个列表项进行了分类，查看我们的每一项工作任务，这有助于我们确定并重新定义我们的实际优先级。然后，我们找到了最小化、切换或消除低优先级工作的方法。 实现 我们将一些自动化低成本较低的工作自动化，可能这不会很多，但一旦部署，将大大降低运维负荷。 我们还确定了可以实现自助服务的常见问题。编写客户所需的程序并不需要很长时间，并从队列中删除了一些重复的工作。 我们合理地关闭了许多积压这的工单，这些工单中的大多数都是过时的、多余的，或者是紧急的（虽然他们声称是紧急的）。有些工单是监控那些不可操作的工作，所以我们修复了相关的监控。在某些情况下，我们积极解决不重要的问题。我们将这些问题放在一边处理更紧急的工单，但首先要记录我们的进度，以便在我们能够再次处理他们之前不会失去之前的环境。 当有疑问时，我们放弃一项工作，但标记为第二阶段的分流。一旦我们的盘子（几乎）空了，我们将重新审视这个暂定列表，以决定恢复哪些任务。事实证明，这些任务几乎都不具有影响力或重要性，无法恢复。 两天——一天的密集分流加上一天的记录流程和实施自动化——我们很小的团队解决了几个月的工单积压。然后我们可以处理剩余的几个故障，这些故障与生产中的活动问题有关。 经验总结 我们的团队了解到识别和确认过载是解决问题的第一步。在我们帮助我们团队恢复健康状态之前，我们需要让每个人都进入同一个房间并重新评估积压工作。 为了避免新的中断性任务积累，我们开始每两周对中断性任务进行一次分类。我们的技术负责人会定期检查任务队列，并评估团队是否有过载风险。我们决定每个团队成员应该有10张或更少的开放工单，以避免过载。如果团队领导同志团队成员的工单数超过10张，他们可以执行以下一项或多项组合： 提醒团队关闭陈旧的工单。 与过载的团队成员同步并从他们那卸载工单。 提示各个团队成员解决他们的工单队列。 组织团队范围的一日工单修复工作。 分配工作以修复故障单来源或操作工作以减少将来的故障单。 案例研究2：组织和工作量变化后的感知过载 背景 本案例研究中的Google SRE团队分处两个地方，每个站点有六到七名随叫随到的工程师（有关团队规模的更多讨论，请参阅第11章站点可靠性工程)。虽然悉尼团队健康运作，但苏黎世团队在超负荷运转。 在苏黎世团队进入超负荷之前，我们很稳定且满足。我们管理的服务数量相对稳定，每个服务都多种多样，维护度也很高。虽然我们所支持服务的SLO与其外部依赖的SLO不匹配，但这种不匹配并未引起任何问题。我们正在开展一些项目来改进我们管理的服务（例如，改善负载均衡）。 同时致使苏黎世团队陷入过载的诱因是：我们开始在谷歌的基础架构中加入噪音更大、整合程度更低的新服务，技术主管和另一名团队成员也离开了我们团队，导致团队缺少两个人。额外工作量和知识流失的结合引发了更多问题： 对新服务的未调优监控和与迁移相关的监控导致每个班次增加了更多的页面。这种积累是渐进的，所以当它出现时我们没有注意到它的增加。 SRE对新服务感到相对无助，我们对它们的了解还不够，无法做出适当的反应，而且经常需要询问开发团队问题。虽然过载可能保证将服务交还给开发人员，但我们的团队从未返回过服务，所以我们并不认为这是一个可行的选择。 5人值班小组轮班缩短了我们通常花在业务工作上的时间。 新的故障单报警出现了问题，这种问题在最近的团队变更之前就存在了。我们过去只是简单地忽略了这些问题，但我们现在需要将被忽略的电子邮件报警移至故障单。项目规划并没有考虑到这一新的技术债务来源。 新的票据SLO要求我们在三天内处理票据，这意味着值班人员必须更快地处理在他们值班期间产生的票据。SLO旨在减少添加到我们（大部分被忽略的）积压工单中的票据数量，但这可能产生了更糟糕的副作用。现在，SREs觉得他们在轮班后无法得到他们所需要的休息，因为他们必须立即解决后续工作。对这些工单的优先考虑也意味着SREs没有足够的时间进行其它操作。 在此期间，我们团队被指派给一位新的经理，他同时管理另外两个团队。这位新上任的经理并不是值班轮值人员，因此没有直接感受到团队成员所面临的压力。当团队向经理解释情况时，没有任何改变。团队成员认为他们没有被听到，这让他们感到与管理团队的距离太远了。工单的超载持续了几个月，让团队成员变得脾气暴躁，直到一连串的不愉快情绪蔓延到整个团队。 问题陈述 在失去两个人并接受额外和各种各样的工作后，我们的团队感到超负荷。当我们试图将这种感觉传达给我们的直接经理时，经理不以为然。随着工作时间的延长，人们开始精疲力竭，生产力正在下降，任务增加的速度开始快于团队解决问题的速度。感知到的过载现在变成了客观过载，使情况变得更糟。 超负荷造成的情绪压力降低了士气，导致一些团队成员倦怠。当个人处理工作过度对身体的影响（疾病和低生产力）时，团队中的其他人不得不承担更多的工作，在每周的团队会议上分配的工作没有完成。 然后我们开始假设我们不能依赖其他人来完成他们的工作，这削弱了团队内部的信任和可靠性。因此，我们对人际风险承担感到不安全，这是心理安全的一个重要因素（见第11章网站可靠性工程）。团队成员感觉不被其他团队成员接受和尊重，因此他们之间没有自由地相互协作。随着团队心理安全的减弱，协作停止，信息共享速度减慢，导致效率进一步低下。 团队调查还显示，他们的心理安全受损——团队成员表示，他们并不觉得自己属于团队。他们不再关心他们的职业发展，团队晋升率也降到了历史最低点。 当高层管理人员为我们分配了新的强制性全公司项目时，我们终于达到了一个突破点，在这一点上，我们重新与管理层就过载问题进行了对话。一系列的讨论表明，我们不愉快的情况不仅仅是工作太多的结果——我们对团队安全的看法使我们不再相互信任和合作。 我们决定做什么 上层管理人员为我们团队指派了一位新经理，他不是供职于三个团队。新经理采用参与式管理方式来改善团队的心理安全，以便我们再次合作。该方法使团队成员能够积极参与解决团队问题。整个团队，包括我们的直接经理，都参与了一系列简单的团建活动，以提高我们的团队效率（其中一些活动就像一起喝茶一样简单）。最终，我们能够起草一套目标： 短期：缓解压力，提高心理安全，营造健康的工作氛围。 中期：通过培训建立团队成员的信心；找到导致过载问题的根本原因。 长期：解决正在发生的导致级联的问题。 为了设定这些目标，我们首先必须在团队中达到某种基本的心理安全。随着士气的提高，我们开始分享知识、并在彼此想法的基础上找到让我们的工作负荷得到控制的方法。 实现 短期行为 长期压力，无论是过度工作还是对团队安全的看法，都会降低生产力并影响人们的健康。因此，我们最重要的短期行动是减轻压力，提高信任和心理安全。一旦缓解了一些压力，团队成员就可以更清晰地思考并参与推动整个团队向前发展。在确定过载的一个月内，我们实施了以下措施： 开始了一个非定期的圆桌会议来讨论问题。该团队释放了挫败感，并对可能导致超负荷的原因进行了头脑风暴。 找到更好的衡量负载的指标。我们决定改进我们原有的页数标准，我们自动给值班人员分配工单，即使在轮班结束后，值班人也要负责这些工单。我们的新指标衡量了一位值班人在轮班后处理工单所需的时间。 审核并删除垃圾邮件警报。我们审核了警报，并删除了那些不代表面向用户问题的警报。 屏蔽大量警报。这个团队故意不去寻找每一个警报的来源，而是专注于减轻压力，避免因为我们已经知道的问题而不断接到警报和提工单。我们使用了以下策略： ——已知的警报在被修复之前一直处于屏蔽状态。 ——警报只能在有限的一段时间内被屏蔽（通常是一天，有时长达一周）。否则，他们可能会掩盖故障。 ——几分钟内无法修复的警报被分配到一个跟踪工单上。 增加了一个专门针对单个团队的直接经理。让一个受人尊敬的团队成员成为新经理重新建立了对管理的信任。新经理可以将更多时间集中在团队及其成员上，而不是管理三个团队。 重新平衡团队。我们通过添加技术经验丰富的SREs来引入新的视角并减轻值班人员的压力，这些SREs对团队或组织没有先入为主的观念。找到合适的人并不是一件容易的事，但值得付出努力。 举办团体活动，如午餐和棋盘游戏。谈论与工作无关的话题，一起大笑，缓解团队的紧张局势，提高心理安全性。 中期行为 单靠短期解决方案无法维持良好的氛围——例如，我们的短期策略之一就是在没有真正解决问题的情况下屏蔽报警。在三个月内，我们还采取了一下行动： 值班期间尽可能减少运维工作（参见SRE第29章），以便团队可以专注于永久性修复和项目工作。 将一项服务的责任归还给其开发团队。 相互培训（和新的团队成员）。虽然培训需要投入时间和精力，但传播知识意味着所有团队成员（以及未来的雇员）可以在未来更快地排除故障并解决问题。培训同时提高了我们的信心，因为我们意识到我们实际上对服务有很多了解。当他们获得知识时，团队成员开始寻找管理服务的新方法，提高可靠性和减少过载。 从其他团队中引入SREs来安排我们的一些值班工作并参与培训。他们注意到了团队的压力，并提供了一些有价值的新视角。 在团队中重新扮演了两个开放的角色。 在报警屏蔽过期解决每个报警。我们在周会中讨论了没有采取任何操作的重复报警，这让我们调整了报警或修复了潜在的问题。虽然这些是重要的（和明显的）行为，我们只有在报警被屏蔽情况下才有足够的空间进行分析和采取行动而不是制造持续的噪音。 有组织的聆听活动。管理层（包括跳级经理和团队领导）有意识地倾听团队的痛点并找到一个团队驱动的解决方案。 增加视角。希望不是一种策略，但它确实有助于提升团队士气。随着新成员加入on-call，转变为更清晰的优先事项，以及结束产生报警的项目，团队的情绪得到了改善。 长期行为 为了保持我们新发现的稳定，我们目前正在将我们的SLO与其服务后端的SLO保持一致，并努力使服务更加统一。统一具有双重好处：它降低了SRE的心理负荷，并使编写可以跨服务使用的自动化变得更加容易。我们还回顾了已经存在了很长时间的服务，并将它们更新到当前的生产标准。例如，一些服务在负载下运行很差，这些年来显著增加。某些服务更需要根据其后端服务策略的更改进行更新。其它服务几年来一直没有更新。 成效 我们在第一次头脑风暴会议后的几个月，结果开始浮出水面：on-call轮班期间变得更安静了，我们的团队成功地快速有效地处理了一个棘手的时间。不久，新的团队成员加入。当我们在圆桌会议上讨论心理安全时，新成员说他们无法想象团队会有这样的问题。事实上，他们认为我们的团队是一个温暖而安全的工作场所。在最初的升级后大约一年，最初的超负荷几乎没有，一项匿名调查显示，团队成员现在觉得这个团队是高效和安全的。 经验总结 工作场所的变化会对团队中的人产生心理影响——毕竟，你的队友不是机器。你需要关注团队的压力水平这样人们就会开始互相信任，一起工作；否则，团队可能会进入导致压力的过载中恶性循环，从而阻止你应对过载。 事实上，感知过载是过载，并且对团队的影响与其他因素造成的工作过载一样大。在我们的案例中，我们在悉尼的姐妹团队没有遇到同样的问题，与前几年相比，我们解决的报警数量并没有太大的变化。相反，失去两名团队成员，感知过载增加，工单增加以及新的3天的工单让团队感觉超负荷了。最终，客观和感知超载之间的区别并不重要：一些团队成员的管制过载会很快导致整个团队的超负荷。 减轻过载的策略 外部视角有时可以很容易地识别团队何时超负荷。同样，回顾一下应该采取什么行动也很容易。但当你正在体验它时，你将如何识别过载？当你陷入过载困境时，通往健康、友好和快乐的工作氛围的道路很难想象。本节介绍了识别和减轻团队过载的实践。 识别过载的症状 如果你知道过载的症状，很容易识别出一个超负荷的团队： 团队士气降低： 过载可能表现为咆哮和抱怨。相关主题（工作条件、工作满意度、项目、同事和经理）的调查通常反映团队士气，并在团队超负荷时产生更多负面结果。与团队领导定期积极的聆听会议可以解决你不了解的问题。积极倾听的一个基本要素是不经过判断就倾听。 团队成员长时间工作，或生病时工作： 没有补偿的加班可能是心理压力源。领导者应该梳理一个好榜样：生病时待在家里。 更频繁的疾病： 过度工作的团队成员往往会经常沮丧和生病 不健康的任务队列： 我们建议定期查看团队的任务队列，已查看积压的工单，处理哪些问题以及可以延迟或删除那些任务。如果团队错过最后期限，或者紧急事件阻止你定期执行此审核，那么团队很可能会比他们所能处理的更快地累积中断。 不平衡的指标： 一些关键的指标可能表明你的团队过载 * 长时间关闭某个问题 * 长时间花费在艰难进行的工作上 * 大量的时间来关闭来自于调用会话的问题 团队应该共同决定使用哪些措施。没有一种适合所有人的方法；每个团队的超负荷都会以不同的方式放映出来。作为经理，在不了解每个人的工作量和工作习惯的情况下，不要对团队施加措施。如果坚持使用特定措施，团队成员可能会觉得你不理解工作。例如，如果你按照修复问题所需的天数来评估负载，那么一个人可能会整整一天解决问题，而另一个人可能会在几天内将工作分配到其他工作中。 减少团队压力维持团队健康状态 阅读完标准后，你可能会认为你的团队已经超负荷了。不要绝望！本节提供了一个让你的团队恢复健康状态的方法。 通常，给团队成员更多的控制和权力可以减少感知到的压力。虽然有压力的情况下求助于微管理，但重要的是要让团队处于循环状态中，并将优先级放在一起，以提高绩效和工作满意度。这个模型假设一个团队成员之间有着健康的人际关系之中。 识别并减轻心理压力源 当要调整一个超负载的团队时，最重要的是团队成员需要重建心理安全。团队和每个成员都是息息相关的。 你可以从识别每个人和整个团队的心理压力源开始。实际哪些因素影响团队的压力？你无法控制团队成员是否患有重大疾病，但你可以控制团队面临压力的大小（如案例研究1中所示）或屏蔽报警（如案例研究2）。 与你的合作的产品开发人员团队沟通，让他们知道你的团队的压力。他们或许可以伸出援助之手，甚至接管整个项目。 当你的团队成员相互依赖并达到一定程度的心理安全（这样他们能够承担人际风险）时，你可以让个别成员承担更多的责任，学习其他领域的专业知识，并将专业人员物尽其用，从而提高他们的自信心，使他们能够承担风险的重任。 决策应该是透明的，如果可能的话，应该是民主的。每个团队成员都应该对面对的情况有一种控制感。例如，案例研究2中的头脑风暴会议帮助团队识别和讨论问题。 在四分之一的范围内优先处理和分类 健康的团队会首先处理重要的问题并对问题进行分类。案例研究1为这个观点提供了一个很好的例子：团队坐在一起并审查他们积压的问题。审查帮助他们意识到他们超载了。他们重新确定了工作优先级后，并完成了可以迅速减少负载的任务。案例研究2中的团队现在每个季度末召开会议，共同规划现有和未来工作并确定其优先顺序。 如果可能，我们建议SRE在其日历上安排无中断时间（没有on-call），这样他们就有时间处理技术深度上很困难的任务，如开发自动化和调查中断你的根本原因。在案例研究2中，当外部团队给予on-call一些解脱时，团队成员则有宝贵的时间专注于他们的项目。 如果绝对必要，放弃一些工作内容：在案例研究2中，团队通过将此职责交还给开发团队，放弃了对其中一项服务的on-call支持。 在未来保护自己 我们强烈建议制定指标来评估团队的工作量。定期查看指标，确保他们正在衡量正确的事情。 一旦你的团队出现过载，你可以通过采取措施监控或解决潜在问题来防止过载进一步恶化。例如，案例研究1中的团队现在维护一个轻量级的分类流程，以检测不断增加的积压任务。案例研究2中的团队目前正在制定一项长期计划，以协调后端和服务SLO。 当你的团队处于超负荷状态时，优先考虑工程工作，即使你没有超负荷工作，也会比重复工作更重要，在将来你会获得利益。 最后，团队中的每个人都应对预警信号负责（请参见第366也的“识别过载症状”），以指示可能出现的过载情况。如果管理人员认为团队正在走向过载，他们应该坐下来与团队成员交谈。 结论 在完美的世界中，SRE团队始终能够使用我们的第一本书中描述的策略来管理中断。但我们只是人类，我们的团队没有达到那个理想状态。本章研究了过载情况下如何建立团队健康的方法，并讨论了如何在它发生时检测和响应。 特别实在运营工作方面，过度的中断很容易导致团队从正常工作负载滑落到过载。频繁的中断可能导致过载，过载会对健康和生产力产生负面影响。超载会给团队成员带来心理社会压力因素，进一步影响工作，导致自我强制循环。 感知过载是一种特殊的过载形式，无法通过劳动量或操作量来衡量。很难确定和消除。为了使团队的工作量保持平衡，持续监控（感知的或为感知的）过载非常重要。为了更好地为用户服务并做好工作，你需要首先尊重自己和团队。在日常工作中保持健康的平衡对于帮助你和你的团队实现这一目标有很大帮助。</summary></entry></feed>
