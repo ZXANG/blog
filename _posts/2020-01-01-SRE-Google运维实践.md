@@ -101,10 +101,10 @@ Edited by:
 > Tools Don't create reliability. Humans do. But tools can help.
 >
 
-* 相关资料
-英文原版：[the-site-reliability-workbook-next18.pdf](/blog/something/pdf/SRE/the-site-reliability-workbook-next18.pdf)
 
-悟冥：[读《SRE：Google运维解密》一点思考](https://zhuanlan.zhihu.com/p/97600369)
+### 相关资料
 
-SRE Google运维解密
+英文原版：[the-site-reliability-workbook-next18.pdf](/blog/something/pdf/SRE/the-site-reliability-workbook-next18.pdf)  
+悟冥：[读《SRE：Google运维解密》一点思考](https://zhuanlan.zhihu.com/p/97600369)  
+SRE Google运维解密  
 
