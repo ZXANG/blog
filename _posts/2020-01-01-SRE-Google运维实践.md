@@ -6,7 +6,8 @@ categories:
 tags: 《SRE-Google运维实践》 
 ---
 
-> 《The Site Reliability Workbook — Practical Ways to Implement SRE》 中文版
+> 《The Site Reliability Workbook — Practical Ways to Implement SRE》 
+
 
 <!-- more -->
 
@@ -43,19 +44,24 @@ Edited by:
 
 
 > ### <center>如何阅读本书</center>
-> This book is the companion volume to Google’s first book, Site Reliability Engineer‐ing. To get the most out of this volume, we recommend that you have read, or can refer to, the first SRE book (available to read online for free at google.com/sre). The two works complement each other in the following ways:
-> * The previous work was an introduction to principles and philosophy. This vol‐ume concentrates on how those principles are applied. (In a few areas—particu‐larly configuration management and canarying—we also cover some new ground to provide background for the practical treatment of other subjects.)
+> 这本书是google第一本sre(Site Reliability Engineering)书的姊妹篇. 要充分读懂本书，我们建议您阅读或参考第一本SRE书籍(可在google.com/sre在线免费阅读)。这两部作品在以下几个方面是相辅相成的:    
+> * 第一本书主要是是原则和理论的介绍。本书主要讨论如何应用这些原则。(在少数几个领域——主要是配置管理和灰度——我们还讨论了一些新领域，为其他主题的实际应用提供了场景。)
 >
-> * The earlier volume concentrated exclusively on how SRE is practiced at Google. This work includes perspectives from a number of other firms—from traditional enterprises (including The Home Depot and the New York Times) to digital natives (Evernote, Spotify, and others).
+> * 第一本书专门集中于如何在谷歌实践SRE。包括许多其他公司的观点——从传统企业(包括家得宝和纽约时报)到`数字原生代`(Evernote、Spotify和其他)。
 >
-> * The first book didn’t directly refer to the larger operations community—espe‐ cially DevOps—whereas this book speaks directly to how SRE and DevOps relate to each other.
+> * 第一本书没有直接提到更大的运营社区—特别是DevOps—而这本书直接谈到了SRE和DevOps是如何相互关联的。
 > 
-> This volume assumes that you will bounce between this volume and its predecessor.  You might, for example, read Chapter 4, “Service Level Objectives” in the first book and then read its implementation complement (Chapter 2) in this volume.
+> 本书假设你会在阅读第一本书和第二本书之间互相验证。例如，您可以在第一本书中阅读第4章“服务级别目标”，然后在本卷中阅读(第2章)其实现补充。
 >
-> This book assumes that every chapter is just the starting point for a longer discussion and journey. Accordingly, this book is intended to be a conversation starter rather than the last word.
+> 本书假设每一章只是一个更长的讨论和旅程的起点。因此，本书的目的是要成为一个对话的开始，而不是结束。
 > 
 > —The Editors
  
+> 备注：
+>
+>   数字原生代:是美国哈佛大学的网络社会研究中心和瑞士圣加仑大学的信息法研究中心提出的概念， 意为“80 后” 甚至再年轻些的这代人一出生就面临着一个无所不在的网络世界，对于他们而言，网络就是他们的生活，数字化生存是他们从小就开始的生存方式。
+
+
 本书目录结构：
 
 第一章  SRE与DevOps之间的联系

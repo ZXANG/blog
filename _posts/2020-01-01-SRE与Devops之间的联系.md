@@ -6,7 +6,7 @@ categories:
 tags: 《SRE-Google运维实践》 
 ---
 
-> 《The Site Reliability Workbook — Practical Ways to Implement SRE》 中文版
+> 《The Site Reliability Workbook — Practical Ways to Implement SRE》 
 
 <!-- more -->
 
