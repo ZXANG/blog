@@ -1,0 +1,1886 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="《SRE-Google运维实践》," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在项目生命周期的开始阶段，配置通常相对轻量且简单。您可能有一些数据格式的文件，如INI，JSON，YAML或XML。管理这些文件几乎不需要辛劳。应用程序、服务器和变体的数量随着时间的推移而增加，配置可能变得非常复杂和冗长。如果项目充斥着与配置相关的工作，您可以采取一些基本策略来改善这种情况。">
+<meta name="keywords" content="《SRE-Google运维实践》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十五章 配置细节">
+<meta property="og:url" content="http://localhost:4000/sre/2020/01/15/%E9%85%8D%E7%BD%AE%E7%BB%86%E8%8A%82/">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="在项目生命周期的开始阶段，配置通常相对轻量且简单。您可能有一些数据格式的文件，如INI，JSON，YAML或XML。管理这些文件几乎不需要辛劳。应用程序、服务器和变体的数量随着时间的推移而增加，配置可能变得非常复杂和冗长。如果项目充斥着与配置相关的工作，您可以采取一些基本策略来改善这种情况。">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第十五章 配置细节">
+<meta name="twitter:description" content="在项目生命周期的开始阶段，配置通常相对轻量且简单。您可能有一些数据格式的文件，如INI，JSON，YAML或XML。管理这些文件几乎不需要辛劳。应用程序、服务器和变体的数量随着时间的推移而增加，配置可能变得非常复杂和冗长。如果项目充斥着与配置相关的工作，您可以采取一些基本策略来改善这种情况。">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>第十五章 配置细节 | Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6d1adeb8cec8ffce64c7106d77e66ce";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-something">
+          <a href="/something/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            奇奇怪怪
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/sre/2020/01/15/%E9%85%8D%E7%BD%AE%E7%BB%86%E8%8A%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            第十五章 配置细节
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-15T00:00:00+08:00">
+                2020-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/SRE" itemprop="url" rel="index">
+                    <span itemprop="name">SRE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/sre/2020/01/15/%E9%85%8D%E7%BD%AE%E7%BB%86%E8%8A%82/" class="leancloud_visitors" data-flag-title="第十五章 配置细节">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    在项目生命周期的开始阶段，配置通常相对轻量且简单。您可能有一些数据格式的文件，如INI，JSON，YAML或XML。管理这些文件几乎不需要辛劳。应用程序、服务器和变体的数量随着时间的推移而增加，配置可能变得非常复杂和冗长。如果项目充斥着与配置相关的工作，您可以采取一些基本策略来改善这种情况。
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <p>管理生产系统是SRE为组织提供价值的众多方式之一。在生产中配置和运行应用程序,需要深入了解这些系统如何组合在一起以及如何工作。当出现问题时，随时响应的工程师需要确切知道配置的位置以及如何更改配置。如果团队或组织未花精力去解决与配置相关的问题，则此责任可能成为负担。</p>
+
+<p>本书详细介绍了琐事的主题（见第6章）。如果您的SRE团队承担了大量与配置相关的工作负担，我们希望实现本章中介绍的一些想法可以帮助您节省部分更改配置所花费的时间。</p>
+
+<h2 id="配置带来的琐事">配置带来的琐事</h2>
+
+<p>在项目生命周期的开始阶段，配置通常相对轻量且简单。您可能有一些数据格式的文件，如INI，JSON，YAML或XML。管理这些文件几乎不需要辛劳。应用程序、服务器和变体的数量随着时间的推移而增加，配置可能变得非常复杂和冗长。例如，一开始可以通过单个配置文件来进行“配置更改”，但现在必须更新多个位置的配置文件。阅读这样的配置也很困难，因为重要的差异被无关且重复细节所淹没。这种与配置相关的琐事是重复的琐事：管理跨系统配置的无技术含量的任务。这种工作不仅限于大型组织和庞大的系统 –对于具有许多独立配置组件的微服务架构而言，这种情况尤为常见。</p>
+
+<p>工程师通常通过构建自动化或配置框架来应对重复工作。它们旨在消除配置系统中的重复性，并使配置更易于理解和维护。重复利用软件工程中的技术，这种方法通常使用“配置语言” .Google SRE创建了许多配置语言，旨在减少我们最大和最复杂的生产系统的辛劳。</p>
+
+<p>不幸的是，这种策略并不能根除配置导致的琐事。将你从大量的个人配置中解脱出来，该项目（及其配置资料库）以新的速度增长。不可避免地，你遇到了复杂的琐事：处理复杂自动化中出现的、有时是不受欢迎的挑战性行为和令人沮丧的任务。该琐事通常在较大的组织（10多名工程师）和一直增长的混合系统中出现。你越早解决就越好;  配置文件的大小和复杂性只会随着时间的推移而增长。</p>
+
+<h2 id="减少配置导致的琐事">减少配置导致的琐事</h2>
+
+<p>如果项目充斥着与配置相关的工作，您可以采取一些基本策略来改善这种情况。</p>
+
+<p>在极少数情况下，如果您的应用程序是自定义构建的，您可以选择完全删除配置。在处理配置的某些方面时，应用程序可能天然地就比配置语言更好：让应用程序使用默认值是有意义的，因为它可以访问有关机器的信息或者动态地改变某些值，或者可以根据负载进行扩展。</p>
+
+<p>如果配置不可删除，并且重复琐事正在成为问题，请考虑自动化以减少配置文件中的重复性。可能需要集成新的配置语言，或者需要改进或替换现有的配置文件。接下来，第317页的“配置系统的关键属性和缺陷”一节提供了有关选择或设计系统的一些指导。</p>
+
+<p>如果选择新的配置框架，则需要将配置语言与需要配置的应用程序集成。“集成现有应用程序：Kubernetes。（第322页）使用Kubernetes作为现有应用程序示例，要集成的应用程序和“集成自定义应用程序（内部软件）”（第326页）提供了一些更常规的建议。这些部分使用Jsonnet（作为代表进行说明）演示一些示例。</p>
+
+<p>一旦有适当的配置系统 - 不管是否是现有解决方案，还是选择新的配置语言进行实施 。 “有效运行配置系统”（第329页）中的最佳实践，“何时评估配置”（第331页）和“防止滥用配置”（第331页）都有助于优化设置，无论使用哪种语言。采用这些流程和工具有助于最大限度地降低复杂程度。</p>
+
+<h2 id="配置系统的关键属性和缺陷">配置系统的关键属性和缺陷</h2>
+
+<p>第14章概述了任何配置系统的一些关键属性。除了理想中的通用要求（如轻量级，易学，简单和富有表现力）之外，高效的配置系统必须：</p>
+
+<ul>
+  <li>通过配置工具对配置文件进行管理（线程，调试器，格式化程序，IDE集成等）可以支持配置合法性检查，（增强）工程师信心和（提高）工作效率</li>
+  <li>提供回滚配置和一般可重复性的密封评估。</li>
+  <li>单独的配置和数据，以便于分析配置和一系列配置界面。</li>
+</ul>
+
+<p>普遍而言，人们不觉得这些属性是至关重要的，并且达到目前理解的程度已经是一个征程。（以至于）在此过程中，Google也发明了几种缺乏这些关键属性的配置系统。但这不仅止存在于我们之中，虽然流行的配置系统种类繁多，但你很难找到一个不会违反以下任意一条的系统。</p>
+
+<h3 id="缺陷一未能将配置视为编程语言问题">缺陷一：未能将配置视为编程语言问题</h3>
+
+<p>如果你不是有意设计一门语言，那么最终得到的“语言”很可能不是一门好语言。</p>
+
+<p>虽然配置语言描述数据而不是行为，但它们仍然具有编程语言的其他特征。如果我们的配置策略以仅使用数据格式为目标开始，那么编程语言功能往往会渗透到后门。该格式不是仅保留数据语言，而是一种深奥而复杂的编程语言。</p>
+
+<p>例如，某些系统将count属性添加到正在配置的虚拟机（VM）的架构中。此属性不是VM本身的属性，而是表示需要多个属性。虽然有用，但这是编程语言的一个特性，而不是数据格式，因为它需要外部编译器或解释器。经典编程语言方法将使用工件外部的逻辑（例如for循环或列表理解）来根据需要生成更多VM。</p>
+
+<p>另一个例子是一种配置语言，它产生字符串插值规则而不是支持通用表达式。这些字符串似乎只是“数据”，尽管它们实际上可以包含复杂的代码，包括数据结构操作，校验和，base64编码等。</p>
+
+<p>流行的YAML+Jinja解决方案也有缺点。简单的纯数据格式（如XML，JSON，YAML和文本格式的协议缓冲区）是纯数据用例的绝佳选择。同样，文本模板引擎（如Jinja2或Go模板）非常适合HTML模板化。但是，当使用配置语言时，人类和工具难以维护和分析。在这些情况下，该缺陷将导致出现复杂的、深奥不适合工具的“语言”。</p>
+
+<h3 id="缺陷二设计意外或特殊语言功能">缺陷二：设计意外或特殊语言功能</h3>
+
+<p>在大规模操作系统中，SRE通常会觉察到配置可用性问题。新语言不具备良好的工具支持（IDE支持，良好的连接），如果开发语言具有未公开的、或深奥的语义特性，那么开发自定义工具则很痛苦。</p>
+
+<p>随着时间的推移，将特殊编程语言功能添加到简单的配置格式可能会拥有一个功能完整的解决方案，但是临时语言更复杂，并且通常比其他经过设计的等价语言更不使用。这其中还会带来开发陷阱和特性风险，因为设计者无法提前考虑功能之间的相互作用。</p>
+
+<p>如果不希望配置系统变得足够复杂，而是简单的编程结构就能解决的话，最好在初始设计阶段考虑好这些要求。</p>
+
+<h3 id="缺陷三构建太多特定领域的优化">缺陷三：构建太多特定领域的优化</h3>
+
+<p>对于新的特定领域的解决方案，用户群越小则其出现的的时间就会越长, 因为其需要积累足够的用户来证明构建工具的合理性。工程师不愿意花时间理解该语言，因为它在该领域之外几乎没有适用性。像Stack Overflow这样的学习资源基本不可用。</p>
+
+<h3 id="缺陷四混淆配置评估与副作用">缺陷四：混淆“配置评估”与“副作用”</h3>
+
+<p>副作用包括在配置运行期间更改外部系统或咨询带外数据源（DNS、VM ID、最新构建版本）。</p>
+
+<p>允许这些副作用的系统会破坏密封性，影响配置与数据分离。在极端情况下，如果不花钱保留云资源，就无法调试配置。为了分离配置和数据，首先评估配置，然后将结果数据提供给用户进行分析，然后才考虑副作用。</p>
+
+<h3 id="缺陷五使用现有的通用脚本语言如pythonruby或lua">缺陷五：使用现有的通用脚本语言，如Python、Ruby或Lua</h3>
+
+<p>这似乎是避免前四个陷阱的一种微不足道的方法，但使用通用脚本语言的实现是重量级的和/或需要侵入式沙盒来确保密封性。由于通用语言可以访问本地系统，基于安全性考虑也可能需要沙盒。</p>
+
+<p>此外，无法保证维护配置人员熟悉所有语言。</p>
+
+<p>为了避免这些陷阱，开发了用于配置的可重用特定语言（DSL），例如HOCON、Flabbergast、Dhall和Jsonnet。我们建议使用现有的DSL进行配置。即使DSL看起来太强大，无法满足你的需求，可能需要在某些时候使用附加功能，并且始终可以使用内部样式指南来限制语言的功能。</p>
+
+<blockquote>
+  <h4 id="-jsonnet的简介-"><center> Jsonnet的简介 </center></h4>
+
+  <p>Jsonnet是一个密封的开源DSL，可以用作库或命令行工具为任何应用程序提供配置。在Google内外都广泛使用。</p>
+
+  <p>这种语言对程序员来说很熟悉：它使用类似Python的语法、面向对象和功能构造。它是JSON的扩展，这意味着JSON文件只是一个输出自身的Jsonnet程序。在使用引号和逗号时，Jsonnet比JSON更方便，并支持注释。更重要的是，它增加了计算结构。</p>
+
+  <p>你不需要特别熟悉Jsonnet语法来完成本章的其余部分，只需花一些时间阅读在线教程就可以入门。</p>
+
+</blockquote>
+
+<blockquote>
+  <p>Google或我们的读者群中没有主流配置语言，但我们需要选择语言方便我们提供示例。本章使用Jsonnet来展示我们在第14章中所提供建议的示例。</p>
+
+  <p>如果你尚未使用特定配置语言并且想要使用Jsonnet，则可以直接应用本章中的示例。我们会尽力让你尽可能轻松地从代码示例中抽象出基础原理。</p>
+
+  <p>此外，一些示例探索了你可能希望在编程书中找到的概念（如图灵完整性）。我们只在必要时深入研究，以解释在生产中真正困扰我们的微妙之处。在大多数复杂的系统中 - 当然还有配置方面 - 故障处于边缘。</p>
+</blockquote>
+
+<h2 id="集成配置语言">集成配置语言</h2>
+
+<p>本节使用Jsonnet讨论如何将配置语言与你需要配置的应用程序集成，相同的技术也适用其他配置语言。</p>
+
+<h3 id="以特定格式生成配置">以特定格式生成配置</h3>
+
+<p>配置语言可以以正确的格式本机输出。例如，Jsonnet输出JSON，它与许多应用程序兼容。对于扩展JSON的语言的消费者，JSON也是足够的，例如JavaScript、YAML或HashiCorp的配置语言。如果这是你面对的情况，则无需进行其他任何集成工作。</p>
+
+<p>对于本机不支持的其他配置格式：</p>
+
+<ol>
+  <li>你需要找到一种在配置语言中表示配置数据的方法。这并不难，因为配置值（如图、列表、字符串和其他原始值）是通用的，并且可用于所有语言。</li>
+  <li>一旦用配置语言表示了这些数据，就可以使用该语言的结构来减少重复（减少工作量）。</li>
+  <li>你需要为必要的输出格式编写（或重用）序列化函数。例如，Jsonnet标准库具有从其内部类似JSON的表示中输出INI和XML的功能。如果配置数据无法在配置语言中表示（例如，Bash脚本），你可以使用基本的字符串模板技术作为最后手段。可以在http://bit.ly/2La0zDe找到使用示例。</li>
+</ol>
+
+<h3 id="推动多种应用">推动多种应用</h3>
+
+<p>一旦可以从配置语言驱动任意现有应用程序，你就可以从同一配置中定位多个应用程序。如果你的应用程序使用不同的配置格式，则需要做一些转换工作。一旦能够以一定的格式生成配置，你就可以轻松统一、同步和消除整个配置文件库中的重复。鉴于JSON和基于JSON格式的普及，甚至可能不必生成不同的格式 - 例如，如果使用部署体系结构，使用GCP部署管理器，AWS CloudFormation或Terraform作为基础架构，以及Kubernetes作为容器，则情况确实如此。</p>
+
+<p>此时，你可以：</p>
+
+<ul>
+  <li>从单个Jsonnet评估中输出Nginx Web服务器配置和Terraform防火墙配置，该评估仅定义端口一次。</li>
+  <li>从相同文件配置监控仪表盘，保留策略和警报通知管道。</li>
+  <li>通过将初始化命令从一个列表移动到另一个列表，管理VM启动脚本和磁盘映像构建脚本之间的性能权衡。</li>
+</ul>
+
+<p>在将不同的配置统一到之后，会有很多机会来优化和抽象配置。配置甚至可以嵌套 - 例如，Cassandra配置可以嵌入其基础架构的DeploymentManager配置内或Kubernetes ConfigMap内。一个优秀的配置语言可以处理任何笨拙的字符串引用，通常这个操作自然而简单。</p>
+
+<p>为了便于为各种应用程序编写许多不同的文件，Jsonnet有一种模式，配置执行产生一个JSON对象，将文件名映射到文件内容（根据需要进行格式化）。可以在其他配置语言中模拟此功能，方法是在字符串之间产生映射，并使用后续处理步骤或脚本来编写文件。</p>
+
+<h2 id="集成现有应用程序kubernetes">集成现有应用程序：Kubernetes</h2>
+
+<p>Kubernetes提出了一个有趣的案例研究，原因如下：</p>
+
+<ul>
+  <li>运行在Kubernetes上的作业需要配置文件，并且配置可能会很复杂。</li>
+  <li>Kubernetes没有附带绑定的配置语言（甚至没有专门的配置语言）。</li>
+</ul>
+
+<p>对于最简单的结构，Kubernetes用户只需使用YAML即可。对于具有较大的基础结构，Kubernetes用户可以使用Jsonnet等语言扩展其工作流程，以其作为该规模所需的抽象工具。</p>
+
+<h3 id="kubernetes提供什么">Kubernetes提供什么</h3>
+
+<p>Kubernetes是一个开源系统，用于在一组机器上编排容器化工作负载。它的API允许你自己管理容器和许多重要的细节，例如容器之间的通信、集群内外的通信、负载平衡、存储、渐进式部署和自动扩展。每个配置项都用一个JSON对象表示，该对象可以通过API进行管理。命令行工具kubectl允许从磁盘读取这些对象并将它们发送到API。</p>
+
+<p>在磁盘上，JSON对象实际上被编码为YAML流，YAML易于读取，并可以通过常用库轻松转换为JSON。开箱即用的用户体验包括编写代表Kubernetes对象的YAML文件并运行kubectl以将它们部署到集群。</p>
+
+<p>要了解配置Kubernetes的最佳实践，请参阅有关该主题的Kubernetes文档。</p>
+
+<h3 id="kubernetes配置示例">Kubernetes配置示例</h3>
+
+<p>YAML是Kubernetes配置的用户界面，它提供了一些简单的功能，如注释，并且具有大多数人中所意的简洁的原始JSON语法。然而，YAML在抽象方面不尽如人意：它只提供锚点，这在实践中很少有用，而且Kubernetes不支持。</p>
+
+<p>假设你要使用不同的命名空间、标签和其他微小差异，将Kubernetes对配置文件复制四次。遵循基础结构不变的最佳实践，可以存储所有四个文件的配置，复制配置的相同处。以下代码片段提供了其中一个文件（为简洁起见，我们省略了其他三个文件）：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20</pre></td><td class="code"><pre class="highlight"><code># example1.yaml
+apiVersion: v1
+kind: Service
+metadata:
+     labels:
+        app: guestbook
+        tier: frontend
+     name: frontend
+     namespace: prod
+spec:
+    externalTrafficPolicy: Cluster
+    ports:
+    - port: 80
+       protocol: TCP
+       targetPort: 80
+    selector:
+       app: guestbook
+       tier: frontend
+    sessionAffinity: None
+    type: NodePort
+</code></pre></td></tr></tbody></table></div></div>
+
+<p>此格式难以阅读和维护，因为重要的差异被模糊了。</p>
+
+<h3 id="集成配置语言-1">集成配置语言</h3>
+
+<p>如第315页上的“配置引发的操作”中所述，管理大量YAML文件可能会花费大量时间。配置语言可以帮助简化此任务。最直接的方法是从Jsonnet的每次执行中发出一个Kubernetes对象，然后将生成的JSON直接传递给kubectl，kubectl处理JSON，就好像它是YAML一样。或者，您可以发出YAML流（一系列此类对象或单个kubectl列表对象，或让Jsonnet从同一配置发出多个文件。有关进一步的讨论，请参阅Jsonnet网站）。</p>
+
+<p>开发人员应该意识到，通常，YAML允许您编写JSON中无法表达的配置（因此，Jsonnet无法生成）。YAML配置可以包含异常的IEEE浮点值，如NaN，或者包含非字符串字段的对象，如数组、其他对象或null。实际上，这些功能很少使用并且Kubernetes不允许使用它们，因为配置在发送到API时必须进行JSON编码。</p>
+
+<p>以下代码段显示了我们的示例Kubernetes配置在Jsonnet中的样子：</p>
+
+<p>请注意以下事项：</p>
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34<br/>35<br/>36<br/>37<br/>38<br/>39<br/>40<br/>41<br/>42<br/>43<br/>44<br/>45<br/>46<br/>47<br/>48<br/>49<br/>50<br/>51<br/>52<br/>53</pre></td><td class="code"><pre class="highlight"><code>// templates.libsonnet
+{
+    MyTemplate:: {
+          local service = self,
+          tier:: error 'Needs tier',
+          apiVersion: 'v1',
+          kind: 'Service',
+          local selector_labels = { app: 'guestbook', tier:service.tier },
+          metadata: {
+                labels: selector_labels,
+                name: 'guestbook-' + service.tier,
+                namespace: 'default',
+           },
+           spec: {
+                externalTrafficPolicy: 'Cluster',
+                ports: [{
+                    port: 80,
+                    protocol: 'TCP',
+                    targetPort: 80,
+                }],
+            selector: selector_labels,
+            sessionAffinity: 'None',
+            type: 'NodePort',
+        },
+    },
+}
+// example1.jsonnet
+local templates = import 'templates.libsonnet';
+templates.MyTemplate {
+    tier: 'frontend',
+}
+// example2.jsonnet
+local templates = import 'templates.libsonnet';
+templates.MyTemplate {
+    tier: 'backend',
+    metadata+: {
+        namespace: 'prod',
+    },
+}
+// example3.jsonnet
+local templates = import 'templates.libsonnet';
+templates.MyTemplate {
+    tier: 'frontend',
+    metadata+: {
+        namespace: 'prod',
+        labels+: { foo: 'bar' },
+},
+}
+// example4.jsonnet
+local templates = import 'templates.libsonnet';
+templates.MyTemplate {
+    tier: 'backend',
+}
+</code></pre></td></tr></tbody></table></div></div>
+<p>注意以下几点：</p>
+
+<ul>
+  <li>我们通过四次实例化抽象来表达所有四种变体，但你也可以使用功能抽象。</li>
+  <li>虽然我们为每个实例使用单独的Jsonnet文件，但你也可以将它们合并到一个文件中。</li>
+  <li>在抽象模板中，空间命名为默认值，并且必须被覆盖。</li>
+  <li>乍一看，Jsonnet略显冗长，但随着模板实例化数量的增加而降低了工作量。</li>
+</ul>
+
+<p>在MyTemplate中，local关键字定义了一个变量服务，该服务初始化为self（对最近的封闭对象的引用）。这允许您从嵌套对象中引用对象，其中self被重新定义。</p>
+
+<p>tier字段有两个冒号（而不是常规的JSON单冒号），并且在生成的JSON中隐藏（不输出）。否则，Kubernetes将拒绝tier为无法识别的字段。隐藏字段仍然可以被覆盖和引用 - 在本例中为service.tier。</p>
+
+<p>模板本身不能使用，因为引用service.tier会触发错误构造，这会引发给定文本的运行时错误。为避免错误，模板的每个实例都会使用其他表达式覆盖tier字段。换句话说，这种模式表达类似于纯虚拟/抽象方法的东西。</p>
+
+<p>使用抽象函数意味着配置只能参数化。相反，模板允许您覆盖父项中的任何字段。如第14章所述，虽然简洁性应该是您设计的基础，但简单易行的能力非常重要。模板覆盖提供了一个有用的避开方式，可以更改通常被认为太低级别的特定细节。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6</pre></td><td class="code"><pre class="highlight"><code>templates.MyTemplate {
+    tier: 'frontend',
+    spec+: {
+        sessionAffinity: 'ClientIP',
+    },
+}
+</code></pre></td></tr></tbody></table></div></div>
+<p>这是将现有模板转换为Jsonnet的典型工作流程：</p>
+
+<ol>
+  <li>将其中一个YAML格式转换为JSON。</li>
+  <li>通过Jsonnet格式化程序运行生成的JSON。</li>
+  <li>手动添加Jsonnet构造以抽象和实例化代码（如示例中所示）。</li>
+</ol>
+
+<p>该示例显示了如何在保留不同的某些字段的同时删除重复内容。随着差异越来越微妙（例如，字符串只是略有不同）或表达具有挑战性（例如，配置具有结构差异，如阵列中的附加元素，或者应用于阵列的所有元素的相同差异），使用配置语言变得更加引人注目。</p>
+
+<p>通常，抽象不同配置的共性可以促进关注点的分离，并且与编程语言中的模块化具有相同的好处。您可以针对许多不同的用例利用抽象功能：</p>
+
+<ul>
+  <li>
+    <p>单个团队可能需要创建几乎（但不完全）相同的多个配置版本。例如，在跨不同环境（prod/stage/dev/test）管理部署，调整不同体系结构上的部署或调整时区不同地区的能力。</p>
+  </li>
+  <li>
+    <p>组织可能拥有一个基础架构团队，负责维护可重用组件-API服务框架、缓存服务器或MapReduces。对于每个组件，基础结构团队可以维护一个模板，该模板定义大规模运行该组件所需的Kubernetes对象。每个应用程序团队都可以实例化该模板以添加其应用程序的详细信息。</p>
+  </li>
+</ul>
+
+<h2 id="集成自定义应用程序内部软件">集成自定义应用程序（内部软件）</h2>
+
+<p>如果你的基础架构使用任何自定义应用程序（即内部开发的软件，而不是现成的解决方案），那么可以将这些应用程序设计为与可重用的配置语言共存。用于编写配置文件或与生成的配置数据交互时（例如，出于调试目的或与其他工具集成时），本节中的建议应改善整体用户配置体验。它们还应简化应用程序的设计并将配置与数据分开。</p>
+
+<p>处理自定义应用程序的通用策略应该是：</p>
+
+<ul>
+  <li>让配置语言处理它的设计目的:语言问题的方面。</li>
+  <li>
+    <p>让应用程序处理所有其他功能。
+以下最佳实践包括使用Jsonnet的示例，但相同的建议也适用于其他语言：</p>
+  </li>
+  <li>使用单个纯数据文件，然后让配置语言使用import将配置拆分为文件。这意味着配置语言实现只需要发出（并且应用程序只需要使用）单个文件。此外，由于应用程序可以以不同方式组合文件，因此该策略明确且清晰地描述了如何组合文件以形成应用程序配置。</li>
+  <li>使用对象表示命名实体的集合，其中字段包含对象名称，值包含实体的其余部分。避免使用每个元素都有名称字段的对象数组。
+    <div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10</pre></td><td class="code"><pre class="highlight"><code>  Bad JSON:
+      [
+          { "name": "cat", ... },
+          { "name": "dog", ... }
+      ]
+  Good JSON:
+      {
+           "cat": { ... },
+           "dog": { ... }
+   }
+</code></pre></td></tr></tbody></table></div>    </div>
+    <p>该策略使得集合（和单个动物）更容易扩展，并且您可以通过名称引用实体（例如，animals.cat）而不是引用索引（例如，动物[0]）。</p>
+  </li>
+  <li>避免在顶级按类型对实体进行分组。构造JSON，以便将逻辑相关的配置分组到同一子树中。这允许抽象（在配置语言级别）遵循功能边界。
+    <div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10</pre></td><td class="code"><pre class="highlight"><code>  Bad JSON:
+      {
+          "pots": { "pot1": { ... },"pot2": { ... } },
+          "lids": { "lid1": { ... }, "lid2":{ ... } }
+      }
+  Good JSON:
+      {
+          "pot_assembly1": { "pot": { ... },"lid": { ... } },
+          "pot_assembly2": { "pot": { ... },"lid": { ... } }
+      }
+</code></pre></td></tr></tbody></table></div>    </div>
+    <p>在配置语言级别，此策略支持以下抽象：</p>
+    <div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5</pre></td><td class="code"><pre class="highlight"><code>  local kitchen = import 'kitchen.libsonnet';
+  {
+  pot_assembly1: kitchen.CrockPot,
+  pot_assembly2: kitchen.SaucePan { pot+: { color: 'red' }},
+  }
+</code></pre></td></tr></tbody></table></div>    </div>
+  </li>
+  <li>保持数据一直简单:：
+    <ul>
+      <li>–避免在数据表示中嵌入语言功能（如“陷阱1：无法将配置识别为编程语言问题”（第317页）中所述）。这些类型的抽象将只会产生混淆，因为它们会强制用户决定是使用数据表示形式还是配置语言中的抽象功能。</li>
+      <li>–不要担心过于冗长的数据表示。减少冗长的解决方案会带来复杂性，并且这个问题可以使用配置语言管理。</li>
+      <li>–避免在应用程序中解释自定义字符串插值语法，例如字符串中的条件或占位符引用。有时解释是不可避免的 - 例如，当您需要描述在生成配置的纯数据版本（报警，处理程序等）之后执行的操作时。但除此之外，让配置语言尽可能多地完成语言级别的工作。</li>
+    </ul>
+  </li>
+</ul>
+
+<p>如前所述，如果您可以完全删除配置，那么这样做始终是您的最佳选择。虽然配置语言可以通过使用具有默认值的模板来隐藏底层模型的复杂性，但生成的配置数据并不是完全隐藏的 - 它可以由工具处理、由人检查或加载到配置数据库中。出于同样的原因，不要依赖配置语言来修复模型本身中底层modelfix中不一致的命名、复数或错误。如果您无法修复模型中的不一致性，最好在语言级别使用它们以避免更多的不一致。</p>
+
+<p>根据我们的经验，配置更改往往会在系统中随着时间的推移成为导致停机的根本原因（请参阅附录C中的停机的主要原因列表）。验证配置更改是保持可靠性的关键步骤。我们建议在配置执行后立即验证生成的配置数据。单独的语法验证（即，检查JSON是否可解析）将不会发现许多错误。在通用模式验证之后，检查特定于应用程序域的属性 - 例如，是否存在必填字段、是否存在引用的文件名，以及提供的值是否在允许的范围内。</p>
+
+<p>您可以使用JSONschema验证Jsonnet的JSON。对于使用协议缓冲区的应用程序，您可以从Jsonnet轻松生成这些缓冲区的规范JSON格式，协议缓冲区实现将在反序列化期间进行验证。</p>
+
+<p>无论您决定如何验证，都不要忽略无法识别的字段名称，因为它们可能表示配置语言级别的拼写错误。Jsonnet可以使用::语法屏蔽不应输出的字段。在precommit hook中执行相同的验证也是一个好主意。</p>
+
+<h2 id="有效地运行配置系统">有效地运行配置系统</h2>
+
+<p>在以任何语言实现“配置为代码”时，我们建议遵循通常有助于软件工程的规程和流程。</p>
+
+<h3 id="版本">版本</h3>
+
+<p>配置语言通常会触发工程师编写模板库和实用程序函数。通常，一个团队维护这些库，但许多其他团队可能会使用它们。当您需要对库进行重大更改时，您有两种选择：</p>
+
+<ul>
+  <li>提交所有客户端代码的全局更新，重构代码以使其仍然有效（这可能在组织上不可行）。</li>
+  <li>使用版本库，以便不同的消费者可以使用不同的版本并独立迁移。选择使用弃用版本的消费者将无法获得新版本的好处，并将产生技术债务 - 有一天，他们将不得不重构他们的代码以使用新库。</li>
+</ul>
+
+<p>大多数语言，包括Jsonnet，都没有为版本控制提供任何特定的支持; 相反，你可以轻松使用目录。有关Jsonnet中的实际示例，请参阅ksonnet-lib存储库，其中版本是导入路径的第一个组件：</p>
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1</pre></td><td class="code"><pre class="highlight"><code>    local k = import 'ksonnet.beta.2/k.libsonnet';
+</code></pre></td></tr></tbody></table></div></div>
+
+<h3 id="源控制">源控制</h3>
+
+<p>第14章主张保留配置更改的历史记录（包括谁创建它们）并确保回滚简单可靠。检查配置到源代码控制中可以带来所有这些功能，还可以编写查看配置更改的代码。</p>
+
+<h3 id="工具">工具</h3>
+
+<p>考虑如何强制执行样式和lint配置，并调查是否有一个编辑器插件将这些工具集成到您的工作流程中。您的目标是在所有作者之间保持一致的风格、提高可读性并检测错误。有些编辑器支持可以为您运行格式化程序和其他外部工具的写后hook.。您还可以使用预先挂钩来运行相同的工具，以确保签入的配置具有高质量。</p>
+
+<h3 id="测试">测试</h3>
+
+<p>我们建议对上游模板库实施单元测试。确保库在实例化时生成预期的具体配置。与之对应的，为了便于维护，函数库也应该包括单元测试</p>
+
+<p>在Jsonnet中，你可以将测试编写为Jsonnet文件：</p>
+
+<ol>
+  <li>导入要测试的库。</li>
+  <li>应用库</li>
+  <li>使用assert语句或标准库assertEqual函数来验证其输出。后者在其错误消息中显示所有不匹配的值。</li>
+</ol>
+
+<p>以下示例为测试joinName函数和MyTemplate：</p>
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4</pre></td><td class="code"><pre class="highlight"><code>// utils_test.jsonnet
+local utils = import 'utils.libsonnet';
+std.assertEqual(utils.joinName(['foo', 'bar']),'foo-bar') &amp;&amp;
+std.assertEqual(utils.MyTemplate { tier: 'frontend' }, {... })
+</code></pre></td></tr></tbody></table></div></div>
+<p>对于较大的测试套件，你可以使用Jsonnet社区成员开发的更全面的单元测试框架。你可以用此框架以结构化方式定义和运行测试套件-例如，报告所有失败测试的集合，而不是在第一个失败的断点中中止执行。</p>
+
+<h2 id="何时评估配置">何时评估配置</h2>
+
+<p>我们的关键属性包括封闭性;也就是说，无论它们在何时何地执行，相同的配置语言必须生成相同的配置数据。如第14章所述，如果系统依赖于其密封环境之外可以改变的资源，则系统可能很难或无法回滚。通常，封闭性意味着Jsonnet代码始终可以与它所代表的扩展JSON互换。因此，你可以在任何时间从Jsonnet生成JSON。</p>
+
+<p>我们建议在版本控制中存储配置。你可以在注册之前验证配置。此外，应用程序在需要JSON数据时可以评估配置。同样，你可以在构建时进行评估。你可以根据用例的具体情况对每个选项进行评估优化。</p>
+
+<h3 id="初期检查json">初期：检查JSON</h3>
+
+<p>你可以在检查版本控制之前从Jsonnet代码生成JSON。典型的工作流程如下：</p>
+
+<ol>
+  <li>修改Jsonnet文件。</li>
+  <li>运行Jsonnet命令行工具（可能包装在脚本中）以重新生成JSON文件。</li>
+  <li>勾选预先提交确保Jsonnet代码和JSON输出始终一致。</li>
+  <li>将所有内容打包成拉取请求以进行代码审查。</li>
+</ol>
+
+<h4 id="优点">优点</h4>
+
+<ul>
+  <li>审阅者可以检查具体的更改 - 例如，重构不应该影响生成的JSON。</li>
+  <li>可以在生成和抽象级别上跨不同版本检查多个作者的行注释。同样利于对变更的审核。</li>
+  <li>在运行时你无需运行Jsonnet，这样可以降低复杂性、二进制大小和风险。</li>
+</ul>
+
+<h4 id="缺点">缺点</h4>
+
+<ul>
+  <li>生成的JSON不一定是可读的 - 例如，如果它嵌入了长字符串。</li>
+  <li>由于其他原因，JSON可能不适合检查版本控制 - 例如，如果它太大或包含隐私。</li>
+  <li>如果单个Jsonnet文件的许多并发编辑同时合并到单个JSON文件，则可能会出现合并冲突。</li>
+</ul>
+
+<h3 id="中期构建时评估">中期：构建时评估</h3>
+
+<p>你可以通过在构建时运行Jsonnet命令行实用程序并将生成的JSON嵌入到发布工件中（例如，作为tarball）来避免将JSON检入源控件。应用程序代码只是在初始化时从磁盘读取JSON文件。如果你使用的是Bazel，则可以使用Jsonnet Bazel规则轻松实现此目的。在谷歌，我们通常使用这种方法，该方法有如下优点。</p>
+
+<h4 id="优点-1">优点</h4>
+
+<ul>
+  <li>你可以控制运行时的复杂性、二进制大小和风险，而无需在每个拉取请求中重建JSON文件。</li>
+  <li>原始Jsonnet代码与生成的JSON之间不存在去同步的风险。</li>
+</ul>
+
+<h4 id="缺点-1">缺点</h4>
+
+<ul>
+  <li>构建更复杂。</li>
+  <li>在代码审查期间评估具体变化更加困难。</li>
+</ul>
+
+<h3 id="后期在运行时评估">后期：在运行时评估</h3>
+
+<p>链接Jsonnet库允许应用程序本身随时解释配置，产生的JSON配置的内存中表示。</p>
+
+<h4 id="优点-2">优点</h4>
+
+<ul>
+  <li>它更简单，不需要事先评估。</li>
+  <li>可以在执行期间评估用户提供的Jsonnet代码。</li>
+</ul>
+
+<h4 id="缺点-2">缺点</h4>
+
+<ul>
+  <li>任何链接库都会增加覆盖范围和风险。</li>
+  <li>可能会在运行时发现配置错误，为时已晚。</li>
+  <li>如果Jsonnet代码不稳定，则必须特别小心。（我们在第333页的“防止滥用配置”中讨论了原因）</li>
+</ul>
+
+<p>按照我们的运行示例，如果你正在生成Kubernetes对象，何时应该运行Jsonnet？</p>
+
+<p>答案取决于你的具体实施。如果你正在构建类似ksonnet（从本地文件系统运行Jsonnet代码的客户端命令行工具），最简单的解决方案是将Jsonnet库链接到该工具并评估正在进行的Jsonnet。这样做是安全的，因为代码在作者自己的机器上运行。</p>
+
+<p>Box.com的基础架构使用Git将配置更改推送到生产环境。为了避免在服务器上执行Jsonnet，Git会对保存在存储库中的生成的JSON进行操作。对于像Helm或Spinnaker这样的部署管理守护程序，唯一的选择是在运行时评估服务器上的Jsonnet（下一节中将介绍注意事项）。</p>
+
+<h2 id="防止滥用配置">防止滥用配置</h2>
+
+<p>与长时间运行的服务不同，配置执行应该随着配置生成快速终止。然而，由于错误或恶意攻击，配置可能会占用任意数量的CPU时间或内存。为了说明原因，请考虑以下非终止Jsonnet程序：</p>
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1</pre></td><td class="code"><pre class="highlight"><code>    local f(x) = f(x +1); f(0)
+</code></pre></td></tr></tbody></table></div></div>
+<p>使用无界内存的程序与之类似：</p>
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1</pre></td><td class="code"><pre class="highlight"><code>    local f(x) = f(x +[1]); f([])
+</code></pre></td></tr></tbody></table></div></div>
+<p>你可以使用对象而不是函数或其他配置语言编写等效示例。</p>
+
+<p>可以尝试通过限制语言来避免过度消耗资源，以使其不再是图灵计算机完成的。但是，强制所有配置终止并不一定能防止过度消耗资源。编写一个耗费足够时间或内存的程序而实际是不终止的程序是很容易的。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1</pre></td><td class="code"><pre class="highlight"><code>    local f(x) = if x== 0 then [] else [f(x - 1), f(x - 1)]; f(100)
+</code></pre></td></tr></tbody></table></div></div>
+
+<p>实际上，即使使用简单的配置格式（如XML和YAML），也存在此类程序。</p>
+
+<p>当然，这些情景的风险取决于具体情况。问题较少的情况，假设命令行工具使用Jsonnet构建Kubernetes对象，然后部署这些对象。在这种情况下，Jsonnet代码是可信的：很少产生非终止的事故，你可以使用Ctrl-C来缓解它们。很少会产生内存耗尽。另一个极端情况，使用类似Helm或Spinnaker这样的服务，它接受来自最终用户的任意配置代码并在请求处理程序中对其进行评估，你需要避免占用请求处理程序或耗尽内存的DOS攻击。</p>
+
+<p>如果在请求处理程序中评估不受信任的Jsonnet代码，则可以通过沙盒化Jsonnet执行来避免此类攻击。一个简单的策略是使用单独的进程和ulimit（或其非UNIX等价物）。通常，你需要fork到命令行可执行文件而不是链接Jsonnet库。因此，未在给定资源内完成的程序将执行失败并通知最终用户。为了进一步防御C++内存漏洞利用，你可以使用Jsonnet的本机Go实现。</p>
+
+<h2 id="结论">结论</h2>
+
+<p>无论是使用Jsonnet、采用其他配置语言还是开发自己的配置语言，我们都希望你能够应用这些最佳实践来管理配置生产系统所需的复杂性和操作负载。</p>
+
+<p>至少，配置语言的关键属性是优秀的工具，封闭配置以及配置和数据的分离。</p>
+
+<p>你的系统可能不至于复杂到使用配置语言。过渡到像Jsonnet这样的特定于域的语言是一种在你的系统复杂度增加时可以考虑的策略。它会提供一致且结构良好的界面，让你的SRE团队有更多时间来处理其他重要项目。</p>
+
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" rel="tag"># 《SRE-Google运维实践》</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sre/2020/01/16/%E7%81%B0%E5%BA%A6%E9%83%A8%E7%BD%B2/" rel="next" title="第十六章 灰度部署 (金丝雀部署)">
+                <i class="fa fa-chevron-left"></i> 第十六章 灰度部署 (金丝雀部署)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sre/2020/01/14/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="prev" title="第十四章 系统配置最佳实践">
+                第十四章 系统配置最佳实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="ZX" />
+          <p class="site-author-name" itemprop="name">ZX</p>
+           
+              <p class="site-description motion-element" itemprop="description">zxzxzxzx</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/ZXANG" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/" title="首页" target="_blank">首页</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/categories/" title="分类" target="_blank">分类</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" title="《SRE-Google运维实践》" target="_blank">《SRE-Google运维实践》</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#配置带来的琐事"> <span class="nav-number">1</span> <span class="nav-text">配置带来的琐事</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#减少配置导致的琐事"> <span class="nav-number">2</span> <span class="nav-text">减少配置导致的琐事</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#配置系统的关键属性和缺陷"> <span class="nav-number">3</span> <span class="nav-text">配置系统的关键属性和缺陷</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#缺陷一未能将配置视为编程语言问题"> <span class="nav-number">3.1</span> <span class="nav-text">缺陷一：未能将配置视为编程语言问题</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#缺陷二设计意外或特殊语言功能"> <span class="nav-number">3.2</span> <span class="nav-text">缺陷二：设计意外或特殊语言功能</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#缺陷三构建太多特定领域的优化"> <span class="nav-number">3.3</span> <span class="nav-text">缺陷三：构建太多特定领域的优化</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#缺陷四混淆配置评估与副作用"> <span class="nav-number">3.4</span> <span class="nav-text">缺陷四：混淆“配置评估”与“副作用”</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#缺陷五使用现有的通用脚本语言如pythonruby或lua"> <span class="nav-number">3.5</span> <span class="nav-text">缺陷五：使用现有的通用脚本语言，如Python、Ruby或Lua</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#-jsonnet的简介-"> <span class="nav-number">3.5.1</span> <span class="nav-text"> Jsonnet的简介 </center</span> </a> </li> </ol> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#集成配置语言"> <span class="nav-number">4</span> <span class="nav-text">集成配置语言</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#以特定格式生成配置"> <span class="nav-number">4.1</span> <span class="nav-text">以特定格式生成配置</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#推动多种应用"> <span class="nav-number">4.2</span> <span class="nav-text">推动多种应用</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#集成现有应用程序kubernetes"> <span class="nav-number">5</span> <span class="nav-text">集成现有应用程序：Kubernetes</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#kubernetes提供什么"> <span class="nav-number">5.1</span> <span class="nav-text">Kubernetes提供什么</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#kubernetes配置示例"> <span class="nav-number">5.2</span> <span class="nav-text">Kubernetes配置示例</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#集成配置语言-1"> <span class="nav-number">5.3</span> <span class="nav-text">集成配置语言</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#集成自定义应用程序内部软件"> <span class="nav-number">6</span> <span class="nav-text">集成自定义应用程序（内部软件）</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#有效地运行配置系统"> <span class="nav-number">7</span> <span class="nav-text">有效地运行配置系统</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#版本"> <span class="nav-number">7.1</span> <span class="nav-text">版本</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#源控制"> <span class="nav-number">7.2</span> <span class="nav-text">源控制</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#工具"> <span class="nav-number">7.3</span> <span class="nav-text">工具</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#测试"> <span class="nav-number">7.4</span> <span class="nav-text">测试</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#何时评估配置"> <span class="nav-number">8</span> <span class="nav-text">何时评估配置</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#初期检查json"> <span class="nav-number">8.1</span> <span class="nav-text">初期：检查JSON</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#优点"> <span class="nav-number">8.1.1</span> <span class="nav-text">优点</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#缺点"> <span class="nav-number">8.1.2</span> <span class="nav-text">缺点</span> </a> </li> </ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#中期构建时评估"> <span class="nav-number">8.2</span> <span class="nav-text">中期：构建时评估</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#优点-1"> <span class="nav-number">8.2.1</span> <span class="nav-text">优点</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#缺点-1"> <span class="nav-number">8.2.2</span> <span class="nav-text">缺点</span> </a> </li> </ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#后期在运行时评估"> <span class="nav-number">8.3</span> <span class="nav-text">后期：在运行时评估</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#优点-2"> <span class="nav-number">8.3.1</span> <span class="nav-text">优点</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#缺点-2"> <span class="nav-number">8.3.2</span> <span class="nav-text">缺点</span> </a> </li> </ol> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#防止滥用配置"> <span class="nav-number">9</span> <span class="nav-text">防止滥用配置</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#结论"> <span class="nav-number">10</span> <span class="nav-text">结论</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZX</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://jekyllrb.com">Jekyll</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("<app_id>", "<app_key>");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+

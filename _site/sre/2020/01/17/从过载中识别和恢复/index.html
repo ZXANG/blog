@@ -1,0 +1,1626 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="《SRE-Google运维实践》," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="无论其起源如何，过载都是一种可能削弱生产力的职业压力。如果不加以控制，可能会导致严重的疾病。当团队没有足够的时间来处理这些&quot;负载&quot;时，通常会发生工作超负荷——当分配给团队的任务数量无法在每个任务的给定截止日期内完成时，这是客观现实。">
+<meta name="keywords" content="《SRE-Google运维实践》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十七章 从过载中识别和恢复">
+<meta property="og:url" content="http://localhost:4000/sre/2020/01/17/%E4%BB%8E%E8%BF%87%E8%BD%BD%E4%B8%AD%E8%AF%86%E5%88%AB%E5%92%8C%E6%81%A2%E5%A4%8D/">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="无论其起源如何，过载都是一种可能削弱生产力的职业压力。如果不加以控制，可能会导致严重的疾病。当团队没有足够的时间来处理这些&quot;负载&quot;时，通常会发生工作超负荷——当分配给团队的任务数量无法在每个任务的给定截止日期内完成时，这是客观现实。">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第十七章 从过载中识别和恢复">
+<meta name="twitter:description" content="无论其起源如何，过载都是一种可能削弱生产力的职业压力。如果不加以控制，可能会导致严重的疾病。当团队没有足够的时间来处理这些&quot;负载&quot;时，通常会发生工作超负荷——当分配给团队的任务数量无法在每个任务的给定截止日期内完成时，这是客观现实。">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>第十七章 从过载中识别和恢复 | Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6d1adeb8cec8ffce64c7106d77e66ce";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-something">
+          <a href="/something/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            奇奇怪怪
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/sre/2020/01/17/%E4%BB%8E%E8%BF%87%E8%BD%BD%E4%B8%AD%E8%AF%86%E5%88%AB%E5%92%8C%E6%81%A2%E5%A4%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            第十七章 从过载中识别和恢复
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-17T00:00:00+08:00">
+                2020-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/SRE" itemprop="url" rel="index">
+                    <span itemprop="name">SRE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/sre/2020/01/17/%E4%BB%8E%E8%BF%87%E8%BD%BD%E4%B8%AD%E8%AF%86%E5%88%AB%E5%92%8C%E6%81%A2%E5%A4%8D/" class="leancloud_visitors" data-flag-title="第十七章 从过载中识别和恢复">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    无论其起源如何，过载都是一种可能削弱生产力的职业压力。如果不加以控制，可能会导致严重的疾病。当团队没有足够的时间来处理这些"负载"时，通常会发生工作超负荷——当分配给团队的任务数量无法在每个任务的给定截止日期内完成时，这是客观现实。
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <p>当SRE团队顺利运行时，团队成员应该感觉他们可以轻松地处理所有工作。他们应该能够处理工单，并且还有时间处理长期项目，以便将来更容易地管理服务。</p>
+
+<p>但有时现实情况会妨碍团队的工作目标，比如，成员长期病假或转移到新的团队。组织为SRE制定了新的生产范围计划，对服务或更大系统的更改带来了新的技术挑战。随着工作量的增加，团队成员开始工作更长时间来处理工单和紧急警报，以至于减少了花在工程工作上的时间。整个团队开始感到压力并沮丧，因为他们努力工作却没有取得进步。反过来，压力会导致人们犯更多的错误，影响可靠性最终影响最终用户。简而言之，该团队失去了管理日常工作和有效管理服务的能力。</p>
+
+<p>因此，团队需要找到摆脱这种过载状态的方法。他们需要重新平衡工作量，以便团队成员可以专注于必要的工程工作。运维负载（或运维工作负载）是一个术语，描述的是使系统和服务以最佳性能运行的持续维护工作。有三种不同类型的运维负载：紧急警报、工单和日常运维任务。紧急警报通常需要立即关注，与紧急问题相关的工单可能会有紧迫的截止日期。报警和紧急工单都会中断SRE的工程工作来支持团队的运维工作。出于这个原因，我们将它们称为中断。SRE（Site Reliability Engineering）的第29章讨论了管理团队在维护复杂系统的运行状态时处理自然中断的技术。当运维负载超过团队管理能力时，团队最终将处于运维过载状态（也称为工作超负荷）。当团队无法在关键优先事项方面取得进展时，团队处于运营超负荷状态，因为紧急问题不断取代项目工作。除了降低团队的优先级和服务改进之外，过载还会增加工程师出错的可能性。</p>
+
+<p>运维过载的阈值因团队而异，Google SRE团队将工作量限制在工程师工作时间的50%。从长远来看，成功的SRE团队必须有信心他们将能够完成所需的工程项目，以减少他们所管理服务的运维负担。</p>
+
+<p>本章描述了Google的团队如何从一个以运维过载为特征的困难局面发展到管理良好的工作负载。两个案例研究显示了运维过载对团队健康的不利影响，以及团队如何改变他们的日常任务，以便可以专注于长期有影响力的项目。在案例研究1中，当身处于一个不断缩小的团队中的成员无法跟上工作负载时，便会导致过载。在案例研究2中，团队遭受他们所认为的过载——这是一种与运维过载具有相同效果的状态，但最初是对实际工作负荷的误解。</p>
+
+<p>虽然案例研究突出了两个Google SRE团队的具体行为，但“减轻过载的策略”一节第366页提供了适用于任何公司或组织辨别和减轻过载的实践。因此，本章应该对过载团队的管理者或任何关注过载的SRE团队有用。</p>
+
+<h2 id="从负载到过载">从负载到过载</h2>
+
+<p>无论其起源如何，过载都是一种可能削弱生产力的职业压力。如果不加以控制，可能会导致严重的疾病。对于SRE团队而言，运维负载通常是认知上困难任务的组合（如调试内存泄漏或分段故障）和一些需要频繁环境切换的小任务（通过配额请求，启动二进制分发等）。</p>
+
+<p>当团队没有足够的时间来处理所有这些任务时，通常会发生工作超负荷——当分配给团队的任务数量无法在每个任务的给定截止日期内完成时，这是客观现实。感知过载更为主观，并且当团队中的个人觉得他们有太多工作时就会发生。这通常发生在短期内有多次组织或工作变更时，但团队几乎没有机会与领导层就变更进行沟通。</p>
+
+<p>当你值班时，你永远不会清楚会出现什么问题，或者你的工作量是什么。一方面，看似单一的磁盘空间不足问题可能会导致对重复的垃圾收集工作进行深入调查。另一方面，20次以上的紧急报警风暴可能会成为监控不良的情况。当很难估计或预测你的工作量时，很容易成为认知偏差的受害者并误判工作量——例如，你可能会任务在你on-call期间工单队列太大而无法完成，即使你可以快速完成所有工单并且实际工作负载较低，你在第一次查看工单队列时也会感到超载。这种感知过载本身是一种影响工作方式和态度的心理因素，如果你没有以一种有很多工作的预想开始一天的工作，你将很可能潜心的按照你自己的方式完成工单序列。也许你整天都在工作，但并没有完成你的工作量（因此面临工作超负荷），但是这将比一开始就感觉不堪重负更有进步。</p>
+
+<p>累积很多工作中断可能会导致工作超载，但也并非如此。但是，当频繁的中断与外部压力因素配对时，大的工作量（甚至是小的工作量）很容易变成感知的过载。这种压力可能源于担心其他团队成员失望，工作安全感，工作相关或个人矛盾，疾病或健康相关问题，如缺乏睡眠或运动。如果你的工作没有得到适当的优先排序，那么每项任务都会显得同样紧迫，从而导致实际和感知过载。在实际的过载情况下，工单和警报的紧急程度可能导致团队成员工作到知道解决问题，即使这样做意味着持续的长时间工作。当一个团队面临被认为的过载时，重新确定优先级可以帮助减少紧急工作量，为他们创造空间，通过项目工作来解决过载源。</p>
+
+<p>在分析具体情况时，不一定要假设工作量本身需要更改，相反，我们建议首先量化团队所面临的工作，以及它如何（或没有）随时间变化。例如，你可以根据团队处理的故障单和紧急警报数量来衡量工作负载。如果你的工作量实际上没有随着时间的推移而发生变化，那么团队可能会感到超载仅仅是因为他们认为工作是压倒性的。可以通过要求每个成员列出他们面临的所有的工作任务来收集一次性快照，以更全面的了解团队当前的工作负载。然后看看你的团队面临的心理压力因素，例如组织变化或重新优化排序。完成研究后，就可以就改变工作量做出决定。</p>
+
+<p>第366页的“减轻过载的策略”更多的讨论了如何识别真是和感知的过载。首先，我们提出两个认可的团队案例研究，他们处于超负荷状态并采取措施缓解它。</p>
+
+<h2 id="案例研究1当半数团队成员离开时工作超载">案例研究1：当半数团队成员离开时工作超载</h2>
+
+<h3 id="背景">背景</h3>
+
+<p>Google的一个内部存储SRE团队负责多种服务的后端维护，包括Gmail，Google云端硬盘和Google网上论坛，以及许多其他内部或面向用户的服务。我们在2016年中期经历了一场危机，当时三分之二的团队成员，包括最高级工程师（经理），在相对较短的时间内因为完全不相干的原因而离职。这个时间显然导致了巨大的工作量管理问题：可用于处理日常工作和项目工作的SRE越来越少，导致团队过载。我们的工作也遇到了瓶颈，因为每个团队成员的专业知识都被划分到不同的生产领域。虽然增加新的团队成员和三名实习生可以改善我们的工作量，但增加这些工程师需要花费大量的时间和精力进行培训。</p>
+
+<h3 id="问题陈述">问题陈述</h3>
+
+<p>上述因素显著降低了团队生产力。我们的开始落后于项目工作，并且我们管理的许多服务相关的工单开始堆积。我们没有足够的时间来处理这个积压，因为我们的所有工作都被更高优先级的任务所消耗。过不了多久我们就无法完成所需要的所有重要且紧急的工作。与此同时，我们的团队很快将获得更多高优先级的工作。</p>
+
+<p>如果我们没有把一些工作从我们的主要版块上移开，那么我们只能放弃重要工作。然而，一旦我们开始放弃一些工作，我们就会遇到一些心理问题：</p>
+
+<ul>
+  <li>放弃任何正在进行的工作，感觉就像我们刚刚浪费了我们努力的时间。大多数积压工作似乎要么至关重要，要么值得我们付出努力，所以只有无限期地推迟或取消项目。我们没有意识到我们正处于一种沉没成本谬论的控制之中。</li>
+  <li>努力实现流程自动化或修复工作负载的根本原因并不像立即处理高优先级故障那样重要。当这项工作被添加到已经庞大的堆积工作的顶部时，所有的工作都感到压力很大。</li>
+</ul>
+
+<h3 id="我们决定做什么">我们决定做什么</h3>
+
+<p>我们将团队成员聚集在一个房间中，并列出了团队的所有职责，包括积压项目、运维工作和工单。然后我们队每个列表项进行了分类，查看我们的每一项工作任务，这有助于我们确定并重新定义我们的实际优先级。然后，我们找到了最小化、切换或消除低优先级工作的方法。</p>
+
+<h3 id="实现">实现</h3>
+
+<p>我们将一些自动化低成本较低的工作自动化，可能这不会很多，但一旦部署，将大大降低运维负荷。</p>
+
+<p>我们还确定了可以实现自助服务的常见问题。编写客户所需的程序并不需要很长时间，并从队列中删除了一些重复的工作。</p>
+
+<p>我们合理地关闭了许多积压这的工单，这些工单中的大多数都是过时的、多余的，或者是紧急的（虽然他们声称是紧急的）。有些工单是监控那些不可操作的工作，所以我们修复了相关的监控。在某些情况下，我们积极解决不重要的问题。我们将这些问题放在一边处理更紧急的工单，但首先要记录我们的进度，以便在我们能够再次处理他们之前不会失去之前的环境。</p>
+
+<p>当有疑问时，我们放弃一项工作，但标记为第二阶段的分流。一旦我们的盘子（几乎）空了，我们将重新审视这个暂定列表，以决定恢复哪些任务。事实证明，这些任务几乎都不具有影响力或重要性，无法恢复。</p>
+
+<p>两天——一天的密集分流加上一天的记录流程和实施自动化——我们很小的团队解决了几个月的工单积压。然后我们可以处理剩余的几个故障，这些故障与生产中的活动问题有关。</p>
+
+<h3 id="经验总结">经验总结</h3>
+
+<p>我们的团队了解到识别和确认过载是解决问题的第一步。在我们帮助我们团队恢复健康状态之前，我们需要让每个人都进入同一个房间并重新评估积压工作。</p>
+
+<p>为了避免新的中断性任务积累，我们开始每两周对中断性任务进行一次分类。我们的技术负责人会定期检查任务队列，并评估团队是否有过载风险。我们决定每个团队成员应该有10张或更少的开放工单，以避免过载。如果团队领导同志团队成员的工单数超过10张，他们可以执行以下一项或多项组合：</p>
+
+<ul>
+  <li>提醒团队关闭陈旧的工单。</li>
+  <li>与过载的团队成员同步并从他们那卸载工单。</li>
+  <li>提示各个团队成员解决他们的工单队列。</li>
+  <li>组织团队范围的一日工单修复工作。</li>
+  <li>分配工作以修复故障单来源或操作工作以减少将来的故障单。</li>
+</ul>
+
+<h2 id="案例研究2组织和工作量变化后的感知过载">案例研究2：组织和工作量变化后的感知过载</h2>
+<h3 id="背景-1">背景</h3>
+
+<p>本案例研究中的Google SRE团队分处两个地方，每个站点有六到七名随叫随到的工程师（有关团队规模的更多讨论，请参阅第11章站点可靠性工程)。虽然悉尼团队健康运作，但苏黎世团队在超负荷运转。</p>
+
+<p>在苏黎世团队进入超负荷之前，我们很稳定且满足。我们管理的服务数量相对稳定，每个服务都多种多样，维护度也很高。虽然我们所支持服务的SLO与其外部依赖的SLO不匹配，但这种不匹配并未引起任何问题。我们正在开展一些项目来改进我们管理的服务（例如，改善负载均衡）。</p>
+
+<p>同时致使苏黎世团队陷入过载的诱因是：我们开始在谷歌的基础架构中加入噪音更大、整合程度更低的新服务，技术主管和另一名团队成员也离开了我们团队，导致团队缺少两个人。额外工作量和知识流失的结合引发了更多问题：</p>
+
+<ul>
+  <li>对新服务的未调优监控和与迁移相关的监控导致每个班次增加了更多的页面。这种积累是渐进的，所以当它出现时我们没有注意到它的增加。</li>
+  <li>SRE对新服务感到相对无助，我们对它们的了解还不够，无法做出适当的反应，而且经常需要询问开发团队问题。虽然过载可能保证将服务交还给开发人员，但我们的团队从未返回过服务，所以我们并不认为这是一个可行的选择。</li>
+  <li>5人值班小组轮班缩短了我们通常花在业务工作上的时间。</li>
+  <li>新的故障单报警出现了问题，这种问题在最近的团队变更之前就存在了。我们过去只是简单地忽略了这些问题，但我们现在需要将被忽略的电子邮件报警移至故障单。项目规划并没有考虑到这一新的技术债务来源。</li>
+  <li>新的票据SLO要求我们在三天内处理票据，这意味着值班人员必须更快地处理在他们值班期间产生的票据。SLO旨在减少添加到我们（大部分被忽略的）积压工单中的票据数量，但这可能产生了更糟糕的副作用。现在，SREs觉得他们在轮班后无法得到他们所需要的休息，因为他们必须立即解决后续工作。对这些工单的优先考虑也意味着SREs没有足够的时间进行其它操作。</li>
+</ul>
+
+<p>在此期间，我们团队被指派给一位新的经理，他同时管理另外两个团队。这位新上任的经理并不是值班轮值人员，因此没有直接感受到团队成员所面临的压力。当团队向经理解释情况时，没有任何改变。团队成员认为他们没有被听到，这让他们感到与管理团队的距离太远了。工单的超载持续了几个月，让团队成员变得脾气暴躁，直到一连串的不愉快情绪蔓延到整个团队。</p>
+
+<h3 id="问题陈述-1">问题陈述</h3>
+
+<p>在失去两个人并接受额外和各种各样的工作后，我们的团队感到超负荷。当我们试图将这种感觉传达给我们的直接经理时，经理不以为然。随着工作时间的延长，人们开始精疲力竭，生产力正在下降，任务增加的速度开始快于团队解决问题的速度。感知到的过载现在变成了客观过载，使情况变得更糟。</p>
+
+<p>超负荷造成的情绪压力降低了士气，导致一些团队成员倦怠。当个人处理工作过度对身体的影响（疾病和低生产力）时，团队中的其他人不得不承担更多的工作，在每周的团队会议上分配的工作没有完成。</p>
+
+<p>然后我们开始假设我们不能依赖其他人来完成他们的工作，这削弱了团队内部的信任和可靠性。因此，我们对人际风险承担感到不安全，这是心理安全的一个重要因素（见第11章网站可靠性工程）。团队成员感觉不被其他团队成员接受和尊重，因此他们之间没有自由地相互协作。随着团队心理安全的减弱，协作停止，信息共享速度减慢，导致效率进一步低下。</p>
+
+<p>团队调查还显示，他们的心理安全受损——团队成员表示，他们并不觉得自己属于团队。他们不再关心他们的职业发展，团队晋升率也降到了历史最低点。</p>
+
+<p>当高层管理人员为我们分配了新的强制性全公司项目时，我们终于达到了一个突破点，在这一点上，我们重新与管理层就过载问题进行了对话。一系列的讨论表明，我们不愉快的情况不仅仅是工作太多的结果——我们对团队安全的看法使我们不再相互信任和合作。</p>
+
+<h3 id="我们决定做什么-1">我们决定做什么</h3>
+
+<p>上层管理人员为我们团队指派了一位新经理，他不是供职于三个团队。新经理采用参与式管理方式来改善团队的心理安全，以便我们再次合作。该方法使团队成员能够积极参与解决团队问题。整个团队，包括我们的直接经理，都参与了一系列简单的团建活动，以提高我们的团队效率（其中一些活动就像一起喝茶一样简单）。最终，我们能够起草一套目标：</p>
+
+<p><code class="highlighter-rouge">短期</code>：缓解压力，提高心理安全，营造健康的工作氛围。</p>
+
+<p><code class="highlighter-rouge">中期</code>：通过培训建立团队成员的信心；找到导致过载问题的根本原因。</p>
+
+<p><code class="highlighter-rouge">长期</code>：解决正在发生的导致级联的问题。</p>
+
+<p>为了设定这些目标，我们首先必须在团队中达到某种基本的心理安全。随着士气的提高，我们开始分享知识、并在彼此想法的基础上找到让我们的工作负荷得到控制的方法。</p>
+
+<h3 id="实现-1">实现</h3>
+
+<h4 id="短期行为">短期行为</h4>
+
+<p>长期压力，无论是过度工作还是对团队安全的看法，都会降低生产力并影响人们的健康。因此，我们最重要的短期行动是减轻压力，提高信任和心理安全。一旦缓解了一些压力，团队成员就可以更清晰地思考并参与推动整个团队向前发展。在确定过载的一个月内，我们实施了以下措施：</p>
+
+<ul>
+  <li>开始了一个非定期的圆桌会议来讨论问题。该团队释放了挫败感，并对可能导致超负荷的原因进行了头脑风暴。</li>
+  <li>找到更好的衡量负载的指标。我们决定改进我们原有的页数标准，我们自动给值班人员分配工单，即使在轮班结束后，值班人也要负责这些工单。我们的新指标衡量了一位值班人在轮班后处理工单所需的时间。</li>
+  <li>审核并删除垃圾邮件警报。我们审核了警报，并删除了那些不代表面向用户问题的警报。</li>
+  <li>屏蔽大量警报。这个团队故意不去寻找每一个警报的来源，而是专注于减轻压力，避免因为我们已经知道的问题而不断接到警报和提工单。我们使用了以下策略：<br />
+      ——已知的警报在被修复之前一直处于屏蔽状态。<br />
+      ——警报只能在有限的一段时间内被屏蔽（通常是一天，有时长达一周）。否则，他们可能会掩盖故障。<br />
+     ——几分钟内无法修复的警报被分配到一个跟踪工单上。</li>
+  <li>增加了一个专门针对单个团队的直接经理。让一个受人尊敬的团队成员成为新经理重新建立了对管理的信任。新经理可以将更多时间集中在团队及其成员上，而不是管理三个团队。</li>
+  <li>重新平衡团队。我们通过添加技术经验丰富的SREs来引入新的视角并减轻值班人员的压力，这些SREs对团队或组织没有先入为主的观念。找到合适的人并不是一件容易的事，但值得付出努力。</li>
+  <li>举办团体活动，如午餐和棋盘游戏。谈论与工作无关的话题，一起大笑，缓解团队的紧张局势，提高心理安全性。</li>
+</ul>
+
+<h4 id="中期行为">中期行为</h4>
+
+<p>单靠短期解决方案无法维持良好的氛围——例如，我们的短期策略之一就是在没有真正解决问题的情况下屏蔽报警。在三个月内，我们还采取了一下行动：</p>
+
+<ul>
+  <li>值班期间尽可能减少运维工作（参见SRE第29章），以便团队可以专注于永久性修复和项目工作。</li>
+  <li>将一项服务的责任归还给其开发团队。</li>
+  <li>相互培训（和新的团队成员）。虽然培训需要投入时间和精力，但传播知识意味着所有团队成员（以及未来的雇员）可以在未来更快地排除故障并解决问题。培训同时提高了我们的信心，因为我们意识到我们实际上对服务有很多了解。当他们获得知识时，团队成员开始寻找管理服务的新方法，提高可靠性和减少过载。</li>
+  <li>从其他团队中引入SREs来安排我们的一些值班工作并参与培训。他们注意到了团队的压力，并提供了一些有价值的新视角。</li>
+  <li>在团队中重新扮演了两个开放的角色。</li>
+  <li>在报警屏蔽过期解决每个报警。我们在周会中讨论了没有采取任何操作的重复报警，这让我们调整了报警或修复了潜在的问题。虽然这些是重要的（和明显的）行为，我们只有在报警被屏蔽情况下才有足够的空间进行分析和采取行动而不是制造持续的噪音。</li>
+  <li>有组织的聆听活动。管理层（包括跳级经理和团队领导）有意识地倾听团队的痛点并找到一个团队驱动的解决方案。</li>
+  <li>增加视角。希望不是一种策略，但它确实有助于提升团队士气。随着新成员加入on-call，转变为更清晰的优先事项，以及结束产生报警的项目，团队的情绪得到了改善。</li>
+</ul>
+
+<h4 id="长期行为">长期行为</h4>
+
+<p>为了保持我们新发现的稳定，我们目前正在将我们的SLO与其服务后端的SLO保持一致，并努力使服务更加统一。统一具有双重好处：它降低了SRE的心理负荷，并使编写可以跨服务使用的自动化变得更加容易。我们还回顾了已经存在了很长时间的服务，并将它们更新到当前的生产标准。例如，一些服务在负载下运行很差，这些年来显著增加。某些服务更需要根据其后端服务策略的更改进行更新。其它服务几年来一直没有更新。</p>
+
+<h3 id="成效">成效</h3>
+
+<p>我们在第一次头脑风暴会议后的几个月，结果开始浮出水面：on-call轮班期间变得更安静了，我们的团队成功地快速有效地处理了一个棘手的时间。不久，新的团队成员加入。当我们在圆桌会议上讨论心理安全时，新成员说他们无法想象团队会有这样的问题。事实上，他们认为我们的团队是一个温暖而安全的工作场所。在最初的升级后大约一年，最初的超负荷几乎没有，一项匿名调查显示，团队成员现在觉得这个团队是高效和安全的。</p>
+
+<h3 id="经验总结-1">经验总结</h3>
+
+<p>工作场所的变化会对团队中的人产生心理影响——毕竟，你的队友不是机器。你需要关注团队的压力水平这样人们就会开始互相信任，一起工作；否则，团队可能会进入导致压力的过载中恶性循环，从而阻止你应对过载。</p>
+
+<p>事实上，感知过载是过载，并且对团队的影响与其他因素造成的工作过载一样大。在我们的案例中，我们在悉尼的姐妹团队没有遇到同样的问题，与前几年相比，我们解决的报警数量并没有太大的变化。相反，失去两名团队成员，感知过载增加，工单增加以及新的3天的工单让团队感觉超负荷了。最终，客观和感知超载之间的区别并不重要：一些团队成员的管制过载会很快导致整个团队的超负荷。</p>
+
+<h2 id="减轻过载的策略">减轻过载的策略</h2>
+
+<p>外部视角有时可以很容易地识别团队何时超负荷。同样，回顾一下应该采取什么行动也很容易。但当你正在体验它时，你将如何识别过载？当你陷入过载困境时，通往健康、友好和快乐的工作氛围的道路很难想象。本节介绍了识别和减轻团队过载的实践。</p>
+
+<h3 id="识别过载的症状">识别过载的症状</h3>
+
+<p>如果你知道过载的症状，很容易识别出一个超负荷的团队：</p>
+
+<p><strong>团队士气降低：</strong><br />
+过载可能表现为咆哮和抱怨。相关主题（工作条件、工作满意度、项目、同事和经理）的调查通常反映团队士气，并在团队超负荷时产生更多负面结果。与团队领导定期积极的聆听会议可以解决你不了解的问题。积极倾听的一个基本要素是不经过判断就倾听。</p>
+
+<p><strong>团队成员长时间工作，或生病时工作：</strong><br />
+没有补偿的加班可能是心理压力源。领导者应该梳理一个好榜样：生病时待在家里。</p>
+
+<p><strong>更频繁的疾病：</strong><br />
+过度工作的团队成员往往会经常沮丧和生病</p>
+
+<p><strong>不健康的任务队列：</strong><br />
+我们建议定期查看团队的任务队列，已查看积压的工单，处理哪些问题以及可以延迟或删除那些任务。如果团队错过最后期限，或者紧急事件阻止你定期执行此审核，那么团队很可能会比他们所能处理的更快地累积中断。</p>
+
+<p><strong>不平衡的指标：</strong><br />
+    一些关键的指标可能表明你的团队过载
+    * 长时间关闭某个问题
+    * 长时间花费在艰难进行的工作上
+    * 大量的时间来关闭来自于调用会话的问题</p>
+
+<p>团队应该共同决定使用哪些措施。没有一种适合所有人的方法；每个团队的超负荷都会以不同的方式放映出来。作为经理，在不了解每个人的工作量和工作习惯的情况下，不要对团队施加措施。如果坚持使用特定措施，团队成员可能会觉得你不理解工作。例如，如果你按照修复问题所需的天数来评估负载，那么一个人可能会整整一天解决问题，而另一个人可能会在几天内将工作分配到其他工作中。</p>
+
+<h3 id="减少团队压力维持团队健康状态">减少团队压力维持团队健康状态</h3>
+
+<p>阅读完标准后，你可能会认为你的团队已经超负荷了。不要绝望！本节提供了一个让你的团队恢复健康状态的方法。</p>
+
+<p>通常，给团队成员更多的控制和权力可以减少感知到的压力。虽然有压力的情况下求助于微管理，但重要的是要让团队处于循环状态中，并将优先级放在一起，以提高绩效和工作满意度。这个模型假设一个团队成员之间有着健康的人际关系之中。</p>
+
+<h4 id="识别并减轻心理压力源">识别并减轻心理压力源</h4>
+
+<p>当要调整一个超负载的团队时，最重要的是团队成员需要重建心理安全。团队和每个成员都是息息相关的。</p>
+
+<p>你可以从识别每个人和整个团队的心理压力源开始。实际哪些因素影响团队的压力？你无法控制团队成员是否患有重大疾病，但你可以控制团队面临压力的大小（如案例研究1中所示）或屏蔽报警（如案例研究2）。</p>
+
+<p>与你的合作的产品开发人员团队沟通，让他们知道你的团队的压力。他们或许可以伸出援助之手，甚至接管整个项目。</p>
+
+<p>当你的团队成员相互依赖并达到一定程度的心理安全（这样他们能够承担人际风险）时，你可以让个别成员承担更多的责任，学习其他领域的专业知识，并将专业人员物尽其用，从而提高他们的自信心，使他们能够承担风险的重任。</p>
+
+<p>决策应该是透明的，如果可能的话，应该是民主的。每个团队成员都应该对面对的情况有一种控制感。例如，案例研究2中的头脑风暴会议帮助团队识别和讨论问题。</p>
+
+<h4 id="在四分之一的范围内优先处理和分类">在四分之一的范围内优先处理和分类</h4>
+
+<p>健康的团队会首先处理重要的问题并对问题进行分类。案例研究1为这个观点提供了一个很好的例子：团队坐在一起并审查他们积压的问题。审查帮助他们意识到他们超载了。他们重新确定了工作优先级后，并完成了可以迅速减少负载的任务。案例研究2中的团队现在每个季度末召开会议，共同规划现有和未来工作并确定其优先顺序。</p>
+
+<p>如果可能，我们建议SRE在其日历上安排<code class="highlighter-rouge">无中断时间</code>（没有on-call），这样他们就有时间处理技术深度上很困难的任务，如开发自动化和调查中断你的根本原因。在案例研究2中，当外部团队给予on-call一些解脱时，团队成员则有宝贵的时间专注于他们的项目。</p>
+
+<p>如果绝对必要，放弃一些工作内容：在案例研究2中，团队通过将此职责交还给开发团队，放弃了对其中一项服务的on-call支持。</p>
+
+<h4 id="在未来保护自己">在未来保护自己</h4>
+
+<p>我们强烈建议制定指标来评估团队的工作量。定期查看指标，确保他们正在衡量正确的事情。</p>
+
+<p>一旦你的团队出现过载，你可以通过采取措施监控或解决潜在问题来防止过载进一步恶化。例如，案例研究1中的团队现在维护一个轻量级的分类流程，以检测不断增加的积压任务。案例研究2中的团队目前正在制定一项长期计划，以协调后端和服务SLO。</p>
+
+<p>当你的团队处于超负荷状态时，优先考虑工程工作，即使你没有超负荷工作，也会比重复工作更重要，在将来你会获得利益。</p>
+
+<p>最后，团队中的每个人都应对预警信号负责（请参见第366也的“识别过载症状”），以指示可能出现的过载情况。如果管理人员认为团队正在走向过载，他们应该坐下来与团队成员交谈。</p>
+
+<h2 id="结论">结论</h2>
+
+<p>在完美的世界中，SRE团队始终能够使用我们的第一本书中描述的策略来管理中断。但我们只是人类，我们的团队没有达到那个理想状态。本章研究了过载情况下如何建立团队健康的方法，并讨论了如何在它发生时检测和响应。</p>
+
+<p>特别实在运营工作方面，过度的中断很容易导致团队从正常工作负载滑落到过载。频繁的中断可能导致过载，过载会对健康和生产力产生负面影响。超载会给团队成员带来心理社会压力因素，进一步影响工作，导致自我强制循环。</p>
+
+<p>感知过载是一种特殊的过载形式，无法通过劳动量或操作量来衡量。很难确定和消除。为了使团队的工作量保持平衡，持续监控（感知的或为感知的）过载非常重要。为了更好地为用户服务并做好工作，你需要首先尊重自己和团队。在日常工作中保持健康的平衡对于帮助你和你的团队实现这一目标有很大帮助。</p>
+
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" rel="tag"># 《SRE-Google运维实践》</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/sre/2020/01/18/SRE-%E5%8F%82%E4%B8%8E%E6%A8%A1%E5%BC%8F/" rel="next" title="第十八章 SRE：参与模式">
+                <i class="fa fa-chevron-left"></i> 第十八章 SRE：参与模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/sre/2020/01/16/%E7%81%B0%E5%BA%A6%E9%83%A8%E7%BD%B2/" rel="prev" title="第十六章 灰度部署 (金丝雀部署)">
+                第十六章 灰度部署 (金丝雀部署) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="ZX" />
+          <p class="site-author-name" itemprop="name">ZX</p>
+           
+              <p class="site-description motion-element" itemprop="description">zxzxzxzx</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/ZXANG" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/" title="首页" target="_blank">首页</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/categories/" title="分类" target="_blank">分类</a>
+                </li>
+              
+                
+                
+                <li class="links-of-blogroll-item">
+                  <a href="https://zxang.github.io/blog/tag/#/%E3%80%8ASRE-Google%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5%E3%80%8B" title="《SRE-Google运维实践》" target="_blank">《SRE-Google运维实践》</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#从负载到过载"> <span class="nav-number">1</span> <span class="nav-text">从负载到过载</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#案例研究1当半数团队成员离开时工作超载"> <span class="nav-number">2</span> <span class="nav-text">案例研究1：当半数团队成员离开时工作超载</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#背景"> <span class="nav-number">2.1</span> <span class="nav-text">背景</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#问题陈述"> <span class="nav-number">2.2</span> <span class="nav-text">问题陈述</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#我们决定做什么"> <span class="nav-number">2.3</span> <span class="nav-text">我们决定做什么</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#实现"> <span class="nav-number">2.4</span> <span class="nav-text">实现</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#经验总结"> <span class="nav-number">2.5</span> <span class="nav-text">经验总结</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#案例研究2组织和工作量变化后的感知过载"> <span class="nav-number">3</span> <span class="nav-text">案例研究2：组织和工作量变化后的感知过载</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#背景-1"> <span class="nav-number">3.1</span> <span class="nav-text">背景</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#问题陈述-1"> <span class="nav-number">3.2</span> <span class="nav-text">问题陈述</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#我们决定做什么-1"> <span class="nav-number">3.3</span> <span class="nav-text">我们决定做什么</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#实现-1"> <span class="nav-number">3.4</span> <span class="nav-text">实现</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#短期行为"> <span class="nav-number">3.4.1</span> <span class="nav-text">短期行为</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#中期行为"> <span class="nav-number">3.4.2</span> <span class="nav-text">中期行为</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#长期行为"> <span class="nav-number">3.4.3</span> <span class="nav-text">长期行为</span> </a> </li> </ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#成效"> <span class="nav-number">3.5</span> <span class="nav-text">成效</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#经验总结-1"> <span class="nav-number">3.6</span> <span class="nav-text">经验总结</span> </a> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#减轻过载的策略"> <span class="nav-number">4</span> <span class="nav-text">减轻过载的策略</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#识别过载的症状"> <span class="nav-number">4.1</span> <span class="nav-text">识别过载的症状</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#减少团队压力维持团队健康状态"> <span class="nav-number">4.2</span> <span class="nav-text">减少团队压力维持团队健康状态</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#识别并减轻心理压力源"> <span class="nav-number">4.2.1</span> <span class="nav-text">识别并减轻心理压力源</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#在四分之一的范围内优先处理和分类"> <span class="nav-number">4.2.2</span> <span class="nav-text">在四分之一的范围内优先处理和分类</span> </a> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#在未来保护自己"> <span class="nav-number">4.2.3</span> <span class="nav-text">在未来保护自己</span> </a> </li> </ol> </li> </ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#结论"> <span class="nav-number">5</span> <span class="nav-text">结论</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZX</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://jekyllrb.com">Jekyll</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+
+
+  
+
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("<app_id>", "<app_key>");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
