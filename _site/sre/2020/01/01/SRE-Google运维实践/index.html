@@ -485,7 +485,7 @@
 
 
   <blockquote>
-  <p>《The Site Reliability Workbook — Practical Ways to Implement SRE》 中文版</p>
+  <p>《The Site Reliability Workbook — Practical Ways to Implement SRE》</p>
 </blockquote>
 
 <!-- more -->
@@ -530,24 +530,30 @@ worked for them and what didn’t.</p>
 
 <blockquote>
   <h3 id="如何阅读本书"><center>如何阅读本书</center></h3>
-  <p>This book is the companion volume to Google’s first book, Site Reliability Engineer‐ing. To get the most out of this volume, we recommend that you have read, or can refer to, the first SRE book (available to read online for free at google.com/sre). The two works complement each other in the following ways:</p>
+  <p>这本书是google第一本sre(Site Reliability Engineering)书的姊妹篇. 要充分读懂本书，我们建议您阅读或参考第一本SRE书籍(可在google.com/sre在线免费阅读)。这两部作品在以下几个方面是相辅相成的:</p>
   <ul>
     <li>
-      <p>The previous work was an introduction to principles and philosophy. This vol‐ume concentrates on how those principles are applied. (In a few areas—particu‐larly configuration management and canarying—we also cover some new ground to provide background for the practical treatment of other subjects.)</p>
+      <p>第一本书主要是是原则和理论的介绍。本书主要讨论如何应用这些原则。(在少数几个领域——主要是配置管理和灰度——我们还讨论了一些新领域，为其他主题的实际应用提供了场景。)</p>
     </li>
     <li>
-      <p>The earlier volume concentrated exclusively on how SRE is practiced at Google. This work includes perspectives from a number of other firms—from traditional enterprises (including The Home Depot and the New York Times) to digital natives (Evernote, Spotify, and others).</p>
+      <p>第一本书专门集中于如何在谷歌实践SRE。包括许多其他公司的观点——从传统企业(包括家得宝和纽约时报)到<code class="highlighter-rouge">数字原生代</code>(Evernote、Spotify和其他)。</p>
     </li>
     <li>
-      <p>The first book didn’t directly refer to the larger operations community—espe‐ cially DevOps—whereas this book speaks directly to how SRE and DevOps relate to each other.</p>
+      <p>第一本书没有直接提到更大的运营社区—特别是DevOps—而这本书直接谈到了SRE和DevOps是如何相互关联的。</p>
     </li>
   </ul>
 
-  <p>This volume assumes that you will bounce between this volume and its predecessor.  You might, for example, read Chapter 4, “Service Level Objectives” in the first book and then read its implementation complement (Chapter 2) in this volume.</p>
+  <p>本书假设你会在阅读第一本书和第二本书之间互相验证。例如，您可以在第一本书中阅读第4章“服务级别目标”，然后在本卷中阅读(第2章)其实现补充。</p>
 
-  <p>This book assumes that every chapter is just the starting point for a longer discussion and journey. Accordingly, this book is intended to be a conversation starter rather than the last word.</p>
+  <p>本书假设每一章只是一个更长的讨论和旅程的起点。因此，本书的目的是要成为一个对话的开始，而不是结束。</p>
 
   <p>—The Editors</p>
+</blockquote>
+
+<blockquote>
+  <p>备注：</p>
+
+  <p>数字原生代:是美国哈佛大学的网络社会研究中心和瑞士圣加仑大学的信息法研究中心提出的概念， 意为“80 后” 甚至再年轻些的这代人一出生就面临着一个无所不在的网络世界，对于他们而言，网络就是他们的生活，数字化生存是他们从小就开始的生存方式。</p>
 </blockquote>
 
 <p>本书目录结构：</p>
@@ -600,12 +606,11 @@ worked for them and what didn’t.</p>
 
 </blockquote>
 
-<ul>
-  <li>相关资料
-英文原版：<a href="/something/pdf/SRE/the-site-reliability-workbook-next18.pdf">the-site-reliability-workbook-next18.pdf</a>
-悟冥：<a href="https://zhuanlan.zhihu.com/p/97600369">读《SRE：Google运维解密》一点思考</a>
-SRE Google运维解密</li>
-</ul>
+<h3 id="相关资料">相关资料</h3>
+
+<p>英文原版：<a href="/blog/something/pdf/SRE/the-site-reliability-workbook-next18.pdf">the-site-reliability-workbook-next18.pdf</a><br />
+悟冥：<a href="https://zhuanlan.zhihu.com/p/97600369">读《SRE：Google运维解密》一点思考</a><br />
+SRE Google运维解密</p>
 
 
 
@@ -860,7 +865,7 @@ SRE Google运维解密</li>
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#前言"> <span class="nav-number">1</span> <span class="nav-text">前言</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#how-to-read-this-book"> <span class="nav-number">1.1</span> <span class="nav-text">How to Read This Book</center</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#如何阅读本书"> <span class="nav-number">1.2</span> <span class="nav-text">如何阅读本书</center</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第一部分基本原理"> <span class="nav-number">1.3</span> <span class="nav-text">第一部分：基本原理</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第二部分-实践"> <span class="nav-number">1.4</span> <span class="nav-text">第二部分： 实践</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第三部分-发展"> <span class="nav-number">1.5</span> <span class="nav-text">第三部分： 发展</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre"> <span class="nav-number">1.6</span> <span class="nav-text">SRE？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#google的sre具体会负责哪些事情"> <span class="nav-number">1.7</span> <span class="nav-text">Google的SRE具体会负责哪些事情？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre日常工作和职责包含哪些"> <span class="nav-number">1.8</span> <span class="nav-text">SRE日常工作和职责包含哪些?</span> </a> </li> </ol> </li>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#前言"> <span class="nav-number">1</span> <span class="nav-text">前言</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#how-to-read-this-book"> <span class="nav-number">1.1</span> <span class="nav-text">How to Read This Book</center</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#如何阅读本书"> <span class="nav-number">1.2</span> <span class="nav-text">如何阅读本书</center</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第一部分基本原理"> <span class="nav-number">1.3</span> <span class="nav-text">第一部分：基本原理</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第二部分-实践"> <span class="nav-number">1.4</span> <span class="nav-text">第二部分： 实践</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#第三部分-发展"> <span class="nav-number">1.5</span> <span class="nav-text">第三部分： 发展</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre"> <span class="nav-number">1.6</span> <span class="nav-text">SRE？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#google的sre具体会负责哪些事情"> <span class="nav-number">1.7</span> <span class="nav-text">Google的SRE具体会负责哪些事情？</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#sre日常工作和职责包含哪些"> <span class="nav-number">1.8</span> <span class="nav-text">SRE日常工作和职责包含哪些?</span> </a> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#相关资料"> <span class="nav-number">1.9</span> <span class="nav-text">相关资料</span> </a> </li> </ol> </li>
     </ol>
   </div>
             
